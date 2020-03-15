@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#中常用的数据结构及遍历方法 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584291316860">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="常用的集合类：ArrayList,Queue,Stack,SortedList,Hashtable
+
+数组：
+
+Array：
+
+
+数据存储在连续的内存上。
+数组的语速都是同类型的。
+数组可以通过下标访问
+
+
+ArrayList
+
+
+不必声明..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584291316860" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#中常用的数据结构及遍历方法</h2>
+            <div class="post-date">2020-03-16</div>
+            
+            <div class="post-content" v-pre>
+              <p>常用的集合类：ArrayList,Queue,Stack,SortedList,Hashtable</p>
+<!--more-->
+<h1 id="数组">数组：</h1>
+<ul>
+<li>Array：</li>
+</ul>
+<ol>
+<li>数据存储在连续的内存上。</li>
+<li>数组的语速都是同类型的。</li>
+<li>数组可以通过下标访问</li>
+</ol>
+<ul>
+<li>ArrayList</li>
+</ul>
+<ol>
+<li>不必声明指定时的长度</li>
+<li>可以存储不用类型的元素</li>
+<li>ArrayList是类型不安全的。</li>
+<li>数组存储值类型是会发生装箱拆箱操作，因此会产生额外的性能开销，导致性能下降。</li>
+</ol>
+<h1 id="listt">List<T></h1>
+<ol>
+<li>确保了类型安全</li>
+<li>取消了装箱和拆箱操作</li>
+<li>融合了Array可以快速访问的特点</li>
+</ol>
+<p>数组适合数据的数量又上线，且需要快速访问其元素内容的情况。<br>
+链表适合元素数量不固定且需要经常增删结点的情况。</p>
+<p><strong>一、ArrayList</strong><br>
+特点：有序的对象列表、大小不固定、按照索引访问。<br>
+1.当存储容量不足时，按照2的幂次规律扩容；<br>
+2.可以存储不同类型的元素<br>
+ArrayList list =new ArrayList();</p>
+<pre><code>//使用foreach进行遍历
+foreach(int num inlist)
+{
+        Console.WriteLine(num+” “);
+}
+//或者使用for循环和索引来进行遍历
+for(int i;i&lt;list.Count;i++)
+{
+        Console.WriteLine(list[i]+” “);
+}
+</code></pre>
+<p>注意：ArrayList的Capacity属性表示容量，而Count属性表示其中容纳元素的实际数目。</p>
+<p><strong>二、Queue</strong><br>
+特点：先进先出的对象集合（FIFO）。<br>
+遍历方法：<br>
+Queue q=new Queue();<br>
+IEnumerator myEnumerat = q.GetEnumerator();//获取能循环访问队列枚举数的IEnumerator接口实例</p>
+<pre><code>while(myEnumerator.MoveNext())
+{
+        Console.Write(myEnumerator.Current+” “);
+}
+</code></pre>
+<p>注意：<br>
+当Queue内容发生变化时，需要重新获取IEnumerator接口实例。</p>
+<p><strong>三、Stack</strong><br>
+特点：先进后出的对象集合（LIFO）。<br>
+遍历方法：同Queue遍历方法</p>
+<p><strong>四、SortedList</strong><br>
+特点：键/值对的集合，存入的元素会自动按照键排序，可以按照键或者索引访问<br>
+Hashtable（key，object）元素的集合，按照键的哈希代码组织，通过key可以访问到指定的元素。</p>
+<pre><code>Hashtable ht=new Hashtable();
+//获取键：
+foreach(string key in ht.Keys)
+{
+        Console.Write(key+” \t“);
+}
+//获取值：
+foreach(string value in ht.Values)
+{
+        Console.Write(value+”\t “);
+}
+//如果希望同时获得键和值，可以根据Hashtable的元素类型为DictionaryEntry来获得。
+foreach(DictionaryEntry de in ht)
+{
+        Console.WriteLine(“\t{0}       \t{1}”,de.Key,de.Value);
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-shader-2/">
+                  <h3 class="post-title">
+                    《Unity Shader入门精要》读书笔记——渲染流水线
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
