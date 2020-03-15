@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-15T16:55:37.133Z</updated>
+    <updated>2020-03-15T17:01:54.366Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -10,96 +10,6 @@
     <logo>https://ayosi1996.github.io/images/avatar.png</logo>
     <icon>https://ayosi1996.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Sqrt9</rights>
-    <entry>
-        <title type="html"><![CDATA[C#中常用的数据结构及遍历方法]]></title>
-        <id>https://ayosi1996.github.io/post/CQXk2H99N/</id>
-        <link href="https://ayosi1996.github.io/post/CQXk2H99N/">
-        </link>
-        <updated>2020-03-15T19:51:47.000Z</updated>
-        <summary type="html"><![CDATA[<p>常用的集合类：ArrayList,Queue,Stack,SortedList,Hashtable</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>常用的集合类：ArrayList,Queue,Stack,SortedList,Hashtable</p>
-<!--more-->
-<h1 id="数组">数组：</h1>
-<ul>
-<li>Array：</li>
-</ul>
-<ol>
-<li>数据存储在连续的内存上。</li>
-<li>数组的语速都是同类型的。</li>
-<li>数组可以通过下标访问</li>
-</ol>
-<ul>
-<li>ArrayList</li>
-</ul>
-<ol>
-<li>不必声明指定时的长度</li>
-<li>可以存储不用类型的元素</li>
-<li>ArrayList是类型不安全的。</li>
-<li>数组存储值类型是会发生装箱拆箱操作，因此会产生额外的性能开销，导致性能下降。</li>
-</ol>
-<h1 id="listt">List<T></h1>
-<ol>
-<li>确保了类型安全</li>
-<li>取消了装箱和拆箱操作</li>
-<li>融合了Array可以快速访问的特点</li>
-</ol>
-<p>数组适合数据的数量又上线，且需要快速访问其元素内容的情况。<br>
-链表适合元素数量不固定且需要经常增删结点的情况。</p>
-<p><strong>一、ArrayList</strong><br>
-特点：有序的对象列表、大小不固定、按照索引访问。<br>
-1.当存储容量不足时，按照2的幂次规律扩容；<br>
-2.可以存储不同类型的元素<br>
-ArrayList list =new ArrayList();</p>
-<pre><code>//使用foreach进行遍历
-foreach(int num inlist)
-{
-        Console.WriteLine(num+” “);
-}
-//或者使用for循环和索引来进行遍历
-for(int i;i&lt;list.Count;i++)
-{
-        Console.WriteLine(list[i]+” “);
-}
-</code></pre>
-<p>注意：ArrayList的Capacity属性表示容量，而Count属性表示其中容纳元素的实际数目。</p>
-<p><strong>二、Queue</strong><br>
-特点：先进先出的对象集合（FIFO）。<br>
-遍历方法：<br>
-Queue q=new Queue();<br>
-IEnumerator myEnumerat = q.GetEnumerator();//获取能循环访问队列枚举数的IEnumerator接口实例</p>
-<pre><code>while(myEnumerator.MoveNext())
-{
-        Console.Write(myEnumerator.Current+” “);
-}
-</code></pre>
-<p>注意：<br>
-当Queue内容发生变化时，需要重新获取IEnumerator接口实例。</p>
-<p><strong>三、Stack</strong><br>
-特点：先进后出的对象集合（LIFO）。<br>
-遍历方法：同Queue遍历方法</p>
-<p><strong>四、SortedList</strong><br>
-特点：键/值对的集合，存入的元素会自动按照键排序，可以按照键或者索引访问<br>
-Hashtable（key，object）元素的集合，按照键的哈希代码组织，通过key可以访问到指定的元素。</p>
-<pre><code>Hashtable ht=new Hashtable();
-//获取键：
-foreach(string key in ht.Keys)
-{
-        Console.Write(key+” \t“);
-}
-//获取值：
-foreach(string value in ht.Values)
-{
-        Console.Write(value+”\t “);
-}
-//如果希望同时获得键和值，可以根据Hashtable的元素类型为DictionaryEntry来获得。
-foreach(DictionaryEntry de in ht)
-{
-        Console.WriteLine(“\t{0}       \t{1}”,de.Key,de.Value);
-}
-</code></pre>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[《Unity Shader入门精要》读书笔记——渲染流水线]]></title>
         <id>https://ayosi1996.github.io/post/unity-shader-2/</id>
@@ -1792,6 +1702,55 @@ end
 <p>然后重新Build Android Resource，重新启动安卓客户端：</p>
 <figure data-type="image" tabindex="8"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2w7q0m0j30740cndft.jpg" alt="undefined" loading="lazy"></figure>
 <p>完！</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用UGUI与MySql实现的简单角色管理系统]]></title>
+        <id>https://ayosi1996.github.io/post/unity-mysql-ugui-2/</id>
+        <link href="https://ayosi1996.github.io/post/unity-mysql-ugui-2/">
+        </link>
+        <updated>2017-06-05T01:00:21.000Z</updated>
+        <summary type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
+<br><br>
+实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
+实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
+<br><br>
+实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
+实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
+<!--more-->
+<p><strong>游戏界面客户端：</strong></p>
+<p>功能：登录注册、角色选择与创建、已有角色选择、商城购买装备、添加删除好友、背包装备与金币显示。</p>
+<p>界面展示：<br>
+登录注册界面：<br>
+<img src="https://img-blog.csdn.net/20170605173858561" alt="这里写图片描述" loading="lazy"><br>
+角色创建与选择界面：<br>
+功能：选择角色、或者点击左侧已经创建的角色<br>
+<img src="https://img-blog.csdn.net/20170605174116739" alt="这里写图片描述" loading="lazy"></p>
+<p>背包页面：<br>
+功能：显示所选角色种类以及背包<br>
+<img src="https://img-blog.csdn.net/20170605173932843" alt="这里写图片描述" loading="lazy"></p>
+<p>商城界面：<br>
+功能：点击装备显示价格、右键点击购买并添加至背包。<br>
+界面：<br>
+<img src="https://img-blog.csdn.net/20170605174027718" alt="这里写图片描述" loading="lazy"></p>
+<p>好友界面：<br>
+功能：搜索已经注册的好友并添加，在左侧滚动条中显示已添加好友，删除已有好友。<br>
+界面：<br>
+<img src="https://img-blog.csdn.net/20170605174058957" alt="这里写图片描述" loading="lazy"></p>
+<p><strong>角色数据管理客户端：</strong></p>
+<p>功能：搜索已经创建的角色所有信息，修改装备价格，删除玩家已创建角色，修改玩家角色拥有金币数量</p>
+<p>界面：<br>
+<img src="https://img-blog.csdn.net/20170605174133583" alt="这里写图片描述" loading="lazy"></p>
+<p>查询角色信息：<br>
+<img src="https://img-blog.csdn.net/20170605174151156" alt="这里写图片描述" loading="lazy"></p>
+<p>修改角色信息：<br>
+<img src="https://img-blog.csdn.net/20170605174206859" alt="这里写图片描述" loading="lazy"></p>
+<p>修改后：<br>
+<img src="https://img-blog.csdn.net/20170605174222781" alt="这里写图片描述" loading="lazy"></p>
+<p>图标资源来自<a href="http://www.devsiki.com/">siki学院</a><br>
+文档下载地址：http://download.csdn.net/download/macyosef/9970997</p>
 ]]></content>
     </entry>
 </feed>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>使用UGUI与MySql实现的简单角色管理系统 | Sqrt9</title>
+<title>RPG 中控制相机距离以及旋转相机视角 | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,12 +18,14 @@
 
 
 
-    <meta name="description" content="记录一下大三的数据库项目,虽然挺垃圾的🙃
+    <meta name="description" content="实现简单地控制相机距离和角度
 
-实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6
-实现结果：游戏界面客户端，游戏数据管理查询客户端。
+附加于相机上的代码：
+	private Transform player;  //跟随目标
 
-游戏界面客户端..." />
+    Vector3 tempPosition=Vector3.zero;
+    
+    Vector3 o..." />
     <meta name="keywords" content="Unity" />
   </head>
   <body>
@@ -99,49 +101,76 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">使用UGUI与MySql实现的简单角色管理系统</h2>
-            <div class="post-date">2017-06-05</div>
+            <h2 class="post-title">RPG 中控制相机距离以及旋转相机视角</h2>
+            <div class="post-date">2017-03-25</div>
             
-              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/unity-mysql-ugui-2.png')">
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/oTRIgNFY6.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
-<br><br>
-实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
-实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
-<!--more-->
-<p><strong>游戏界面客户端：</strong></p>
-<p>功能：登录注册、角色选择与创建、已有角色选择、商城购买装备、添加删除好友、背包装备与金币显示。</p>
-<p>界面展示：<br>
-登录注册界面：<br>
-<img src="https://img-blog.csdn.net/20170605173858561" alt="这里写图片描述" loading="lazy"><br>
-角色创建与选择界面：<br>
-功能：选择角色、或者点击左侧已经创建的角色<br>
-<img src="https://img-blog.csdn.net/20170605174116739" alt="这里写图片描述" loading="lazy"></p>
-<p>背包页面：<br>
-功能：显示所选角色种类以及背包<br>
-<img src="https://img-blog.csdn.net/20170605173932843" alt="这里写图片描述" loading="lazy"></p>
-<p>商城界面：<br>
-功能：点击装备显示价格、右键点击购买并添加至背包。<br>
-界面：<br>
-<img src="https://img-blog.csdn.net/20170605174027718" alt="这里写图片描述" loading="lazy"></p>
-<p>好友界面：<br>
-功能：搜索已经注册的好友并添加，在左侧滚动条中显示已添加好友，删除已有好友。<br>
-界面：<br>
-<img src="https://img-blog.csdn.net/20170605174058957" alt="这里写图片描述" loading="lazy"></p>
-<p><strong>角色数据管理客户端：</strong></p>
-<p>功能：搜索已经创建的角色所有信息，修改装备价格，删除玩家已创建角色，修改玩家角色拥有金币数量</p>
-<p>界面：<br>
-<img src="https://img-blog.csdn.net/20170605174133583" alt="这里写图片描述" loading="lazy"></p>
-<p>查询角色信息：<br>
-<img src="https://img-blog.csdn.net/20170605174151156" alt="这里写图片描述" loading="lazy"></p>
-<p>修改角色信息：<br>
-<img src="https://img-blog.csdn.net/20170605174206859" alt="这里写图片描述" loading="lazy"></p>
-<p>修改后：<br>
-<img src="https://img-blog.csdn.net/20170605174222781" alt="这里写图片描述" loading="lazy"></p>
-<p>图标资源来自<a href="http://www.devsiki.com/">siki学院</a><br>
-文档下载地址：http://download.csdn.net/download/macyosef/9970997</p>
+              <p>实现简单地控制相机距离和角度</p>
+<!-- more -->
+<p>附加于相机上的代码：</p>
+<pre><code class="language-c">	private Transform player;  //跟随目标
+
+    Vector3 tempPosition=Vector3.zero;
+    
+    Vector3 offsetPosition;    //相机距离目标之间的差向量
+    
+    float distance = 0.0f;
+    
+    public float speed = 1;
+    
+    public float rotateSpeed = 4;
+    
+	// Use this for initialization
+	void Start () {
+        player = GameObject.FindGameObjectWithTag(tags.player).transform;
+        transform.LookAt(player.position);
+		//计算差向量
+        offsetPosition = transform.position - player.position;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		//控制相机跟随目标
+        transform.position = offsetPosition + player.position;
+        Rotate();
+        Distance();
+    }
+	//控制相机的拉近及拉远
+    void Distance()
+    {
+        distance = offsetPosition.magnitude;
+		//滚轮控制相机距离目标的距离
+        distance = distance + Input.GetAxis(&quot;Mouse ScrollWheel&quot;) * speed;
+		//控制最小与最大距离
+        distance = Mathf.Clamp(distance, 5, 20);
+        offsetPosition = offsetPosition.normalized * distance;
+    }
+	//控制相机围绕目标旋转
+    void Rotate()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            Vector3 tempPos = transform.position;
+            Quaternion tempRot = transform.rotation;
+
+            transform.RotateAround(player.position, player.up, rotateSpeed * Input.GetAxis(&quot;Mouse X&quot;));
+//**注意这里围绕旋转的轴是相机本身的x轴，类似天体运动中的自转**
+            transform.RotateAround(player.position, transform.right, rotateSpeed * Input.GetAxis(&quot;Mouse Y&quot;));
+            float x = transform.eulerAngles.x;
+//限制旋转角度在10 - 80 之间
+            if(x&lt;10||x&gt;80)
+            {
+                transform.position = tempPos;
+                transform.rotation = tempRot;
+            }
+        }
+//注意一定要在旋转后更新差向量
+        offsetPosition = transform.position - player.position;
+    }
+</code></pre>
 
             </div>
             
@@ -156,9 +185,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ayosi1996.github.io/post/oTRIgNFY6/">
+                <a href="https://ayosi1996.github.io/post/opengl-terrain/">
                   <h3 class="post-title">
-                    RPG 中控制相机距离以及旋转相机视角
+                    【OpenGL】生成简易网格地形
                   </h3>
                 </a>
               </div>
