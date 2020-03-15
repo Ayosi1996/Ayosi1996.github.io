@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>【OpenGL】生成简易网格地形 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584288928973">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+
+网格地形实验思路：
+
+
+
+通过两重for循环生成一个5*9的网格。
+
+
+通过glBegin(GL_TRIANGLES)函数将所有的四个点之间连接成两个三角形。
+
+
+通过两个相邻三角形之间坐标可以得知一个规律：
+右下角三角形坐标：
+glV..." />
+    <meta name="keywords" content="OpenGL" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584288928973" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">【OpenGL】生成简易网格地形</h2>
+            <div class="post-date">2017-03-23</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/opengl-terrain.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!-- more -->
+<ol>
+<li><strong>网格地形实验思路：</strong></li>
+</ol>
+<ul>
+<li>
+<p>通过两重for循环生成一个5*9的网格。</p>
+</li>
+<li>
+<p>通过glBegin(GL_TRIANGLES)函数将所有的四个点之间连接成两个三角形。</p>
+</li>
+<li>
+<p>通过两个相邻三角形之间坐标可以得知一个规律：</p>
+<p>右下角三角形坐标：<br>
+glVertex3f(x, y, z);<br>
+glVertex3f(x+1, y+1, sinf(x+1));<br>
+glVertex3f(x+1, y, sinf(x+1));</p>
+<p>左上角三角形：<br>
+glVertex3f(x, y, z);<br>
+glVertex3f(x, y + 1, sinf(x ));<br>
+glVertex3f(x + 1, y+1, sinf(x  + 1));</p>
+  <!--more-->
+</li>
+<li>
+<p>在TRIANGLES函数中调用两次两重for循环来完成所有三角形的绘制。</p>
+</li>
+<li>
+<p>通过上面的坐标可知z的值通过sin函数来改变的，从而产生地形的起伏效果。</p>
+</li>
+<li>
+<p>左上角三角形的颜色的值为glColor3f(x/6, y/10, 0)；右下角的三角形的值为glColor3f(x / 5, y / 9, 0);产生地形颜色的渐变效果。</p>
+</li>
+<li>
+<p>最后在三角形绘制函数前加上绕三个轴旋转的函数，通过按键控制旋转角度的大小。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>主要代码：</strong></li>
+</ol>
+<pre><code class="language-c">void render(void)   
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer   清理深度缓冲区  颜色
+	glLoadIdentity();
+   glTranslatef(x_trens,y_trens,z_trens);	
+   glRotatef(angle, 0,1, 0);
+	glRotatef(angle_1, 1, 0, 0);
+	glRotatef(angle_2, 0, 0, 1);
+   glBegin(GL_TRIANGLES);	        // Draw  Triangles
+	float x = 0;
+	float y;
+	float z;
+	for (x = 0; x &lt; 5; x++)//X的赋值
+	{
+		for (y = 0; y &lt; 9; y++)//Y的赋值
+		{
+			z = sinf(x);
+			glColor3f(x/6, y/10, 0);
+			glVertex3f(x, y, z);
+			glVertex3f(x+1, y+1, sinf(x+1));
+			glVertex3f(x+1, y, sinf(x+1));
+		}
+	}
+	for (x = 0; x &lt; 5; x++)//X的赋值
+	{
+		for (y = 0; y &lt; 9; y++)//Y的赋值
+		{
+			z = sinf(x);
+			glColor3f(x / 5, y / 9, 0);
+			glVertex3f(x, y, z);
+			glVertex3f(x, y + 1, sinf(x ));
+			glVertex3f(x + 1, y+1, sinf(x  + 1));
+		}
+	}
+
+	glEnd();
+    // Swap The Buffers To Become Our Rendering Visible
+    glutSwapBuffers ( );
+}
+void keyboard(unsigned char key, int x, int y)    //键盘控制旋转和移动
+{
+	switch (key) {
+		case 27:        // When Escape Is Pressed...
+			exit(0);    // Exit The Program
+			//平移
+		case 'd':
+			x_trens += 0.5,glutPostRedisplay(); break;
+		case 'a':
+			x_trens -= 0.5, glutPostRedisplay(); break;
+			//缩放
+		case 'w':
+			y_trens += 0.5, glutPostRedisplay(); break;
+		case 's':
+			y_trens -= 0.5, glutPostRedisplay(); break;
+		case 'q':
+			z_trens *= 0.5, glutPostRedisplay(); break;
+		case 'e':
+			z_trens /= 0.5, glutPostRedisplay(); break;
+		case 'j':
+			angle += 2, glutPostRedisplay(); break;
+		case 'l':
+			angle -= 2, glutPostRedisplay(); break;
+		case 'i':
+			angle_1 += 2, glutPostRedisplay(); break;
+		case 'k':
+			angle_1 -= 2, glutPostRedisplay(); break;
+		case 'u':
+			angle_2 += 2, glutPostRedisplay(); break;
+		case 'o':
+			angle_2 -= 2, glutPostRedisplay(); break;
+			//
+		        // Ready For Next Case
+		default:        // Now Wrap It Up
+		break;
+	}
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/9WI1BgJXq/" class="tag">
+                    OpenGL
+                  </a>
+                
+              </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

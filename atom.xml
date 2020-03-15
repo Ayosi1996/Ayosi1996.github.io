@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-15T15:41:09.267Z</updated>
+    <updated>2020-03-15T16:15:47.449Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -280,6 +280,237 @@ screen_y =  \frac{clip_y \cdot pixelHeight}{2 \cdot clip_w } + \frac{pixelHeight
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Lua常用知识点总结]]></title>
+        <id>https://ayosi1996.github.io/post/lua-note/</id>
+        <link href="https://ayosi1996.github.io/post/lua-note/">
+        </link>
+        <updated>2017-10-05T15:55:10.000Z</updated>
+        <summary type="html"><![CDATA[<p>总结一下Lua编程中常用到的知识点</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>总结一下Lua编程中常用到的知识点</p>
+<!-- more -->
+<h1 id="知识点">知识点</h1>
+<ol>
+<li>
+<p>“#”用于求长度，例如#+字符串/表</p>
+</li>
+<li>
+<p>表的声明方式： table = {[&quot;a&quot;] = &quot;Lua&quot;,[&quot;b&quot;] = &quot;C#&quot;,[&quot;c&quot;] = &quot;C++&quot;}</p>
+<pre><code> 	或者 table = { a = &quot;Lua&quot; , b = &quot;C#&quot; , c = &quot;C++&quot; }
+ 		如果是数字key则中括号不能省略
+</code></pre>
+</li>
+<li>
+<p>table的默认索引是从 1 开始</p>
+</li>
+<li>
+<p>可以用 2 对方括号 &quot;[[]]&quot; 来表示&quot;一块&quot;字符串。（类似C# 中的@）</p>
+</li>
+<li>
+<p>if后必跟一个then语句</p>
+</li>
+<li>
+<p>Lua函数可以接受可变数目的参数，和C语言类似在函数参数列表中使用三点（...) 表示函数有可变的参数。</p>
+</li>
+<li>
+<p>可变参数中 arg 参数的最后一个数为参数的个数 ，使用 local arg = {...}来取得参数</p>
+</li>
+<li>
+<p>pairs 和 ipairs异同</p>
+<p>同：都是能遍历集合（表、数组）<br>
+异：ipairs 仅仅遍历值，按照索引升序遍历，索引中断停止遍历。即不能返回 nil,只能返回数字 0，如果遇到 nil 则退出。它只能遍历到集合中出现的第一个不是整数的 key。<br>
+pairs 能遍历集合的所有元素。即 pairs 可以遍历集合中所有的 key，并且除了迭代器本身以及遍历表本身还可以返回 nil。</p>
+</li>
+</ol>
+<!--more-->
+<h1 id="协程">协程</h1>
+<ol start="9">
+<li>
+<ul>
+<li>定义协程函数，将方法放在 coroutine.create()中</li>
+</ul>
+<p>使用 coroutine.resume()启动或者继续协程</p>
+<ul>
+<li>定义协同函数，将函数放在 co = coroutine.wrap()中的</li>
+</ul>
+<p>使用 co(arg1,arg2)启动</p>
+<ul>
+<li>暂停协同函数使用 coroutine.yield(),在yield中的参数可以传递出来</li>
+<li>使用 coroutine.status()获取线程状态</li>
+</ul>
+</li>
+<li>
+<p><font color = red>执行完的协同函数不能复活，必须重新创建</font></p>
+</li>
+</ol>
+<h1 id="面向对象">面向对象</h1>
+<p>1.定义类</p>
+<pre><code>    Person = {name =&quot;&quot;,age = 18}
+    function Person:eat()
+		print(self.name)
+	end
+	--当使用 : 来定义函数的时候可以使用 self 来获取当前调用者，并且调用必须使用 : 才能使用
+    a = Person
+    a:eat() 
+    a.eat(a)
+</code></pre>
+<p>2.构造函数</p>
+<pre><code class="language-lua">    function Person:new()       
+		local t = {}
+		setmetatable(t,{__index = self} --当索引不存在会查找元表中的索引
+		return t
+	end
+</code></pre>
+<p>3.继承实现</p>
+<pre><code class="language-lua">    Student = Person:new()
+	Student.grade = 1
+	--Student相当于Person的子类
+	stu1 = Student:new()
+</code></pre>
+<p>#元表metatable<br>
+8. <font color =red>metatable</font><br>
+使用__metatable可以保护元表，禁止用户访问元表中的尘成员或者修改元表</p>
+<ol start="15">
+<li>
+<p><font color = red> __index </font></p>
+<ol>
+<li>
+<p>当你通过键来访问 table 的时候，如果这个键没有值，那么Lua就会寻找该table的metatable（假定有metatable）中的__index 键。如果__index包含一个表格，Lua会在表格中查找相应的键。</p>
+</li>
+<li>
+<p>如果__index包含一个函数的话，Lua就会调用那个函数，table和键会作为参数传递给函数。</p>
+</li>
+</ol>
+</li>
+<li>
+<p><font color = red>__newindex</font><br>
+__newindex 元方法用来对表更新，当你给表的一个缺少的索引赋值，解释器就会查找__newindex 元方法：如果存在则调用这个函数而不进行赋值操作。</p>
+</li>
+<li>
+<p><font color = red>__add</font><br>
+__add 键包含在元表中，并进行相加操作。</p>
+</li>
+<li>
+<p><font color = red>__call </font><br>
+__call 元方法在 Lua 调用一个值时调用.<br>
+__call = function(mytable,arg) --arg位参数 10<br>
+mytable(10)</p>
+</li>
+<li>
+<p><font color = red>__tostring </font><br>
+__tostring 元方法用于修改表的输出行为。print(mytable)</p>
+</li>
+<li>
+<p><font color = red>rawget 和 rawset</font><br>
+如果不想在访问一个table时涉及到它的__index方法，可以使用函数rawget。调用rawget(t,i)<br>
+就是对table t进行了一个“原始（raw）”的访问，也就是一次不考虑元表的简单访问。一次原始访问并不会加速代码的执行。<br>
+调用rawset(t,k,v)就可以不涉及任何元方法而直接设置table t中与key k向关联的value l。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Lua中协程的使用]]></title>
+        <id>https://ayosi1996.github.io/post/lua-note-coroutine2/</id>
+        <link href="https://ayosi1996.github.io/post/lua-note-coroutine2/">
+        </link>
+        <updated>2017-09-10T15:41:25.000Z</updated>
+        <content type="html"><![CDATA[<!--more-->
+<h1 id="一-简介">一、简介</h1>
+<p>Lua 协同程序(coroutine)与线程比较类似：拥有独立的堆栈，独立的局部变量，独立的指令指针，同时又与其它协同程序共享全局变量和其它大部分东西。</p>
+<p>协同是非常强大的功能，但是用起来也很复杂。</p>
+<h1 id="二-使用">二、使用</h1>
+<h2 id="1创建">1.创建：</h2>
+<pre><code class="language-lua">--第一种创建方法
+function fun1(a,b)
+	-- body
+	print(a+b)
+end
+co=coroutine.create(fun1)
+--第二种创建方法 使用匿名函数
+co=coroutine.create(function fun1( a,b )
+	-- body
+	print(a+b)
+end)
+</code></pre>
+<h2 id="2调用">2.调用</h2>
+<pre><code>coroutine.resume(co,20,30)  --控制台输出50
+</code></pre>
+<h2 id="3暂停">3.暂停</h2>
+<p>在想要暂停执行的地方加上<code>coroutine.yield()</code>语句</p>
+<pre><code>function fun1(a,b)
+	-- body
+	print(a+b)
+	coroutine.yield()
+	print(a*b)
+end
+co=coroutine.create(fun1)
+coroutine.resume(co,20,30)
+print(&quot;我是暂停后执行的&quot;)
+
+--执行结果为 ：
+50
+我是暂停后执行的
+</code></pre>
+<h2 id="4继续">4.继续</h2>
+<p>要想重新开始暂停的程序调用<code>coroutine.resume(co)</code>即可，需要注意的是调用时不用传参数</p>
+<pre><code class="language-lua">function fun1(a,b)
+	-- body
+	print(a+b)
+	coroutine.yield()
+	print(a*b)
+end
+co=coroutine.create(fun1)
+coroutine.resume(co,20,30)
+print(&quot;我是暂停后执行的&quot;)
+coroutine.resume(co)
+
+执行结果为 ：
+50
+我是暂停后执行的
+600
+</code></pre>
+<h1 id="三-注意">三、注意</h1>
+<ul>
+<li>在携程执行完后不能复活，既不能调用resume函数</li>
+<li>在第二次或者更多次调用resume时，除了第一个参数外，后面的参数会传递给暂停处的yield()函数</li>
+<li><code>coroutine.yield()</code>函数能够向主线程传递参数</li>
+</ul>
+<h1 id="四-实例">四、实例</h1>
+<pre><code>function foo (a)
+    print(&quot;foo 函数输出&quot;, a)
+    return coroutine.yield(2 * a) -- 返回  2*a 的值
+end
+
+co = coroutine.create(function (a , b)
+    print(&quot;第一次协同程序执行输出&quot;, a, b) -- co-body 1 10
+    local r = foo(a + 1)
+     
+    print(&quot;第二次协同程序执行输出&quot;, r)
+    local r, s = coroutine.yield(a + b, a - b)  -- a，b的值为第一次调用协同程序时传入
+     
+    print(&quot;第三次协同程序执行输出&quot;, r, s)
+    return b, &quot;结束协同程序&quot;                   -- b的值为第二次调用协同程序时传入
+end)
+
+--注意：在第二次或者后面resume时的参数除了第一个，其他会传入yield函数
+
+print(&quot;main&quot;, coroutine.resume(co, 1, 10)) -- true, 4
+print(&quot;--分割线----&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;r&quot;)) -- true 11 -9
+print(&quot;---分割线---&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;x&quot;, &quot;y&quot;)) -- true 10 end
+print(&quot;---分割线---&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;x&quot;, &quot;y&quot;)) -- cannot resume dead coroutine
+print(&quot;---分割线---&quot;)
+</code></pre>
+<p>执行结果：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170829191451368" alt="这里写图片描述" loading="lazy"></figure>
+<h1 id="参考">参考</h1>
+<p>http://www.runoob.com/lua/lua-coroutine.html</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[《大话数据结构》读书笔记——散列表]]></title>
         <id>https://ayosi1996.github.io/post/data-structure-2/</id>
         <link href="https://ayosi1996.github.io/post/data-structure-2/">
@@ -445,18 +676,12 @@ Status SearchHash(HashTable H,int key,int *char)
         <link href="https://ayosi1996.github.io/post/sqrt9-data-structure/">
         </link>
         <updated>2017-08-02T14:54:03.000Z</updated>
-        <summary type="html"><![CDATA[<ul>
+        <content type="html"><![CDATA[<!--more-->
+<ul>
 <li>平衡二叉树，是一种二叉排序树，其中每一个节点的左子树和和右子树的高度差至多等于1。</li>
 <li>平衡因子，将二叉树的左子树深度减去右子树深度的值称为平衡因子BF（Balance Factor）。</li>
 <li>最小不平衡子树，距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树。</li>
 </ul>
-]]></summary>
-        <content type="html"><![CDATA[<ul>
-<li>平衡二叉树，是一种二叉排序树，其中每一个节点的左子树和和右子树的高度差至多等于1。</li>
-<li>平衡因子，将二叉树的左子树深度减去右子树深度的值称为平衡因子BF（Balance Factor）。</li>
-<li>最小不平衡子树，距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树。</li>
-</ul>
-<!--more-->
 <figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0hvslayj30ii09eab1.jpg" alt="undefined" loading="lazy"></figure>
 <h2 id="平衡二叉树-构建">平衡二叉树 构建</h2>
 <p>​平衡二叉树构建的基本思想就是在构建二叉排序树的过程中，每当插人一个结点时，先检查是否因插入而破坏了树的平衡性，若是，则找出最小不平衡子树，在保持二叉排序树特性的前提下，调整最小不平衡子树中各结点间的链接关系，进行相应的旋转，使之成为新的平衡子树。</p>
@@ -601,6 +826,179 @@ Status InsertAVL(BiTree *T,int e,Status *taller)
 	return TRUE;
 }
 
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[使用UGUI与MySql实现的简单角色管理系统]]></title>
+        <id>https://ayosi1996.github.io/post/unity-mysql-ugui-2/</id>
+        <link href="https://ayosi1996.github.io/post/unity-mysql-ugui-2/">
+        </link>
+        <updated>2017-06-05T01:00:21.000Z</updated>
+        <summary type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
+<br><br>
+实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
+实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
+<br><br>
+实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
+实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
+<!--more-->
+<p><strong>游戏界面客户端：</strong></p>
+<p>功能：登录注册、角色选择与创建、已有角色选择、商城购买装备、添加删除好友、背包装备与金币显示。</p>
+<p>界面展示：<br>
+登录注册界面：<br>
+<img src="https://img-blog.csdn.net/20170605173858561" alt="这里写图片描述" loading="lazy"><br>
+角色创建与选择界面：<br>
+功能：选择角色、或者点击左侧已经创建的角色<br>
+<img src="https://img-blog.csdn.net/20170605174116739" alt="这里写图片描述" loading="lazy"></p>
+<p>背包页面：<br>
+功能：显示所选角色种类以及背包<br>
+<img src="https://img-blog.csdn.net/20170605173932843" alt="这里写图片描述" loading="lazy"></p>
+<p>商城界面：<br>
+功能：点击装备显示价格、右键点击购买并添加至背包。<br>
+界面：<br>
+<img src="https://img-blog.csdn.net/20170605174027718" alt="这里写图片描述" loading="lazy"></p>
+<p>好友界面：<br>
+功能：搜索已经注册的好友并添加，在左侧滚动条中显示已添加好友，删除已有好友。<br>
+界面：<br>
+<img src="https://img-blog.csdn.net/20170605174058957" alt="这里写图片描述" loading="lazy"></p>
+<p><strong>角色数据管理客户端：</strong></p>
+<p>功能：搜索已经创建的角色所有信息，修改装备价格，删除玩家已创建角色，修改玩家角色拥有金币数量</p>
+<p>界面：<br>
+<img src="https://img-blog.csdn.net/20170605174133583" alt="这里写图片描述" loading="lazy"></p>
+<p>查询角色信息：<br>
+<img src="https://img-blog.csdn.net/20170605174151156" alt="这里写图片描述" loading="lazy"></p>
+<p>修改角色信息：<br>
+<img src="https://img-blog.csdn.net/20170605174206859" alt="这里写图片描述" loading="lazy"></p>
+<p>修改后：<br>
+<img src="https://img-blog.csdn.net/20170605174222781" alt="这里写图片描述" loading="lazy"></p>
+<p>图标资源来自<a href="http://www.devsiki.com/">siki学院</a><br>
+文档下载地址：http://download.csdn.net/download/macyosef/9970997</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【OpenGL】生成简易网格地形]]></title>
+        <id>https://ayosi1996.github.io/post/opengl-terrain/</id>
+        <link href="https://ayosi1996.github.io/post/opengl-terrain/">
+        </link>
+        <updated>2017-03-23T09:42:50.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<ol>
+<li><strong>网格地形实验思路：</strong></li>
+</ol>
+<ul>
+<li>
+<p>通过两重for循环生成一个5*9的网格。</p>
+</li>
+<li>
+<p>通过glBegin(GL_TRIANGLES)函数将所有的四个点之间连接成两个三角形。</p>
+</li>
+<li>
+<p>通过两个相邻三角形之间坐标可以得知一个规律：</p>
+<p>右下角三角形坐标：<br>
+glVertex3f(x, y, z);<br>
+glVertex3f(x+1, y+1, sinf(x+1));<br>
+glVertex3f(x+1, y, sinf(x+1));</p>
+<p>左上角三角形：<br>
+glVertex3f(x, y, z);<br>
+glVertex3f(x, y + 1, sinf(x ));<br>
+glVertex3f(x + 1, y+1, sinf(x  + 1));</p>
+  <!--more-->
+</li>
+<li>
+<p>在TRIANGLES函数中调用两次两重for循环来完成所有三角形的绘制。</p>
+</li>
+<li>
+<p>通过上面的坐标可知z的值通过sin函数来改变的，从而产生地形的起伏效果。</p>
+</li>
+<li>
+<p>左上角三角形的颜色的值为glColor3f(x/6, y/10, 0)；右下角的三角形的值为glColor3f(x / 5, y / 9, 0);产生地形颜色的渐变效果。</p>
+</li>
+<li>
+<p>最后在三角形绘制函数前加上绕三个轴旋转的函数，通过按键控制旋转角度的大小。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>主要代码：</strong></li>
+</ol>
+<pre><code class="language-c">void render(void)   
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer   清理深度缓冲区  颜色
+	glLoadIdentity();
+   glTranslatef(x_trens,y_trens,z_trens);	
+   glRotatef(angle, 0,1, 0);
+	glRotatef(angle_1, 1, 0, 0);
+	glRotatef(angle_2, 0, 0, 1);
+   glBegin(GL_TRIANGLES);	        // Draw  Triangles
+	float x = 0;
+	float y;
+	float z;
+	for (x = 0; x &lt; 5; x++)//X的赋值
+	{
+		for (y = 0; y &lt; 9; y++)//Y的赋值
+		{
+			z = sinf(x);
+			glColor3f(x/6, y/10, 0);
+			glVertex3f(x, y, z);
+			glVertex3f(x+1, y+1, sinf(x+1));
+			glVertex3f(x+1, y, sinf(x+1));
+		}
+	}
+	for (x = 0; x &lt; 5; x++)//X的赋值
+	{
+		for (y = 0; y &lt; 9; y++)//Y的赋值
+		{
+			z = sinf(x);
+			glColor3f(x / 5, y / 9, 0);
+			glVertex3f(x, y, z);
+			glVertex3f(x, y + 1, sinf(x ));
+			glVertex3f(x + 1, y+1, sinf(x  + 1));
+		}
+	}
+
+	glEnd();
+    // Swap The Buffers To Become Our Rendering Visible
+    glutSwapBuffers ( );
+}
+void keyboard(unsigned char key, int x, int y)    //键盘控制旋转和移动
+{
+	switch (key) {
+		case 27:        // When Escape Is Pressed...
+			exit(0);    // Exit The Program
+			//平移
+		case 'd':
+			x_trens += 0.5,glutPostRedisplay(); break;
+		case 'a':
+			x_trens -= 0.5, glutPostRedisplay(); break;
+			//缩放
+		case 'w':
+			y_trens += 0.5, glutPostRedisplay(); break;
+		case 's':
+			y_trens -= 0.5, glutPostRedisplay(); break;
+		case 'q':
+			z_trens *= 0.5, glutPostRedisplay(); break;
+		case 'e':
+			z_trens /= 0.5, glutPostRedisplay(); break;
+		case 'j':
+			angle += 2, glutPostRedisplay(); break;
+		case 'l':
+			angle -= 2, glutPostRedisplay(); break;
+		case 'i':
+			angle_1 += 2, glutPostRedisplay(); break;
+		case 'k':
+			angle_1 -= 2, glutPostRedisplay(); break;
+		case 'u':
+			angle_2 += 2, glutPostRedisplay(); break;
+		case 'o':
+			angle_2 -= 2, glutPostRedisplay(); break;
+			//
+		        // Ready For Next Case
+		default:        // Now Wrap It Up
+		break;
+	}
+}
 </code></pre>
 ]]></content>
     </entry>

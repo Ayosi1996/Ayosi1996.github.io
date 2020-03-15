@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Lua中协程的使用 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584288928973">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+一、简介
+Lua 协同程序(coroutine)与线程比较类似：拥有独立的堆栈，独立的局部变量，独立的指令指针，同时又与其它协同程序共享全局变量和其它大部分东西。
+协同是非常强大的功能，但是用起来也很复杂。
+二、使用
+1.创建：
+--第一..." />
+    <meta name="keywords" content="Lua,Program" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584288928973" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Lua中协程的使用</h2>
+            <div class="post-date">2017-09-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/lua-note-coroutine2.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!--more-->
+<h1 id="一-简介">一、简介</h1>
+<p>Lua 协同程序(coroutine)与线程比较类似：拥有独立的堆栈，独立的局部变量，独立的指令指针，同时又与其它协同程序共享全局变量和其它大部分东西。</p>
+<p>协同是非常强大的功能，但是用起来也很复杂。</p>
+<h1 id="二-使用">二、使用</h1>
+<h2 id="1创建">1.创建：</h2>
+<pre><code class="language-lua">--第一种创建方法
+function fun1(a,b)
+	-- body
+	print(a+b)
+end
+co=coroutine.create(fun1)
+--第二种创建方法 使用匿名函数
+co=coroutine.create(function fun1( a,b )
+	-- body
+	print(a+b)
+end)
+</code></pre>
+<h2 id="2调用">2.调用</h2>
+<pre><code>coroutine.resume(co,20,30)  --控制台输出50
+</code></pre>
+<h2 id="3暂停">3.暂停</h2>
+<p>在想要暂停执行的地方加上<code>coroutine.yield()</code>语句</p>
+<pre><code>function fun1(a,b)
+	-- body
+	print(a+b)
+	coroutine.yield()
+	print(a*b)
+end
+co=coroutine.create(fun1)
+coroutine.resume(co,20,30)
+print(&quot;我是暂停后执行的&quot;)
+
+--执行结果为 ：
+50
+我是暂停后执行的
+</code></pre>
+<h2 id="4继续">4.继续</h2>
+<p>要想重新开始暂停的程序调用<code>coroutine.resume(co)</code>即可，需要注意的是调用时不用传参数</p>
+<pre><code class="language-lua">function fun1(a,b)
+	-- body
+	print(a+b)
+	coroutine.yield()
+	print(a*b)
+end
+co=coroutine.create(fun1)
+coroutine.resume(co,20,30)
+print(&quot;我是暂停后执行的&quot;)
+coroutine.resume(co)
+
+执行结果为 ：
+50
+我是暂停后执行的
+600
+</code></pre>
+<h1 id="三-注意">三、注意</h1>
+<ul>
+<li>在携程执行完后不能复活，既不能调用resume函数</li>
+<li>在第二次或者更多次调用resume时，除了第一个参数外，后面的参数会传递给暂停处的yield()函数</li>
+<li><code>coroutine.yield()</code>函数能够向主线程传递参数</li>
+</ul>
+<h1 id="四-实例">四、实例</h1>
+<pre><code>function foo (a)
+    print(&quot;foo 函数输出&quot;, a)
+    return coroutine.yield(2 * a) -- 返回  2*a 的值
+end
+
+co = coroutine.create(function (a , b)
+    print(&quot;第一次协同程序执行输出&quot;, a, b) -- co-body 1 10
+    local r = foo(a + 1)
+     
+    print(&quot;第二次协同程序执行输出&quot;, r)
+    local r, s = coroutine.yield(a + b, a - b)  -- a，b的值为第一次调用协同程序时传入
+     
+    print(&quot;第三次协同程序执行输出&quot;, r, s)
+    return b, &quot;结束协同程序&quot;                   -- b的值为第二次调用协同程序时传入
+end)
+
+--注意：在第二次或者后面resume时的参数除了第一个，其他会传入yield函数
+
+print(&quot;main&quot;, coroutine.resume(co, 1, 10)) -- true, 4
+print(&quot;--分割线----&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;r&quot;)) -- true 11 -9
+print(&quot;---分割线---&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;x&quot;, &quot;y&quot;)) -- true 10 end
+print(&quot;---分割线---&quot;)
+print(&quot;main&quot;, coroutine.resume(co, &quot;x&quot;, &quot;y&quot;)) -- cannot resume dead coroutine
+print(&quot;---分割线---&quot;)
+</code></pre>
+<p>执行结果：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170829191451368" alt="这里写图片描述" loading="lazy"></figure>
+<h1 id="参考">参考</h1>
+<p>http://www.runoob.com/lua/lua-coroutine.html</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/WZSRp8x5g/" class="tag">
+                    Lua
+                  </a>
+                
+                  <a href="https://ayosi1996.github.io/tag/RRqzF97wT/" class="tag">
+                    Program
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/data-structure-2/">
+                  <h3 class="post-title">
+                    《大话数据结构》读书笔记——散列表
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
