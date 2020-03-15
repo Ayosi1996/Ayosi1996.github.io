@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity Shader基础入门 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584291037443">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Shader即着色器，是一款运行在GPU上的程序，用来对三维物体进行着色处理、光与影的计算、纹理颜色的呈现等，从而将游戏引擎中的一个个作为抽象的几何数据存在的模型、场景和特效，以和真实世界类似的光与影的形式呈现在玩家的眼中。
+
+开始
+Sha..." />
+    <meta name="keywords" content="Shader" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584291037443" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity Shader基础入门</h2>
+            <div class="post-date">2019-04-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/vDhd-ksEv.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>Shader即着色器，是一款运行在GPU上的程序，用来对三维物体进行着色处理、光与影的计算、纹理颜色的呈现等，从而将游戏引擎中的一个个作为抽象的几何数据存在的模型、场景和特效，以和真实世界类似的光与影的形式呈现在玩家的眼中。</p>
+<!--more-->
+<h1 id="font-color-0077bb-size-7开始font"><font color = #0077BB size =7>开始</font></h1>
+<h2 id="font-color-0077bbshader是什么font"><font color = #0077BB>Shader是什么</font></h2>
+<p>Shader即着色器，是一款运行在GPU上的程序，用来对三维物体进行着色处理、光与影的计算、纹理颜色的呈现等，从而将游戏引擎中的一个个作为抽象的几何数据存在的模型、场景和特效，以和真实世界类似的光与影的形式呈现在玩家的眼中。<br>
+着色器用于图形处理器（GPU）的可编程流水线。渲染流水线可查看<a href="http://blog.csdn.net/macyosef/article/details/79029146">这篇读书笔记</a>。可编程流水线还能处理所有像素、顶点、纹理的位置、色调、饱和度、明度、对比度并实时地绘制图像。着色器还能产生如模糊、高光、有体积光源、失焦、卡通渲染、色调分离、畸变、凹凸贴图、边缘检测、运动检测等效果。</p>
+<h2 id="font-color-0077bb一些概念font"><font color = #0077BB>一些概念</font></h2>
+<p><strong><font color = #990500>材质(Material)</font></strong><br>
+Shader负责将输入的Mesh（网格）以指定的方式和输入的贴图或者颜色等组合作用，然后输出。绘图单元可以依据这个输出来将图像绘制到屏幕上。输入的贴图或者颜色等，加上对应的Shader，以及对Shader的特定的参数设置，将这些内容（Shader及输入参数）打包存储在一起，得到的就是一个Material（材质）。</p>
+<p><strong><font color = #990500>纹理(Texture)</font></strong><br>
+又称纹理贴图，在计算机图形学中是把存储在内存里的位图包裹到3D渲染物体的表面。纹理贴图给物体提供了丰富的细节，用简单的方式模拟出了复杂的外观。一个图像（纹理）被贴(映射)到场景中的一个简单形体上，就像印花贴到一个平面上一样。这大大减少了在场景中制作形体和纹理的计算量。<br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3dweifkj32bl11iaev.jpg" alt="undefined" loading="lazy"><center><font size =2>1: 未加纹理贴图的球体, 2: 纹理贴图加凹凸贴图, 3: 仅凹凸贴图, 4: 透明图加纹理贴图 图片来源于wiki</font></center></p>
+<p><strong><font color = #990500>纹理坐标</font></strong><br>
+模型上面的贴图是通过纹理映射技术将其附加在模型上面，美术人员利用Max等工具建模时，会在建模软件中利用纹理展开技术把纹理映射坐标存储在每个顶点上，纹理映射坐标定义了该顶点在纹理中对应的2D坐标。这些坐标使用一个二维变量（u，v）来表示，纹理映射坐标也称为UV坐标。顶点UV坐标的范围通常都被归一化到[0,1]范围内。</p>
+<p><strong><font color = #990500>纹理采样</font></strong></p>
+<p><strong><font color = #990500>顶点和片元</font></strong><br>
+顶点即模型中原始的顶点，一个顶点可以包含位置、颜色、法线、切线等数据。图元是由几何顶点组合而成，例如点、线段、多边形。片元是图元经过裁剪、转换窗口坐标、光栅化等一系列步骤后得来，<strong>需要注意的是，一个片元并不是真正意义上的像素，而是包含了很多状态的集合，这些状态用于计算每个像素的最终颜色。这些状态包括了屏幕坐标、深度信息、以及从几何阶段输出的法线、纹理坐标等。</strong><br>
+显示在屏幕上的顶点经过的变换：<a href="http://blog.csdn.net/macyosef/article/details/79176471">一个顶点是怎么显示在屏幕上的</a></p>
+<p><strong><font color = #990500>渲染路径</font></strong><br>
+Rendering Path其实指的就是渲染场景中光照的方式。由于场景中的光源可能很多，甚至是动态的光源。所以怎么在速度和效果上达到一个最好的结果确实很困难。以当今的显卡发展为契机，人们才衍生出了这么多的Rendering Path来处理各种光照。<br>
+<a href="http://www.cnblogs.com/polobymulberry/p/5126892.html?utm_source=tuicool&amp;utm_medium=referral">详细了解Rendering Path</a></p>
+<h1 id="font-color-0077bb-size-7进阶font"><font color = #0077BB size =7>进阶</font></h1>
+<h2 id="font-color-0077bbunity中的shaderfont"><font color = #0077BB>Unity中的Shader</font></h2>
+<p>在Unity中，在<em>Project</em>视图中右击-&gt;<em>Create</em>-&gt;<em>Shader</em>能够创建一下集几种Shader</p>
+<p><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3ed3rvrj30fn094js7.jpg" alt="undefined" loading="lazy"><center><font size =2>unity版本：5.5.0f3</font></center><br>
+<strong>Standard Surface Shader</strong> 会产生一个包含了标准光照模型（使用了Unity中新加的基于物理的渲染方法）的表面着色器。<br>
+<strong>Unity Shader</strong> 会产生一个不包含光照（但包含雾效）的基本的顶点/片元着色器。<br>
+<strong>Image Effect Shader</strong> 则为我们实现各种屏幕后效果提供了一个基本模板。<br>
+<strong>Compute Shader</strong> 会产生一种特殊的Shader文件，这类Shader旨在利用GPU的并行性来进行一些与常规渲染流水线无关的计算。</p>
+<h2 id="font-color-0077bbsurface-shader表面着色器font"><font color = #0077BB>Surface Shader（表面着色器）</font></h2>
+<p>着色器基础结构：</p>
+<pre><code>Shader &quot;Custom/MyShader&quot; {
+	Properties {
+		//属性
+	}
+	
+	SubShader {
+		//显卡A使用的Shader
+	}
+	
+	SubShader {
+		//显卡B使用的Shader
+	}
+	....
+	//回滚
+	FallBack &quot;Diffuse&quot;
+}
+</code></pre>
+<p><em>Properties</em> 语义块中包含了一系列属性，这些属性将会出现在材质面板中。</p>
+<pre><code>Properties {
+		Name(&quot;显示在面板的名字&quot;,属性类型) = DefaultValue
+		Name(&quot;显示在面板的名字&quot;,属性类型) = DefaultValue
+		//...
+	}
+</code></pre>
+<p>属性类型（PropertyType）包括：Int,Float,Range(min,max),Color,Vector,2D,Cube,3D</p>
+<p>Unity Shader可以包含多个<em>SubShader</em>语义块，至少一个。提供这种语义的原因是因为不同的显卡有不同的能力，在计算着色时，平台先选择最优先可以使用的着色器，然后依次运行其中的Pass（Unity Shader中的顶点/片元着色器）。</p>
+<p>下面是Unity中创建的默认Surface Shader：</p>
+<pre><code>Shader &quot;Custom/MyShader&quot; {
+	Properties {
+		_Color (&quot;Color&quot;, Color) = (1,1,1,1)
+		_MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
+		_Glossiness (&quot;Smoothness&quot;, Range(0,1)) = 0.5
+		_Metallic (&quot;Metallic&quot;, Range(0,1)) = 0.0
+	}
+	SubShader {
+		Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+		LOD 200
+		
+		CGPROGRAM
+		// Physically based Standard lighting model, and enable shadows on all light types
+		#pragma surface surf Standard fullforwardshadows
+
+		// Use shader model 3.0 target, to get nicer looking lighting
+		#pragma target 3.0
+
+		sampler2D _MainTex;
+
+		struct Input {
+			float2 uv_MainTex;
+		};
+
+		half _Glossiness;
+		half _Metallic;
+		fixed4 _Color;
+
+		void surf (Input IN, inout SurfaceOutputStandard o) {
+			// Albedo comes from a texture tinted by color
+			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+			o.Albedo = c.rgb;
+			// Metallic and smoothness come from slider variables
+			o.Metallic = _Metallic;
+			o.Smoothness = _Glossiness;
+			o.Alpha = c.a;
+		}
+		ENDCG
+	}
+	FallBack &quot;Diffuse&quot;
+}
+</code></pre>
+<p><strong><font color = "#990500">MyShader详解：</font></strong></p>
+<p><font size=5>Properties</font><br>
+<em>Properties</em>即定义的属性。在材质面板中如下图所示：<br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3esm06xj30aa06z0t1.jpg" alt="undefined" loading="lazy"><br>
+<font size=5>SubShader</font><br>
+然后是<em>SubShader</em>，<em>SubShader</em>语义块中包含的定义通常如下：</p>
+<pre><code>SubShader{
+	//可选的标签
+	[Tags]
+
+    //可选的状态
+    [RenderSetup]
+    
+    //顶点/片元着色器
+    Pass{
+    }
+    //Other Passses
+   }
+</code></pre>
+<p><font size=5>Tags</font><br>
+SubShader的标签是一个键值对，并且都是字符串类型。这些键值对是SubShader和渲染引擎之间沟通的桥梁。用来告诉Unity怎样以及何时渲染这个对象物体。<br>
+标签的结构：</p>
+<pre><code>Tags{&quot;TagName1&quot; = &quot;Value1&quot; &quot;TagName2&quot; = &quot;Value2&quot; }
+</code></pre>
+<center>**SubShader的标签类型**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标签类型</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Queue</td>
+<td style="text-align:center">控制渲染顺序，指定该物体的渲染队列，可以使用自定义的渲染队列控制渲染顺序。</td>
+</tr>
+<tr>
+<td style="text-align:center">RenderType</td>
+<td style="text-align:center">对着色器进行分类，例如这是一个不透明或者透明的着色器</td>
+</tr>
+<tr>
+<td style="text-align:center">DisableBatching</td>
+<td style="text-align:center">指明是否对该<em>SubShader</em>使用批处理</td>
+</tr>
+<tr>
+<td style="text-align:center">ForceNoShadowCasting</td>
+<td style="text-align:center">控制使用该<em>SubShader</em>的物体是否会投射阴影。</td>
+</tr>
+<tr>
+<td style="text-align:center">IgnoreProjector</td>
+<td style="text-align:center">控制使用该<em>SubShader</em>的物体是否受Projector的影响。通常用于半透明物体</td>
+</tr>
+<tr>
+<td style="text-align:center">CanUseSpriteAtlas</td>
+<td style="text-align:center">当该<em>SubShader</em>用于精灵（Sprites）时，将该标签设置为False。</td>
+</tr>
+<tr>
+<td style="text-align:center">PreviewType</td>
+<td style="text-align:center">指明材质面板将如何预览该材质。默认为球形，可以设置为&quot;Plane&quot;,&quot;SkyBox&quot;。</td>
+</tr>
+</tbody>
+</table>
+<p><font size=5>状态</font></p>
+<p>ShaderLab提供了一系列渲染状态的设置指令。</p>
+<center>**常见的渲染状态设置选项**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态名称</th>
+<th style="text-align:center">设置指令</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Cull</td>
+<td style="text-align:center">Cull Back/Front/Off</td>
+<td style="text-align:center">设置剔除模式：剔除背面/正面/关闭剔除</td>
+</tr>
+<tr>
+<td style="text-align:center">ZTest</td>
+<td style="text-align:center">ZTest Less Greater/LEqual/GEqual/Equal/NotEqual/Always</td>
+<td style="text-align:center">设置深度测试时使用的函数</td>
+</tr>
+<tr>
+<td style="text-align:center">ZWrite</td>
+<td style="text-align:center">ZWrite On/Off</td>
+<td style="text-align:center">开启/关闭深度写入</td>
+</tr>
+<tr>
+<td style="text-align:center">Blend</td>
+<td style="text-align:center">Blend SrcFactor DstFactor</td>
+<td style="text-align:center">开启并设置混合模式</td>
+</tr>
+</tbody>
+</table>
+<p>当在<em>SubShader</em>块中设置了渲染状态时，将会应用到所有<em>Pass</em>。也可以在<em>Pass</em>块中单独设置渲染状态。</p>
+<p><font size=5>LOD</font><br>
+LOD即Level of Detail的缩写。是一种控制细节级别的技术。</p>
+<p>在脚本中，我们可以用 <code>Shader.globalMaximumLOD = 100</code> 来全局设置 LOD值，激活使用相对应的 SubShader。<br>
+也可以在<em>Edit</em>-&gt;<em>Project</em> <em>Setting</em>-&gt;<em>Quality</em> 中设置<em>Maximum LOD Level</em>设置最大LOD等级。</p>
+<p><strong>Shader的LOD值小于所设定的LOD值，才会被编译使用。</strong> <em>Maximum LOD Level</em>的等级可以设置7个级别，例如设置为1，则表示把最大LOD值设置为100，等级2，则最大LOD值为200，以此类推，若设置为0，则表示不进行LOD判断，任何LOD值的Shader都会被使用。</p>
+<p>根据这个特性，我们就可以在一个 Shader 里写一出组 SubShader ，分别设置不同的 LOD ，LOD 越大对应更好的效果并且要求更好的显卡性能。然后我们就可以用设置 LOD 的方法来控制游戏画面的渲染质量。</p>
+<p><font size=5>主体</font></p>
+<pre><code>//Shader的主体部分
+CGPROGRAM
+、、、
+ENDCG
+</code></pre>
+<p>使用<em>CGPROGRAM</em>表示使用Cg/HLSL编写Shader代码。<br>
+如果使用GLSL编写则需要嵌套在<em>GLSLPROGRAM</em>和<em>ENDGLSL</em>之间</p>
+<pre><code>// Physically based Standard lighting model, and enable shadows on all light types
+#pragma surface surf Standard fullforwardshadows
+</code></pre>
+<p>这是一据编译指令，它的格式如下：</p>
+<pre><code>#pragma surface surfaceFunction lightModel [optionalparams]
+</code></pre>
+<ul>
+<li>surface 表示声明的是一个表面着色器</li>
+<li>surfaceFunction 表示着色器代码的方法的名字</li>
+<li>lightModel  使用的光照模型</li>
+<li>optionalparams 其他可选的编译指令</li>
+</ul>
+<p>所以上面的代码表示：着色器代码的方法的名字是<code>surf( ){ }</code>使用的光照模型是基于物理的标准光照模型，fullforwardshadows表示在所有灯光类型启用阴影在Forward渲染路径中。</p>
+<p>更多的编译指令可以看<a href="https://docs.unity3d.com/Manual/SL-SurfaceShaders.html">这里</a></p>
+<pre><code>// Use shader model 3.0 target, to get nicer looking lighting
+#pragma target 3.0
+</code></pre>
+<p>这个编译指令表示定义Shader模型为Shader Model 3.0,</p>
+<pre><code>sampler2D _MainTex;
+half _Glossiness;
+half _Metallic;
+fixed4 _Color;
+</code></pre>
+<p>这是CG程序中的属性声明。可以发现这些变量与上面的属性名称是一样的。<br>
+原因是这个Shader其实是由两个相对独立的块组成的，外层的属性声明，回滚等等是Unity可以直接使用和编译的ShaderLab；而现在我们是在<em>CGPROGRAM...ENDCG</em>这样一个代码块中，这是一段CG程序。对于这段CG程序，要想访问在<em>Properties</em>中所定义的变量的话，必须使用和之前变量相同的名字进行声明。于是其实<code>sampler2D _MainTex;</code>做的事情就是再次声明并链接了<code>_MainTex</code>，使得接下来的CG程序能够使用这个变量。</p>
+<pre><code class="language-c">//结构体
+struct Input {
+			float2 uv_MainTex;
+		};
+</code></pre>
+<p>这里声明一个结构体，在后面作为着色器函数的输入。<br>
+在CG程序中，在一个贴图变量（例子中是_MainTex）之前加上uv两个字母，就代表提取它的uv值（其实就是两个代表贴图上点的二维坐标 ）。我们之后就可以在surf程序中直接通过访问uv_MainTex来取得这张贴图当前需要计算的点的坐标值了。</p>
+<pre><code class="language-c">void surf (Input IN, inout SurfaceOutputStandard o) {
+		// Albedo comes from a texture tinted by color
+		fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+		o.Albedo = c.rgb;
+		// Metallic and smoothness come from slider variables
+		o.Metallic = _Metallic;
+		o.Smoothness = _Glossiness;
+		o.Alpha = c.a;
+	}
+</code></pre>
+<p>这里即着色器的方法部分了。<br>
+<code>SurfaceOutputStandard</code>是预定义的输出结构，surf函数的目标就是根据输入把这个输出结构填上。<br>
+<code>SurfaceOutputStandard</code>结构体的定义如下:</p>
+<pre><code>struct SurfaceOutputStandard
+{
+    fixed3 Albedo;      // base (diffuse or specular) color
+    fixed3 Normal;      // tangent space normal, if written
+    half3 Emission;
+    half Metallic;      // 0=non-metal, 1=metal
+    half Smoothness;    // 0=rough, 1=smooth
+    half Occlusion;     // occlusion (default 1)
+    fixed Alpha;        // alpha for transparencies
+};
+</code></pre>
+<p><font size=5>回滚</font></p>
+<pre><code>FallBack &quot;Diffuse&quot;
+</code></pre>
+<p>这个指令用于告诉Unity，如果上面所有的SubShader在这块显卡上都不能运行，就用这个最低级的Shader。<br>
+也可以<code>FallBack Off</code>直接关闭回滚功能。</p>
+<h2 id="font-color-0077bbvertexfragment-shader顶点片元着色器font"><font color = #0077BB>Vertex/Fragment Shader（顶点/片元着色器）</font></h2>
+<p>在Unity中通过在项目视图右键 <em>Create</em>-&gt;<em>Shader</em>-&gt;<em>Unity Shader</em>可以创建一个默认的顶点/片元着色器</p>
+<pre><code>Shader &quot;Unlit/VertFragShader&quot;
+{
+	Properties
+	{
+		_MainTex (&quot;Texture&quot;, 2D) = &quot;white&quot; {}
+	}
+	SubShader
+	{
+		Tags { &quot;RenderType&quot;=&quot;Opaque&quot; }
+		LOD 100
+
+		Pass
+		{
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			// make fog work
+			#pragma multi_compile_fog
+			
+			#include &quot;UnityCG.cginc&quot;
+
+			struct appdata
+			{
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+				float2 uv : TEXCOORD0;
+				UNITY_FOG_COORDS(1)
+				float4 vertex : SV_POSITION;
+			};
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			
+			v2f vert (appdata v)
+			{
+				v2f o;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				UNITY_TRANSFER_FOG(o,o.vertex);
+				return o;
+			}
+			
+			fixed4 frag (v2f i) : SV_Target
+			{
+				// sample the texture
+				fixed4 col = tex2D(_MainTex, i.uv);
+				// apply fog
+				UNITY_APPLY_FOG(i.fogCoord, col);
+				return col;
+			}
+			ENDCG
+		}
+	}
+}
+</code></pre>
+<pre><code>#pragma vertex vert
+#pragma fragment frag
+</code></pre>
+<p>这段编译指令分别指定顶点着色器和片元着色器对应的方法名<code>vert</code>和<code>frag</code></p>
+<pre><code>#include &quot;UnityCG.cginc&quot;
+</code></pre>
+<p>为了方便开发者的编码过程，Unity'提供了很多内置文件，这些文件包含了很多提前定义的函数、变量、宏等。我们可以使用#include指令把这些文件包含进来，就可以使用Unity为我们提供的一些非常有用的变量和帮助函数。</p>
+<pre><code class="language-c">struct appdata
+			{
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+			};
+</code></pre>
+<p>这里使用一个结构体来定义顶点着色器的输入，问了创建一个自定义的结构体，我们必须使用如下格式来定义它：</p>
+<pre><code>struct StructName{
+	Type Name : Semantic;
+	Type Name : Semantic;
+	......
+};
+</code></pre>
+<p>Unity支持的语义(Semantic)有<br>
+<em>POSITION,TANGENT,NORMAL,TEXCOORD0,TEXCOORD1,TEXCOORD2,TEXCOORD3,COLOR</em>等。<br>
+上面代码的<em>POSITION</em>语义表示用模型空间的顶点坐标填充vertex变量，<em>TEXCOORD0</em>表示用模型的第一套纹理坐标填充texcoord变量。</p>
+<pre><code>struct v2f
+		{
+			float2 uv : TEXCOORD0;
+			UNITY_FOG_COORDS(1)
+			float4 vertex : SV_POSITION;
+		};
+</code></pre>
+<p>这个结构体用于在顶点着色器和片元着色器之前传递信息，所以一般叫做v2f(vert to frag)。<br>
+<em>SV_POSITION</em>表示顶点着色器的输出是裁剪空间的顶点坐标。</p>
+<p>需要注意的是表面着色器（Surface Shader）本质上也是顶点/片元着色器。在提供给Unity一个表面着色器时，它会在背后转换为比较复杂的顶点/片元着色器。</p>
+<hr>
+<h1 id="font-color-0077bb-size-7参考font"><font color = #0077BB size =7>参考</font></h1>
+<p>[1] 《Unity Shader入门精要》.冯乐乐<br>
+[2] 《ShaderLab开发实战详解》.郭浩瑜<br>
+[3]  https://onevcat.com/2013/07/shader-tutorial-1/<br>
+[4]  http://gad.qq.com/article/detail/27474<br>
+[5]  http://blog.csdn.net/wpapa/article/details/72721104</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/Q-X1a-DXy/" class="tag">
+                    Shader
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/lua-note/">
+                  <h3 class="post-title">
+                    Lua常用知识点总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
