@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-15T15:13:55.475Z</updated>
+    <updated>2020-03-15T15:41:09.267Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -277,6 +277,166 @@ screen_y =  \frac{clip_y \cdot pixelHeight}{2 \cdot clip_w } + \frac{pixelHeight
 <figure data-type="image" tabindex="9"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuouvo2uij308c0hhjt7.jpg" alt="undefined" loading="lazy"></figure>
 <center><font size = 2>Unity中各个坐标空间的旋向性 </font></center>
 <h1 id="font-size7-color-0077bb完font"><font size=7 color = #0077BB>完</font></h1>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《大话数据结构》读书笔记——散列表]]></title>
+        <id>https://ayosi1996.github.io/post/data-structure-2/</id>
+        <link href="https://ayosi1996.github.io/post/data-structure-2/">
+        </link>
+        <updated>2017-08-22T15:30:37.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="散列表概念">散列表概念</h1>
+<br>
+散列表技术是在记录的存储位置和它的关键字之间建立一个确定的对应关系f，使得每个关键字key对应一个存储位置f（key）。
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="散列表概念">散列表概念</h1>
+<br>
+散列表技术是在记录的存储位置和它的关键字之间建立一个确定的对应关系f，使得每个关键字key对应一个存储位置f（key）。
+<!--more-->
+                        存储位置 = f（关键字）
+<p>f 称为散列函数，又称为哈希函数。采用散列技术将记录存储在一块连续的空间中，这块连续存储空间称为散列表或哈希表(Hash table)。</p>
+<h1 id="散列表查找步骤">散列表查找步骤</h1>
+<ol>
+<li>在存储时，通过散列函数计算记录的散列地址，并按此散列地址存储该记录。</li>
+<li>查找记录时，通过同样的散列函数计算记录的散列地址，按此散列地址访问记录。</li>
+</ol>
+<h1 id="散列技术适用范围">散列技术适用范围</h1>
+<blockquote>
+<p>散列技术既是一种存储方法，也是一种查找方法。三列主要是面向查找的存储结构。</p>
+</blockquote>
+<p>散列技术最适合的求解问题是查找与给定值相等的记录。<br>
+不使用范围：</p>
+<ol>
+<li>同样的关键字，对应很多记录的情况。</li>
+<li>范围查找。比如查找一个班级18-22岁的同学。</li>
+<li>最大值和最小值。</li>
+</ol>
+<h1 id="散列函数构造">散列函数构造</h1>
+<ul>
+<li>直接定址法<br>
+取关键字的某个线性函数值作为散列地址，即：</li>
+</ul>
+<div align=center>f(key) = a * key +b (a、b为常数)</div>
+此散列函数的优点是简单均匀，也不会产生冲突，问题是这需要事先知道关键字的分布情况，适合查找表较小且连续的情况。现实应用并不常用这种方法。
+<br>
+- 数字分析法
+抽取方法是使用关键字的一部分来计算散列存储位置的方法。比如如果需要存储和查找手机号，可以选择手机号的后四位作为散列地址。
+数字分析法通常适合处理关键字位数比较大的情况。
+<ul>
+<li>
+<p>平方取中法<br>
+假设关键字是1234，它的平方是1522756，抽取中间3位也就是227，作为散列地址。<br>
+关键字4321，它的平方是18671041，抽取中间3位可以是671或者710，用作散列地址。<br>
+适合于不知道关键字的分布，而位数又不是很大的情况。</p>
+</li>
+<li>
+<p>除留余数法<br>
+此方法是最常用的构造散列函数方法。对于散列表长为m的散列函数公式为：<br>
+<font size =5><strong>f(key) = key mod p (p&lt;=m)</strong></font><br>
+通常p为小于或等于表长（最好接近m）的最小质数或不包含小于20质因子的合数。</p>
+</li>
+<li>
+<p>随机数法<br>
+选择一个随机数，取关键字的随机函数值作为它的散列地址。即：</p>
+</li>
+</ul>
+<div align=center><font size = 5>f(key) = random(key)</font></div>
+当关键字的长度 不等时，采用这个方法比较合适。
+<p><strong><font color = red>构造散列函数需要考虑的因素：</font></strong></p>
+<ol>
+<li>计算散列地址所需的时间。</li>
+<li>关键字的长度。</li>
+<li>散列表的大小。</li>
+<li>关键字的分布情况。</li>
+<li>记录查找的频率。</li>
+</ol>
+<h1 id="处理散列冲突">处理散列冲突</h1>
+<ul>
+<li>开放定址法</li>
+</ul>
+<p><strong>线性探测法：</strong><br>
+开放定址法就是一旦发生了冲突，就去寻找下一个空的散列地址，只要散列表足够大，空的散列地址总能找到，并将记录存入。公式如下：</p>
+<blockquote>
+<p><font size = 3><strong>f<sub>i</sub>(key) = (f(key) +d<sub>i</sub>) MOD m (d<sub>i</sub>=1,2,3,......,m-1)</strong></font><br>
+<br><br>
+每当发生存储时，i+1。重新计算散列地址。</p>
+</blockquote>
+<p><strong>二次探测法：</strong></p>
+<blockquote>
+<p><font size = 5><strong>f<sub>i</sub>(key) = (f(key) +d<sub>i</sub>) MOD m (d<sub>i</sub>=1<sup>2</sup>,-1<sup>2</sup>,2<sup>2</sup>,-2<sup>2</sup>,...,q<sup>2</sup>,-q<sup>2</sup>,q&lt;=m/2)</strong></font></p>
+</blockquote>
+<p><strong>随机探测法：</strong><br>
+随机数采用伪随机数，也就是如果我们设置的随机种子相同，则不断调用随机函数可以生成不会重复的数列，在查找的时候，用相同的随机种子，它每次得到的数列是相同的。</p>
+<blockquote>
+<p><font size = 5><strong>f<sub>i</sub>(key) = (f(key) +d<sub>i</sub>) MOD m (d<sub>i</sub>是一个随机数列)</strong></font></p>
+</blockquote>
+<ul>
+<li>再散列函数法<br>
+对于散列表，准备多个散列函数：</li>
+</ul>
+<blockquote>
+<p><font size = 5><strong>f<sub>i</sub>(key) =RH<sub>i</sub>(key) (i=1,2,...,k)</strong></font><br>
+RH<sub>i</sub>就是不同的散列函数，比如前面的除留余数、平方取中等。每当发生冲突时，就换领养一个散列函数计算。</p>
+</blockquote>
+<ul>
+<li>链地址法<br>
+将所有关键字为同义词的记录存储在一个单链表中，称为同义词字表。<br>
+对于关键字集合{12,67,56,16,25,37,22,29,15,47,48,34}，以12作为除数，进行除留余数法。可得到如图所示：</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="http://img.blog.csdn.net/20180109162053207" alt="这里写图片描述" loading="lazy"></figure>
+<h1 id="散列表查找实现">散列表查找实现</h1>
+<pre><code class="language-c">#define OK 1
+#define SUCCESS 1
+#define UNSUCCESS 0
+#define HASHSIZE 12  /*定义散列表长为数组的长度*/
+#define NULLKEY -32678
+
+typedef int Status;
+typedef struct 
+{
+	int *elem;		/*数据元素存储基址，动态分派数组*/
+	int count;		/*当前数据元素个数*/
+}HashTable;
+int m=0;			/*散列表全长，全局变量*/
+
+/*初始化散列表*/
+Status InitHashTable(HashTable *H)
+{
+	int i;
+	m=HASHSIZE;
+	H-&gt;count = m;
+	H-&gt;elem = (int *)malloc(m*sizeof(int));
+	for (i =0;i &lt;m; i++)
+		H-&gt;elem[i] =NULLKEY;
+	return OK;
+}
+/*散列函数*/
+int Hash(int key)
+{
+	return key % m; 	/*除留余数法*/
+}
+/*插入关键字进散列表*/
+void InsertHash(HashTable *H,int key)
+{
+	int addr = Hash(key);				/*求散列地址*/
+	while(H-&gt;elem[addr] != NULLKEY)		/*如果不为空，则存在冲突*/
+		addr = (addr+1)%m;				/*开放定址法的线性探测*/
+	H-&gt;elem[addr] = key;				/*直到有空位后插入关键字*/
+}
+/*散列表查找关键字*/
+Status SearchHash(HashTable H,int key,int *char)
+{
+	*addr = Hash(key);					/*求散列地址*/
+	while(H.elem[*addr]!=key)			/*如果不为空，则存在冲突*/
+	{
+		*addr = (*addr+1) % m;			/*开放定址法的线性探测*/
+		if(H.elem[*addr] == NULLKEY ||*addr ==Hash(key))
+			return UNSUCCESS;			/*说明关键字不存在*/
+	}
+
+	return SUCCESS;
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
