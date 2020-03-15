@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-15T17:01:54.366Z</updated>
+    <updated>2020-03-15T17:08:30.270Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -918,6 +918,103 @@ struct Input {
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[通过Shader实现2D游戏中无限滚动的背景]]></title>
+        <id>https://ayosi1996.github.io/post/wAmbz0BhI2/</id>
+        <link href="https://ayosi1996.github.io/post/wAmbz0BhI2/">
+        </link>
+        <updated>2018-02-14T04:06:12.000Z</updated>
+        <summary type="html"><![CDATA[<p>参考：<a href="https://github.com/candycat1992/Unity_Shaders_Book">冯乐乐-《Unity Shader入门精要》</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>参考：<a href="https://github.com/candycat1992/Unity_Shaders_Book">冯乐乐-《Unity Shader入门精要》</a></p>
+<!--more-->
+<p>Unity Shader提供了一系列关于时间的内置变量来允许我们方便地在Shader中访问运行时间，实现各种动画效果。下表给出了内置的时间变量。</p>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3x7wx9pj30i204paaw.jpg" alt="undefined" loading="lazy"></figure>
+<ol>
+<li>创建Quad。</li>
+<li>创建quadMat 材质。</li>
+<li>新建一个Unlit Shader命名为ScrollBackground。</li>
+<li>将材质附给Quad，将Shader附给quadMat 材质。</li>
+</ol>
+<p>在材质面板选择图片：</p>
+<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3xkxrsgj30a9080aae.jpg" alt="undefined" loading="lazy"></figure>
+<p>如果想实现利用多个层模拟视差效果，将以下代码中的注释去掉即可。</p>
+<p>Shader 代码：</p>
+<pre><code>Shader &quot;Unlit/ScrollX&quot;
+{
+	Properties
+	{
+		_MainTex(&quot;Base Layer(RGB)&quot;, 2D) = &quot;white&quot; {}    //第一层纹理  较远纹理
+		//_DetailTex(&quot;2nd Layer(RGB)&quot;,2D)=&quot;white&quot;{}     //第二层纹理  较近纹理
+		_ScrollX(&quot;Base layer Scroll Speed&quot;,Float) = 1.0   //第一层滚动速度
+		//_Scroll2X (&quot;2nd layer Scroll Speed&quot;, Float) = 1.0   //第二层滚动速度
+		_Mutiplier(&quot;Layer Mutiplier&quot;, Float) = 1         //整体亮度
+	}
+		SubShader
+	{
+		Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;Queue&quot; = &quot;Geometry&quot;}
+		LOD 100
+
+		Pass
+		{
+			Tags{ &quot;LightMode&quot; = &quot;ForwardBase&quot; }
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+
+
+			#include &quot;UnityCG.cginc&quot;
+
+			struct a2v
+			{
+				float4 vertex : POSITION;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+				float4 pos : SV_POSITION;
+				float2 uv : TEXCOORD0;
+			};
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			//sampler2D _DetailTex;
+			//float4 _DetailTex_ST;
+			float _ScrollX;
+			//fixed _Scrll2X;
+			float _Mutiplier;
+
+			v2f vert(a2v v)
+			{
+				v2f o;
+				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+
+				o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex) + frac(float2 (_ScrollX, 0.0) * _Time.y);
+
+				//o.uv.zw = TRANSFORM_TEX(v.texcoord, _DetailTex) + frac(float2 _Scroll2X, 0.0) * _Time.y);
+				return o;
+			}
+
+			fixed4 frag(v2f i) : SV_Target
+			{
+
+			fixed4 c = tex2D(_MainTex, i.uv.xy);
+			//fixed4 secondLayer = tex2D(_DetailTex, i.uv.zw);
+
+			//fixed c = lerp(firstLayer, secondLayer, secondLayer.a);
+			c.rgb *= _Mutiplier;
+
+			return c;
+		}
+		ENDCG
+	}
+	}
+		FallBack &quot;VertexLit&quot;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Lua常用知识点总结]]></title>
         <id>https://ayosi1996.github.io/post/lua-note/</id>
         <link href="https://ayosi1996.github.io/post/lua-note/">
@@ -1702,55 +1799,6 @@ end
 <p>然后重新Build Android Resource，重新启动安卓客户端：</p>
 <figure data-type="image" tabindex="8"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2w7q0m0j30740cndft.jpg" alt="undefined" loading="lazy"></figure>
 <p>完！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[使用UGUI与MySql实现的简单角色管理系统]]></title>
-        <id>https://ayosi1996.github.io/post/unity-mysql-ugui-2/</id>
-        <link href="https://ayosi1996.github.io/post/unity-mysql-ugui-2/">
-        </link>
-        <updated>2017-06-05T01:00:21.000Z</updated>
-        <summary type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
-<br><br>
-实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
-实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>记录一下大三的数据库项目,虽然挺垃圾的🙃<br>
-<br><br>
-实现工具：unity5.5  、 MySQL  、Visual Studio 2015 、 Wampserver 3.0.6<br>
-实现结果：游戏界面客户端，游戏数据管理查询客户端。</p>
-<!--more-->
-<p><strong>游戏界面客户端：</strong></p>
-<p>功能：登录注册、角色选择与创建、已有角色选择、商城购买装备、添加删除好友、背包装备与金币显示。</p>
-<p>界面展示：<br>
-登录注册界面：<br>
-<img src="https://img-blog.csdn.net/20170605173858561" alt="这里写图片描述" loading="lazy"><br>
-角色创建与选择界面：<br>
-功能：选择角色、或者点击左侧已经创建的角色<br>
-<img src="https://img-blog.csdn.net/20170605174116739" alt="这里写图片描述" loading="lazy"></p>
-<p>背包页面：<br>
-功能：显示所选角色种类以及背包<br>
-<img src="https://img-blog.csdn.net/20170605173932843" alt="这里写图片描述" loading="lazy"></p>
-<p>商城界面：<br>
-功能：点击装备显示价格、右键点击购买并添加至背包。<br>
-界面：<br>
-<img src="https://img-blog.csdn.net/20170605174027718" alt="这里写图片描述" loading="lazy"></p>
-<p>好友界面：<br>
-功能：搜索已经注册的好友并添加，在左侧滚动条中显示已添加好友，删除已有好友。<br>
-界面：<br>
-<img src="https://img-blog.csdn.net/20170605174058957" alt="这里写图片描述" loading="lazy"></p>
-<p><strong>角色数据管理客户端：</strong></p>
-<p>功能：搜索已经创建的角色所有信息，修改装备价格，删除玩家已创建角色，修改玩家角色拥有金币数量</p>
-<p>界面：<br>
-<img src="https://img-blog.csdn.net/20170605174133583" alt="这里写图片描述" loading="lazy"></p>
-<p>查询角色信息：<br>
-<img src="https://img-blog.csdn.net/20170605174151156" alt="这里写图片描述" loading="lazy"></p>
-<p>修改角色信息：<br>
-<img src="https://img-blog.csdn.net/20170605174206859" alt="这里写图片描述" loading="lazy"></p>
-<p>修改后：<br>
-<img src="https://img-blog.csdn.net/20170605174222781" alt="这里写图片描述" loading="lazy"></p>
-<p>图标资源来自<a href="http://www.devsiki.com/">siki学院</a><br>
-文档下载地址：http://download.csdn.net/download/macyosef/9970997</p>
 ]]></content>
     </entry>
 </feed>
