@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Blender 2.79 BGE记录所有物体的动画 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584293403366">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Blender 2.x的游戏引擎有个很好的功能就是记录动画，可惜的是只有刚体、软体、静态属性的物体能被记录，而且有子物体也不会被记录。
+
+在搜索了很多资料后终于找到了一个简单满足我要求的一个小脚本。（下载链接在文末）
+文件包含两个脚本：ob..." />
+    <meta name="keywords" content="Blender" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584293403366" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Blender 2.79 BGE记录所有物体的动画</h2>
+            <div class="post-date">2019-08-17</div>
+            
+            <div class="post-content" v-pre>
+              <p>Blender 2.x的游戏引擎有个很好的功能就是记录动画，可惜的是只有刚体、软体、静态属性的物体能被记录，而且有子物体也不会被记录。</p>
+<!--more-->
+<p>在搜索了很多资料后终于找到了一个简单满足我要求的一个小脚本。（下载链接在文末）</p>
+<p>文件包含两个脚本：object2text.py 、text_to_keyframe.py</p>
+<ol>
+<li>object2text.py 主要功能是记录动画数据到csv文件<br>
+主要变量：</li>
+</ol>
+<ul>
+<li>target_object：需要记录动画的物体名字</li>
+<li>rate:动画数据记录的速度</li>
+<li>默认记录的csv文件位置是在Blender安装文件夹，想要改变保存位置需要修改 write_data()函数中的filename参数</li>
+</ul>
+<ol start="2">
+<li>text_to_keyframe.py 主要功能是读取csv文件<br>
+主要变量：</li>
+</ol>
+<ul>
+<li>target_object:目标物体的名称</li>
+<li>framerate:读取动画的速率</li>
+<li>filename:csv文件的位置</li>
+</ul>
+<h1 id="使用方法">使用方法</h1>
+<h2 id="保存动画数据">保存动画数据</h2>
+<ol>
+<li>添加Always（总是）传感器，并且命名为“recorder”</li>
+<li>添加一个Python传感器，然后脚本选择 object2text.py</li>
+<li>添加 游戏引擎 促动器，并且命名为“quit_game&quot;</li>
+<li>在文本编辑器中打开 object2text.py ，修改'target_object'和'rate'变量</li>
+<li>运行游戏记录动画数据，退出游戏一定要用Q键退出，否则数据不会被写入</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://ayosi1996.github.io/post-images/1584292910143.png" alt="" loading="lazy"></figure>
+<h2 id="读取动画数据">读取动画数据</h2>
+<p>需要注意的是当前该脚本只记录了位置和旋转数据</p>
+<ol>
+<li>打开 'text_to_keyframe.py' 脚本并且修改其中的变量，要与 object2text.py 中的变量设置相对应</li>
+<li>运行脚本，然后播放动画</li>
+</ol>
+<h2 id="错误解决">错误解决</h2>
+<p>在测试过程中发现，记录的csv文件中会有空行导致读取失败，解决方法是将 object2text.py 文件中的</p>
+<pre><code>with open(filename, 'wt') as fout:
+</code></pre>
+<p>修改为：</p>
+<pre><code>with open(filename, 'wt', newline='') as fout:
+</code></pre>
+<p>下载地址：<a href="http://leocorp.glivion.tech/workshop/1/download">记录动画脚本文件</a></p>
+<p>参考地址：<a href="http://leocorp.glivion.tech/workshop">FROM BLENDER GAME TO ANIMATION</a></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/qoVlYcAAe/" class="tag">
+                    Blender
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-shader-1/">
+                  <h3 class="post-title">
+                    《Unity Shader入门精要》读书笔记——一个顶点是怎么显示在屏幕上的
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>RPG 中控制相机距离以及旋转相机视角 | Sqrt9</title>
+<title>Blender 2D图片转为3D模型并绑定骨骼 | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,15 +18,27 @@
 
 
 
-    <meta name="description" content="实现简单地控制相机距离和角度
+    <meta name="description" content="
+最终效果演示：
 
-附加于相机上的代码：
-	private Transform player;  //跟随目标
+原始图片：
 
-    Vector3 tempPosition=Vector3.zero;
-    
-    Vector3 o..." />
-    <meta name="keywords" content="Unity" />
+
+生成网格
+
+
+使用Images as Planes导入Tracer-Tpose.png
+
+
+将生成的Planes细分多次，然后删除多余的顶点（大概形状就行）
+
+
+
+绑定骨骼
+
+
+Shift+A 新建Bas..." />
+    <meta name="keywords" content="Blender" />
   </head>
   <body>
     <div id="app" class="main">
@@ -101,83 +113,61 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">RPG 中控制相机距离以及旋转相机视角</h2>
-            <div class="post-date">2017-03-25</div>
-            
-              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/oTRIgNFY6.jpg')">
-              </div>
+            <h2 class="post-title">Blender 2D图片转为3D模型并绑定骨骼</h2>
+            <div class="post-date">2019-05-30</div>
             
             <div class="post-content" v-pre>
-              <p>实现简单地控制相机距离和角度</p>
-<!-- more -->
-<p>附加于相机上的代码：</p>
-<pre><code class="language-c">	private Transform player;  //跟随目标
-
-    Vector3 tempPosition=Vector3.zero;
-    
-    Vector3 offsetPosition;    //相机距离目标之间的差向量
-    
-    float distance = 0.0f;
-    
-    public float speed = 1;
-    
-    public float rotateSpeed = 4;
-    
-	// Use this for initialization
-	void Start () {
-        player = GameObject.FindGameObjectWithTag(tags.player).transform;
-        transform.LookAt(player.position);
-		//计算差向量
-        offsetPosition = transform.position - player.position;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//控制相机跟随目标
-        transform.position = offsetPosition + player.position;
-        Rotate();
-        Distance();
-    }
-	//控制相机的拉近及拉远
-    void Distance()
-    {
-        distance = offsetPosition.magnitude;
-		//滚轮控制相机距离目标的距离
-        distance = distance + Input.GetAxis(&quot;Mouse ScrollWheel&quot;) * speed;
-		//控制最小与最大距离
-        distance = Mathf.Clamp(distance, 5, 20);
-        offsetPosition = offsetPosition.normalized * distance;
-    }
-	//控制相机围绕目标旋转
-    void Rotate()
-    {
-        if(Input.GetMouseButton(0))
-        {
-            Vector3 tempPos = transform.position;
-            Quaternion tempRot = transform.rotation;
-
-            transform.RotateAround(player.position, player.up, rotateSpeed * Input.GetAxis(&quot;Mouse X&quot;));
-//**注意这里围绕旋转的轴是相机本身的x轴，类似天体运动中的自转**
-            transform.RotateAround(player.position, transform.right, rotateSpeed * Input.GetAxis(&quot;Mouse Y&quot;));
-            float x = transform.eulerAngles.x;
-//限制旋转角度在10 - 80 之间
-            if(x&lt;10||x&gt;80)
-            {
-                transform.position = tempPos;
-                transform.rotation = tempRot;
-            }
-        }
-//注意一定要在旋转后更新差向量
-        offsetPosition = transform.position - player.position;
-    }
-</code></pre>
+              <!--more-->
+<h2 id="最终效果演示">最终效果演示：</h2>
+<figure data-type="image" tabindex="1"><img src="https://ayosi1996.github.io/post-images/1584293048573.gif" alt="" loading="lazy"></figure>
+<h2 id="原始图片">原始图片：</h2>
+<figure data-type="image" tabindex="2"><img src="https://ayosi1996.github.io/post-images/1584293062377.png" alt="" loading="lazy"></figure>
+<hr>
+<h2 id="生成网格"><strong>生成网格</strong></h2>
+<ul>
+<li>
+<p>使用Images as Planes导入Tracer-Tpose.png</p>
+</li>
+<li>
+<p>将生成的Planes细分多次，然后删除多余的顶点（大概形状就行）<br>
+<img src="https://ayosi1996.github.io/post-images/1584293071593.png" alt="" loading="lazy"></p>
+</li>
+</ul>
+<h2 id="绑定骨骼"><strong>绑定骨骼</strong></h2>
+<ul>
+<li>
+<p>Shift+A 新建Basic Human Armature</p>
+</li>
+<li>
+<p>将骨架与模型位置匹配<br>
+<img src="https://ayosi1996.github.io/post-images/1584293078089.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>在Object Mode依次选中2D模型和骨架，然后按Ctrl+P，选自动权重</p>
+</li>
+<li>
+<p>绑定完成</p>
+</li>
+</ul>
+<h2 id="动作绑定"><strong>动作绑定</strong></h2>
+<ul>
+<li>Blender导出FBX，不导出灯光和相机</li>
+<li>在Mixamo中绑定动作</li>
+<li>下载绑定动作后的FBX</li>
+</ul>
+<h2 id="材质贴图"><strong>材质贴图</strong></h2>
+<ul>
+<li>导入FBX到Blender</li>
+<li>编辑Shading node(EEVEE渲染需要将Material Blend Mode改为Alpha Blend/Hashed)<br>
+<img src="https://ayosi1996.github.io/post-images/1584293085104.png" alt="" loading="lazy"><center><img src="Blender2DTo3D/shading-node.png" alt="" loading="lazy"></center></li>
+</ul>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
-                    Unity
+                  <a href="https://ayosi1996.github.io/tag/qoVlYcAAe/" class="tag">
+                    Blender
                   </a>
                 
               </div>
@@ -185,9 +175,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ayosi1996.github.io/post/opengl-terrain/">
+                <a href="https://ayosi1996.github.io/post/vDhd-ksEv/">
                   <h3 class="post-title">
-                    【OpenGL】生成简易网格地形
+                    Unity Shader基础入门
                   </h3>
                 </a>
               </div>

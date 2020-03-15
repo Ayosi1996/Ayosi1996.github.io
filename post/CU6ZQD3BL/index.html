@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>OpenGL | Sqrt9</title>
+<title>Blender IK FK Snap | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,9 @@
 
 
 
-    <meta name="description" content="Hi there!">
+    <meta name="description" content="IK/FK Snap是一个很实用的功能，rigify插件自带此功能，但是对于已经设置好的自定义rig就没办法使用了，所以在网上找了一个相当简易的IK/FK Snap脚本：
+https://gist.github.com/dskjal/76a..." />
+    <meta name="keywords" content="Blender" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,33 +94,46 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: OpenGL</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ayosi1996.github.io/post/opengl-terrain/">
-                  <h2 class="post-title">【OpenGL】生成简易网格地形</h2>
-                </a>
-                <div class="post-date">
-                  2017-03-23
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://ayosi1996.github.io/post/opengl-terrain/">
-                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/opengl-terrain.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">Blender IK FK Snap</h2>
+            <div class="post-date">2019-06-15</div>
+            
+            <div class="post-content" v-pre>
+              <p>IK/FK Snap是一个很实用的功能，rigify插件自带此功能，但是对于已经设置好的自定义rig就没办法使用了，所以在网上找了一个相当简易的IK/FK Snap脚本：<br>
+https://gist.github.com/dskjal/76a778b4ad00e5fd8e20b6a1e104676c</p>
+<!-- more -->
+<p>由于脚本中的骨骼名称已经全部定义好了，所以使用时还需要按照脚本修改骨骼名称。为了方便使用，我对脚本做了些修改。</p>
+<p>修改后的结果：<br>
+<img src="https://ayosi1996.github.io/post-images/1584293385503.png" alt="" loading="lazy"></p>
+<p>主要就是支持自己选择骨骼了。</p>
+<p>使用方法：<br>
+当选中一个骨架时，按照名称选择对应的骨骼，然后再进行IK-&gt;FK 或者 FK-&gt;IK</p>
+<p>一般胳膊骨骼控制需要用到3组骨骼：形变骨骼、IK控制、FK控制，所以该功能一般配合IK/FK Switch来使用。</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/qoVlYcAAe/" class="tag">
+                    Blender
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/SUwH35hRk/">
+                  <h3 class="post-title">
+                    Blender 2D图片转为3D模型并绑定骨骼
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
 
         </div>
       </div>
