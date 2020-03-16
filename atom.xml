@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-16T04:57:18.100Z</updated>
+    <updated>2020-03-16T05:26:34.401Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -24,7 +24,8 @@
 <br>
 渲染流水线的最终目的在于生成或者说是渲染一张二维图像，即我们在电脑屏幕上看到的所有效果。
 <!--more-->
-<p>渲染流程大体可以分为三个概念阶段：</p>
+<br>
+渲染流程大体可以分为三个概念阶段：
 <figure data-type="image" tabindex="1"><img src="https://ayosi1996.github.io/post-images/1584282752139.png" alt="" loading="lazy"></figure>
 <h1 id="cpu流水线">CPU流水线</h1>
 <ul>
@@ -65,7 +66,7 @@ Draw Call只是一个命令，从CPU发送向GPU。这个命令仅仅会指向�
 <br>
 <font color="#990500"><b>屏幕映射</b></font>的任务是把每个图元的*x*和*y*坐标转换到屏幕坐标系下。
 将*x、y *坐标从（-1,1）范围转换到屏幕坐标系中：
-![undefined](http://ww1.sinaimg.cn/large/005SUDKAly1gcuzs2fd2wj30go05tjrq.jpg)
+<figure data-type="image" tabindex="7"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzs2fd2wj30go05tjrq.jpg" alt="undefined" loading="lazy"></figure>
 <p>注意：屏幕坐标系在OpenGL和DiretX之间存在差异：<br>
 <img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzsgrmajj30m808tt96.jpg" alt="undefined" loading="lazy"></p>
 <ul>
@@ -80,10 +81,11 @@ Draw Call只是一个命令，从CPU发送向GPU。这个命令仅仅会指向�
 <p><font color="#990500"><b>逐片元操作</b></font>这一阶段有几个主要任务：</p>
 <ol>
 <li>决定每个片元的可见性。涉及许多测试工作：深度测试、模板测试等。</li>
-<li>如果片元通过测试，需要把源颜色(通过测试的片元颜色)与目标颜色(颜色缓冲区中的颜色)进行混合。</li>
+<li>如果片元通过测试，需要把源颜色(通过测试的片元颜色)与目标颜色(颜色缓冲区中的颜色)进行混合。<br>
+<br><br>
+<font size =3>此阶段所做的操作：</font><br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzupbpjnj30m802v3yv.jpg" alt="undefined" loading="lazy"></li>
 </ol>
-<p><font size =3>此阶段所做的操作：</font><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzupbpjnj30m802v3yv.jpg" alt="undefined" loading="lazy"></p>
 <center><font size = 2>只有通过了所有的测试后，新生成的片元才能和颜色缓冲区中已经存在的像素颜色进行混合，最后再写入颜色缓冲区中   </font></center>
 <p><font size =3>模板测试和深度测试简化流程图：</font><br>
 <img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzv2il54j30go0hignx.jpg" alt="undefined" loading="lazy"></p>
