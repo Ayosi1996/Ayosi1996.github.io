@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-16T05:27:34.192Z</updated>
+    <updated>2020-03-16T05:35:40.268Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -598,12 +598,9 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
         <link href="https://ayosi1996.github.io/post/CU6ZQD3BL/">
         </link>
         <updated>2019-06-15T05:32:27.000Z</updated>
-        <summary type="html"><![CDATA[<p>IK/FK Snap是一个很实用的功能，rigify插件自带此功能，但是对于已经设置好的自定义rig就没办法使用了，所以在网上找了一个相当简易的IK/FK Snap脚本：<br>
+        <content type="html"><![CDATA[<!-- more -->
+<p>IK/FK Snap是一个很实用的功能，rigify插件自带此功能，但是对于已经设置好的自定义rig就没办法使用了，所以在网上找了一个相当简易的IK/FK Snap脚本：<br>
 https://gist.github.com/dskjal/76a778b4ad00e5fd8e20b6a1e104676c</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>IK/FK Snap是一个很实用的功能，rigify插件自带此功能，但是对于已经设置好的自定义rig就没办法使用了，所以在网上找了一个相当简易的IK/FK Snap脚本：<br>
-https://gist.github.com/dskjal/76a778b4ad00e5fd8e20b6a1e104676c</p>
-<!-- more -->
 <p>由于脚本中的骨骼名称已经全部定义好了，所以使用时还需要按照脚本修改骨骼名称。为了方便使用，我对脚本做了些修改。</p>
 <p>修改后的结果：<br>
 <img src="https://ayosi1996.github.io/post-images/1584293385503.png" alt="" loading="lazy"></p>
