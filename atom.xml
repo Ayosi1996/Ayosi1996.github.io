@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-16T05:43:55.122Z</updated>
+    <updated>2020-03-16T05:49:57.937Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -11,14 +11,12 @@
     <icon>https://ayosi1996.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Sqrt9</rights>
     <entry>
-        <title type="html"><![CDATA[CSDN test]]></title>
+        <title type="html"><![CDATA[CSDN Test]]></title>
         <id>https://ayosi1996.github.io/post/csdn-test/</id>
         <link href="https://ayosi1996.github.io/post/csdn-test/">
         </link>
-        <updated>2020-03-16T05:41:28.000Z</updated>
-        <content type="html"><![CDATA[<!-- more -->
-<p>插入图片<br>
-<img src="https://img-blog.csdnimg.cn/20200316134001989.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+        <updated>2020-03-16T05:47:00.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200316134848608.png" alt="在这里插入图片描述" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
