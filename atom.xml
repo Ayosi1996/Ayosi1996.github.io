@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-03-16T05:49:57.937Z</updated>
+    <updated>2020-03-16T05:52:02.268Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -10,15 +10,6 @@
     <logo>https://ayosi1996.github.io/images/avatar.png</logo>
     <icon>https://ayosi1996.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Sqrt9</rights>
-    <entry>
-        <title type="html"><![CDATA[CSDN Test]]></title>
-        <id>https://ayosi1996.github.io/post/csdn-test/</id>
-        <link href="https://ayosi1996.github.io/post/csdn-test/">
-        </link>
-        <updated>2020-03-16T05:47:00.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200316134848608.png" alt="在这里插入图片描述" loading="lazy"></figure>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[《Unity Shader入门精要》读书笔记——渲染流水线]]></title>
         <id>https://ayosi1996.github.io/post/unity-shader-2/</id>
@@ -1441,6 +1432,103 @@ main()
 </tr>
 </tbody>
 </table>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[通过Shader实现2D游戏中无限滚动的背景]]></title>
+        <id>https://ayosi1996.github.io/post/wAmbz0BhI2/</id>
+        <link href="https://ayosi1996.github.io/post/wAmbz0BhI2/">
+        </link>
+        <updated>2018-02-14T04:06:12.000Z</updated>
+        <summary type="html"><![CDATA[<p>参考：<a href="https://github.com/candycat1992/Unity_Shaders_Book">冯乐乐-《Unity Shader入门精要》</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>参考：<a href="https://github.com/candycat1992/Unity_Shaders_Book">冯乐乐-《Unity Shader入门精要》</a></p>
+<!--more-->
+<p>Unity Shader提供了一系列关于时间的内置变量来允许我们方便地在Shader中访问运行时间，实现各种动画效果。下表给出了内置的时间变量。</p>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3x7wx9pj30i204paaw.jpg" alt="undefined" loading="lazy"></figure>
+<ol>
+<li>创建Quad。</li>
+<li>创建quadMat 材质。</li>
+<li>新建一个Unlit Shader命名为ScrollBackground。</li>
+<li>将材质附给Quad，将Shader附给quadMat 材质。</li>
+</ol>
+<p>在材质面板选择图片：</p>
+<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3xkxrsgj30a9080aae.jpg" alt="undefined" loading="lazy"></figure>
+<p>如果想实现利用多个层模拟视差效果，将以下代码中的注释去掉即可。</p>
+<p>Shader 代码：</p>
+<pre><code>Shader &quot;Unlit/ScrollX&quot;
+{
+	Properties
+	{
+		_MainTex(&quot;Base Layer(RGB)&quot;, 2D) = &quot;white&quot; {}    //第一层纹理  较远纹理
+		//_DetailTex(&quot;2nd Layer(RGB)&quot;,2D)=&quot;white&quot;{}     //第二层纹理  较近纹理
+		_ScrollX(&quot;Base layer Scroll Speed&quot;,Float) = 1.0   //第一层滚动速度
+		//_Scroll2X (&quot;2nd layer Scroll Speed&quot;, Float) = 1.0   //第二层滚动速度
+		_Mutiplier(&quot;Layer Mutiplier&quot;, Float) = 1         //整体亮度
+	}
+		SubShader
+	{
+		Tags { &quot;RenderType&quot; = &quot;Opaque&quot; &quot;Queue&quot; = &quot;Geometry&quot;}
+		LOD 100
+
+		Pass
+		{
+			Tags{ &quot;LightMode&quot; = &quot;ForwardBase&quot; }
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+
+
+			#include &quot;UnityCG.cginc&quot;
+
+			struct a2v
+			{
+				float4 vertex : POSITION;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+				float4 pos : SV_POSITION;
+				float2 uv : TEXCOORD0;
+			};
+
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			//sampler2D _DetailTex;
+			//float4 _DetailTex_ST;
+			float _ScrollX;
+			//fixed _Scrll2X;
+			float _Mutiplier;
+
+			v2f vert(a2v v)
+			{
+				v2f o;
+				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+
+				o.uv.xy = TRANSFORM_TEX(v.texcoord, _MainTex) + frac(float2 (_ScrollX, 0.0) * _Time.y);
+
+				//o.uv.zw = TRANSFORM_TEX(v.texcoord, _DetailTex) + frac(float2 _Scroll2X, 0.0) * _Time.y);
+				return o;
+			}
+
+			fixed4 frag(v2f i) : SV_Target
+			{
+
+			fixed4 c = tex2D(_MainTex, i.uv.xy);
+			//fixed4 secondLayer = tex2D(_DetailTex, i.uv.zw);
+
+			//fixed c = lerp(firstLayer, secondLayer, secondLayer.a);
+			c.rgb *= _Mutiplier;
+
+			return c;
+		}
+		ENDCG
+	}
+	}
+		FallBack &quot;VertexLit&quot;
+}
+</code></pre>
 ]]></content>
     </entry>
 </feed>
