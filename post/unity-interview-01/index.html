@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>游戏开发面试笔试题 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="总结一下面试中遇到的算法题
+
+
+面试
+
+
+Zenjoy 2017校招笔试题
+
+
+一棵二叉树有N个度为2的节点，叶子节点有多少个？
+
+
+699个节点的完全二叉树，叶子节点有多少个？
+
+
+已知一课二叉树的先序遍历和中序遍历结果分别如下，求该二叉..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">游戏开发面试笔试题</h2>
+            <div class="post-date">2017-10-15</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>总结一下面试中遇到的算法题</p>
+<!--more-->
+<ul>
+<li>面试</li>
+</ul>
+<hr>
+<h1 id="zenjoy-2017校招笔试题">Zenjoy 2017校招笔试题</h1>
+<ol>
+<li>
+<p>一棵二叉树有N个度为2的节点，叶子节点有多少个？</p>
+</li>
+<li>
+<p>699个节点的完全二叉树，叶子节点有多少个？</p>
+</li>
+<li>
+<p>已知一课二叉树的先序遍历和中序遍历结果分别如下，求该二叉树的后序遍历结果。<br>
+先序：A B C D E F G H I<br>
+中序：B C A E D G H F I</p>
+</li>
+<li>
+<p>编程题：</p>
+</li>
+</ol>
+<pre><code class="language-c">1.按照从外向里以逆时针的顺序依次打印出矩阵中的每一个数字。
+例如：
+如下矩阵
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+输出序列：1 5 9 13 14 15 16 12 8 4 3 2 1 6 10 11 7
+函数原型如下：
+/*
+*M为正整数，表示矩阵列数
+*N为正整数，表示矩阵行数
+*matrix为二维数组，matrix[n][m]表示矩阵第n+1行第m+1列的元素
+*/
+void printMatrix(int M,int N,int** matrix)(C++)
+</code></pre>
+<p>2.有n个箱子排成一行，每个箱子里有不定数量的金币，现在要从箱子里拿走金币，规则是相邻两个箱子的金币不能同时拿走。请写出程序计算最多能取走多少金币，并且输出取走了哪些箱子。</p>
+<h1 id="面试题">面试题</h1>
+<ol>
+<li>
+<p>找出一个字符串中没有重复的字母</p>
+</li>
+<li>
+<p>文件夹遍历方法</p>
+</li>
+<li>
+<p>LateUpdate()方法常用的地方</p>
+</li>
+<li>
+<p>通过脚本实现移动摇杆</p>
+</li>
+<li>
+<p>缓存池作用</p>
+</li>
+<li>
+<p>FPS游戏中需要用到缓存池的地方</p>
+</li>
+<li>
+<p>unity实现单例模式</p>
+</li>
+<li>
+<p>unity常用生命周期顺序</p>
+</li>
+<li>
+<p>RPG游戏攻击实现方式</p>
+</li>
+<li>
+<p>子弹伤害判定方式</p>
+</li>
+<li>
+<p>通过调用一次协程实现Update的效果</p>
+</li>
+<li>
+<p>算法题</p>
+<ol>
+<li>求两个书的最大公约数</li>
+<li>求二叉树的高</li>
+<li>用unity实现追光灯的效果</li>
+</ol>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/lua-note/">
+                  <h3 class="post-title">
+                    Lua常用知识点总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

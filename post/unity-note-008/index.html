@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D实现点击小地图让角色移动至对应位置 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+步骤
+1.实现小地图
+小地图使用Render Texture是很容易实现的，演示效果如下图所示：
+
+2.转换坐标
+当点击小地图时，可以获得点击位置的屏幕空间下的坐标，如果点击位置位于小地图周围的深色区域，则不予处理，当点击到小地图上时，需..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D实现点击小地图让角色移动至对应位置</h2>
+            <div class="post-date">2017-07-30</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/unity-games.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!--more-->
+<h1 id="步骤">步骤</h1>
+<h2 id="1实现小地图">1.实现小地图</h2>
+<p>小地图使用Render Texture是很容易实现的，演示效果如下图所示：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170730205048459" alt="这里写图片描述" loading="lazy"></figure>
+<h2 id="2转换坐标">2.转换坐标</h2>
+<p>当点击小地图时，可以获得点击位置的屏幕空间下的坐标，如果点击位置位于小地图周围的深色区域，则不予处理，当点击到小地图上时，需要将点击位置转换到小地图坐标系：</p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdn.net/20170730205155095" alt="这里写图片描述" loading="lazy"></figure>
+<p>在屏幕空间中左下角为（0,0），右上角为（1,1）所以坐标变换只需要进行比例变换就行，不过要考虑两个坐标原点之间的偏移,因为在做的时候用的1920*1080分辨率，所以所有的比例按照这个数值进行计算，只要将图片锚点设置好后，并且画布设置为随屏幕大小自适应后其他比例也可以使用，这里我用来存放render texture的Raw Image的宽高都为1000：<br>
+设点击位置在屏幕空间下为（s_x,s_y）,转换后在小地图坐标系下为（m_x,m_y）；<br>
+则转换式为：</p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdn.net/20170730205354156" alt="这里写图片描述" loading="lazy"></figure>
+<h2 id="3发出射线">3.发出射线</h2>
+<p>转换后的坐标与实现小地图Camera的视图空间相同，此时可以让小地图Camera产生射线与场景发生碰撞获得位置信息.<br>
+主要代码：</p>
+<pre><code class="language-c">public void OnPointerClick(PointerEventData eventData) {
+Vector2 tempVector = new Vector2(eventData.pointerCurrentRaycast.screenPosition.x / Screen.width, eventData.pointerCurrentRaycast.screenPosition.y / Screen.height);
+    Vector2 raypoint=new Vector2((tempVector.x-(460/1920.0f))/(1000/1920.0f),(tempVector.y-(40/1080.0f))/(1000/1080.0f));
+        Ray ray = Camera.main.ViewportPointToRay(raypoint);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+			//设置玩家移动目标为点击地点
+            	player.SetDestination(hit.point);
+        }
+		//LineRender指向点击位置
+       	lineDraw.SetPositions(new Vector3[2] { Vector3.zero, hit.point });
+    }
+    
+</code></pre>
+<p>将改代码放于小地图上即可。</p>
+<h2 id="4实现效果">4.实现效果</h2>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdn.net/20170730205806662" alt="这里写图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdn.net/20170730205818902" alt="这里写图片描述" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-note-015/">
+                  <h3 class="post-title">
+                    Unity中实现RPG游戏角色控制移动
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D实现简单可配置按键输入 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="现在很多电脑游戏都有自定义按键的功能，这里通过Unity3D实现一个简单的配置按键的功能
+
+开始
+一般情况下，我们这样来处理游戏中的输入：
+void Update () {
+            if (Input.GetKeyDown(..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D实现简单可配置按键输入</h2>
+            <div class="post-date">2018-01-24</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/unity-games.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>现在很多电脑游戏都有自定义按键的功能，这里通过Unity3D实现一个简单的配置按键的功能</p>
+<!--more-->
+<h2 id="开始"><strong>开始</strong></h2>
+<p>一般情况下，我们这样来处理游戏中的输入：</p>
+<pre><code class="language-csharp">void Update () {
+            if (Input.GetKeyDown(KeyCode.W)) Jump();
+            if (Input.GetKeyDown(KeyCode.S)) GetDown();
+            if (Input.GetKeyDown(KeyCode.A)) Defense();
+            if (Input.GetKeyDown(KeyCode.D)) Attack();
+    }
+</code></pre>
+<p>现在很多电脑游戏都有自定义按键的功能，这里通过unity实现一个简单的配置按键的功能：</p>
+<h2 id="思路"><strong>思路</strong></h2>
+<p>一般玩家修改按键的逻辑如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20180124224617498" alt="这里写图片描述" loading="lazy"></figure>
+<h2 id="界面设计"><strong>界面设计</strong></h2>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdn.net/20180124224732179" alt="这里写图片描述" loading="lazy"></figure>
+<h2 id="实现效果"><strong>实现效果</strong></h2>
+<ol>
+<li>
+<p>初始界面如上图:</p>
+</li>
+<li>
+<p>点击按键区域后</p>
+</li>
+</ol>
+<center>![这里写图片描述](https://img-blog.csdn.net/20180124232008645)</center>
+3. 再按下F键后
+<center>![这里写图片描述](https://img-blog.csdn.net/20180124232154087t)</center>
+## **主要代码**
+<pre><code class="language-chsarp">public class CustomInput : MonoBehaviour
+{
+    //assign values by inspector
+    public Button jumpBtn;
+    public Button getDownBtn;
+    public Button defBtn;
+    public Button atkBtn;
+    //bind keys
+    KeyCode jump_key;
+    KeyCode getdown_key;
+    KeyCode def_key;
+    KeyCode atk_key;
+    //temp current key
+    KeyCode curKey;
+    //new key
+    KeyCode newKey;
+    //current function
+    string functionName = string.Empty;
+    //clicked button
+    Button currentBtn; 
+
+    void Awake()
+    {
+        GetBindKeys();
+    }
+    // Use this for initialization
+    void Start()
+    {
+        jumpBtn.onClick.AddListener(JumpBtnClick);
+        getDownBtn.onClick.AddListener(GetDownBtnClick);
+        defBtn.onClick.AddListener(DefBtnClick);
+        atkBtn.onClick.AddListener(AtkBtnClick);
+    }
+    //when you are setting the input,update will be disabled
+    bool isPlaying = true;
+    // Update is called once per frame
+    void Update()
+    {
+        if(isPlaying)
+        {
+            if (Input.GetKeyDown(jump_key)) Jump();
+            if (Input.GetKeyDown(getdown_key)) GetDown();
+            if (Input.GetKeyDown(def_key)) Defense();
+            if (Input.GetKeyDown(atk_key)) Attack();
+        }
+    }
+
+    bool isWaitingForKey = false;
+    void OnGUI()
+    {
+        if (isWaitingForKey)
+        {
+            Event e = Event.current;
+            if (e.isKey)
+            {
+                newKey = e.keyCode;
+                currentBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = newKey.ToString();
+                PlayerPrefs.SetString(functionName, newKey.ToString());
+                isWaitingForKey = false;
+                //call when config has changed
+                GetBindKeys();
+                StartCoroutine(WaitUpdate());
+            }
+        }
+    }
+    
+    IEnumerator WaitUpdate()
+    {
+        yield return new WaitForEndOfFrame();
+        isPlaying = true;
+    }
+    //onclick
+    void JumpBtnClick()
+    {
+        currentBtn = jumpBtn;
+        isPlaying = false;
+        currentBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = &quot;&quot;;
+        curKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;jump&quot;,&quot;W&quot;));
+        functionName = &quot;jump&quot;;
+        isWaitingForKey = true;
+    }
+    void GetDownBtnClick()
+    {
+        currentBtn = getDownBtn;
+        isPlaying = false;
+        currentBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = &quot;&quot;;
+        curKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;getdown&quot;, &quot;S&quot;));
+        functionName = &quot;getdown&quot;;
+        isWaitingForKey = true;
+    }
+    void DefBtnClick()
+    {
+        currentBtn = defBtn;
+        isPlaying = false;
+        currentBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = &quot;&quot;;
+        curKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;defense&quot;, &quot;D&quot;));
+        functionName = &quot;defense&quot;;
+        isWaitingForKey = true;
+    }
+    void AtkBtnClick()
+    {
+        currentBtn = atkBtn;
+        isPlaying = false;
+        currentBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = &quot;&quot;;
+        curKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;attack&quot;, &quot;A&quot;));
+        functionName = &quot;attack&quot;;
+        isWaitingForKey = true;
+    }
+    //detail
+    void Jump()
+    {
+        Debug.Log(&quot;我跳了！&quot;);
+    }
+    void GetDown()
+    {
+        Debug.Log(&quot;我趴下了！&quot;);
+    }
+    void Defense()
+    {
+        Debug.Log(&quot;我防御了！&quot;);
+    }
+    void Attack()
+    {
+        Debug.Log(&quot;我攻击了！&quot;);
+    }
+    /// &lt;summary&gt;
+    /// get and parse playerprefs
+    /// &lt;/summary&gt;
+    void GetBindKeys()
+    {
+        jump_key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;jump&quot;, &quot;W&quot;));
+        getdown_key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;getdown&quot;, &quot;S&quot;));
+        def_key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;defense&quot;, &quot;D&quot;));
+        atk_key = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(&quot;attack&quot;, &quot;A&quot;));
+        //setting panel display
+        jumpBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = PlayerPrefs.GetString(&quot;jump&quot;, &quot;W&quot;);
+        getDownBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = PlayerPrefs.GetString(&quot;getdown&quot;, &quot;S&quot;);
+        defBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = PlayerPrefs.GetString(&quot;defense&quot;, &quot;D&quot;);
+        atkBtn.transform.Find(&quot;Text&quot;).GetComponent&lt;Text&gt;().text = PlayerPrefs.GetString(&quot;attack&quot;, &quot;A&quot;);
+    }
+}
+</code></pre>
+<hr>
+<p>TODO：没有进行按键冲突判断</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-note-006/">
+                  <h3 class="post-title">
+                    命令模式以及在Unity3D中应用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

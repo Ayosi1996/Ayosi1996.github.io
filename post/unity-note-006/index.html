@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>命令模式以及在Unity3D中应用 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+命令模式：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化； 对请求排队或记录请求日志，以及支持可撤销的操作。
+命令模式是一种回调的面向对象实现
+
+
+UML
+![这里写图片描述](https://img-blog.csdn..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">命令模式以及在Unity3D中应用</h2>
+            <div class="post-date">2018-01-15</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>命令模式：将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化； 对请求排队或记录请求日志，以及支持可撤销的操作。<br>
+命令模式是一种回调的面向对象实现</p>
+</blockquote>
+<!--more-->
+<h1 id="uml">UML</h1>
+<center>![这里写图片描述](https://img-blog.csdn.net/20180115225609418)</center>
+<center><font size=2>图片源自《大话设计模式》</font></center>
+<p><font size=7><b>实现</b></font></p>
+<pre><code class="language-csharp">//用来声明执行操作的接口
+abstract class Command
+{
+	protected Receiver receiver;
+	public Command(Receiver receiver)
+	{
+		this.receiver = receiver;
+	}
+
+	abstract public void Execute();
+}
+
+//将一个接受者对象绑定于一个动作，调用接受者相应的操作，以实现Excute
+class ConcreteCommand:Command
+{
+	public ConcreteCommand(Receiver receiver):base(receiver)
+	{ }
+
+	public override void Execute()
+	{
+		receiver.Action();
+	}
+}
+
+//要求该命令执行这个请求
+class Invoker
+{
+	private Command command;
+
+	public void SetCommand(Command command)
+	{
+		this.command = command;
+	}
+
+	public void ExecuteCommand()
+	{
+		command.Execute();
+	}
+}
+
+//知道如何实施与执行一个与请求相关的操作，任何类都可能成为一个接受者
+class Receiver
+{
+	public void Action()
+	{
+		Console.WriteLine(&quot;请求执行！&quot;);
+	}
+}
+
+//客户端代码，创建一个具体命令对象并设定它的接受者
+static void Main(string[] args)
+{
+	Receiver r = new Receiver();
+	Command c = new Command();
+	Invoker i = new Invoker();
+
+	i.SetCommand(c);
+	i.ExecuteCommand();
+
+	Console.Read();
+}
+</code></pre>
+<h1 id="优点">优点</h1>
+<ul>
+<li>能较容易的设计一个命令队列</li>
+<li>在需要的情况下，可以容易的将命令记入日志</li>
+<li>允许接受请求的一方决定是否要否决请求</li>
+<li>可以容易地实现对请求的撤销和重做</li>
+<li>由于添加新的具体命令类(ConcreteCommand)不影响其他的类，因此增加新的具体命令类很容易</li>
+<li><strong><font color = red>命令模式把请求一个操作的对象与知道怎么执行一个操作的对象分隔开</font></strong></li>
+</ul>
+<hr>
+<p><font size=7><b>应用</b></font></p>
+<h1 id="配置输入">配置输入</h1>
+<p>一般的输入命令：</p>
+<pre><code class="language-csharp">void Update () {
+            if (Input.GetKeyDown(KeyCode.W)) Jump();
+            if (Input.GetKeyDown(KeyCode.S)) GetDown();
+            if (Input.GetKeyDown(KeyCode.A)) Defense();
+            if (Input.GetKeyDown(KeyCode.D)) Attack();
+        
+    }
+</code></pre>
+<p>为了支持可以配置按键功能，需要将这些对Jump()和Attack()的直接调用转化为可以变换的东西。</p>
+<h1 id="撤销和重做">撤销和重做</h1>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/DP-note-004/">
+                  <h3 class="post-title">
+                    设计模式之状态模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

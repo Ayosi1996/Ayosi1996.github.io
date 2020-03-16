@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式之状态模式 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+状态模式，当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。[DP]
+状态模式主要解决的的是当控制一个对象状态转换的条件表达式过于复杂时的情况。把状态的判断逻辑转移到表示不同状态的一系列类中，可以把复杂的判断逻辑简化..." />
+    <meta name="keywords" content="DP" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">设计模式之状态模式</h2>
+            <div class="post-date">2017-12-24</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>状态模式，当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。[DP]</p>
+<p>状态模式主要解决的的是当控制一个对象状态转换的条件表达式过于复杂时的情况。把状态的判断逻辑转移到表示不同状态的一系列类中，可以把复杂的判断逻辑简化。</p>
+</blockquote>
+<!--more-->
+<h1 id="uml">UML</h1>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjdk4f0nj30w10g6gp3.jpg" alt="undefined" loading="lazy"></figure>
+<h1 id="实现">实现</h1>
+<pre><code class="language-csharp">    abstract class State
+    {
+        public abstract void Handle(Context context);
+    }
+    //具体状态类，每一个子类实现一个与Context的一个状态相关的行为
+    class ConcreteStateA:State
+    {
+        public override void Handle(Context context)
+        {
+            context.State = new ConcreteStateB();   //状态转换，即A的下一状态为B
+        }
+    }
+    class ConcreteStateB : State
+    {
+        public override void Handle(Context context)
+        {
+            context.State = new ConcreteStateA();   //状态转换，即B的下一状态为A
+        }
+    }
+
+    //Context类，维护一个ConcreteState子类的实例，这个实例定义当前的状态
+    class Context
+    {
+        private State state;
+        //定义Context的初始状态
+        public Context(State state)
+        {
+            this.state = state;
+        }
+        //可读写的状态属性，用于读取当前状态和设置新状态
+        public State State {
+            get { return state; }
+            set {
+                state = value;
+                Console.WriteLine(&quot;current state:&quot; + state.GetType().Name);
+            }
+        }
+        //对请求做处理，并设置下一状态
+        public void Request()
+        {
+            state.Handle(this);
+        }
+
+    }
+    //客户端
+    static void Main(string[] args) {
+            Context c = new Context(new ConcreteStateA());
+
+            //不断的请求，同时更改状态
+            c.Request();
+            c.Request();
+            c.Request();
+
+            Console.Read();
+        }
+</code></pre>
+<p>输出</p>
+<blockquote>
+<p>current state:ConcreteStateB<br>
+current state:ConcreteStateA<br>
+current state:ConcreteStateB</p>
+</blockquote>
+<h1 id="总结">总结</h1>
+<ol>
+<li>状态模式的好处</li>
+</ol>
+<blockquote>
+<p>状态模式的好处是将于特定状态相关的行为局部化，并且讲不同状态的行为分割开来[DP]<br>
+将特定的状态相关的行为都放入一个对象中，由于所有与状态相关的状态都存在于某个ConcreteState中，所以通过定义新的子类可以很容易地增加新的状态和转换。[DP]</p>
+</blockquote>
+<ol start="2">
+<li>什么时候考虑使用状态模式？</li>
+</ol>
+<blockquote>
+<p>当一个对象的行为取决于它的状态，并且它必须在运行时刻根据状态改变它的行为时，就可以考虑使用状态模式了。</p>
+</blockquote>
+<ol start="3">
+<li>在Unity中的应用<br>
+http://blog.csdn.net/poem_qianmo/article/details/52824776</li>
+</ol>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] 大话设计模式</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/01XxlRy8q/" class="tag">
+                    DP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/DP-note-005/">
+                  <h3 class="post-title">
+                    设计模式之观察者模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

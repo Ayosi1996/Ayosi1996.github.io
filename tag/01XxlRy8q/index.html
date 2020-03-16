@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>DP | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Hi there!">
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: DP</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-004/">
+                  <h2 class="post-title">设计模式之状态模式</h2>
+                </a>
+                <div class="post-date">
+                  2017-12-24
+                </div>
+                <div class="post-abstract">
+                  <blockquote>
+<p>状态模式，当一个对象的内在状态改变时允许改变其行为，这个对象看起来像是改变了其类。[DP]</p>
+<p>状态模式主要解决的的是当控制一个对象状态转换的条件表达式过于复杂时的情况。把状态的判断逻辑转移到表示不同状态的一系列类中，可以把复杂的判断逻辑简化。</p>
+</blockquote>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-004/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-005/">
+                  <h2 class="post-title">设计模式之观察者模式</h2>
+                </a>
+                <div class="post-date">
+                  2017-12-17
+                </div>
+                <div class="post-abstract">
+                  <blockquote>
+<p>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态发生变化时，会通知所有观察者对象，使他们能够自动更新自己。[DP]</p>
+</blockquote>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-005/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-002/">
+                  <h2 class="post-title">设计模式之原型模式</h2>
+                </a>
+                <div class="post-date">
+                  2017-12-02
+                </div>
+                <div class="post-abstract">
+                  <p>原型模式(Prototype)，用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象<br>
+<br><br>
+原型模式其实就是从一个对象再创建另外一个可定制的对象，而且不需要知道创建的细节</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-002/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-001/">
+                  <h2 class="post-title">设计模式之单例模式</h2>
+                </a>
+                <div class="post-date">
+                  2017-11-18
+                </div>
+                <div class="post-abstract">
+                  <p>单例模式：</p>
+<h2 id="c"><strong>C#</strong></h2>
+<p>定义：单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。[DP]</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-001/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-003/">
+                  <h2 class="post-title">设计模式之工厂模式</h2>
+                </a>
+                <div class="post-date">
+                  2017-11-02
+                </div>
+                <div class="post-abstract">
+                  <blockquote>
+<p><font color = gray>实现简单计算器</font></p>
+</blockquote>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-003/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/DP-note-006/">
+                  <h2 class="post-title">设计模式-开始</h2>
+                </a>
+                <div class="post-date">
+                  2017-10-28
+                </div>
+                <div class="post-abstract">
+                  <p>面向对象编程的好处：可维护、易扩展、可复用、灵活性好</p>
+
+                </div>
+              </div>
+              
+                <a class="right" href="https://ayosi1996.github.io/post/DP-note-006/">
+                  <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

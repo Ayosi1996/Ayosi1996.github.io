@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D常用API解析 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="记录并解释unity中经常用到的API
+
+1.Camera
+1.pixelRect
+pixelRect属性：摄像机渲染区间
+此属性用于设置camera被渲染到屏幕中间的坐标位置。pixelRect属性与rect功能类似，不同的是pixelR..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D常用API解析</h2>
+            <div class="post-date">2017-09-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p><strong>记录并解释unity中经常用到的API</strong></p>
+<!--more-->
+<h1 id="1camera"><strong>1.Camera</strong></h1>
+<h2 id="1pixelrect">1.pixelRect</h2>
+<p>pixelRect属性：摄像机渲染区间<br>
+此属性用于设置camera被渲染到屏幕中间的坐标位置。pixelRect属性与rect功能类似，不同的是pixelRect以实际像素大小来设置显示视口的位置，而rect以单位化方式设置显示视口的位置。<br>
+例设置camera.pixelRect (x0,y0,w,h), x0为视口右移的像素大小，y0为视口上移的像素大小，w为camera.pixelWidth,h的值为camera.pixelHeight.</p>
+<h1 id="2mathf"><strong>2.Mathf</strong></h1>
+<h2 id="1pingpong">1.PingPong</h2>
+<p>public static float PingPong(float t,float length)<br>
+此方法用于模拟乒乓球的往复运动。设f = Mathf.PingPong (t, h),其中f 、t、h均为 float值类型。<br>
+（1）若h&gt;0,则</p>
+<pre><code>  f=|t| % h,        当 |t| % 2h &lt;= h时
+  f=h - |t| % h,    当 |t| % 2h &gt; h时
+</code></pre>
+<p>（1）若h&lt;0,则</p>
+<pre><code>  f=2h + |t| % |2h|,        当| t | % |2h| &lt;= h时
+  f= - |t| % |2h|,    当| t | % |2h| &gt; h时
+</code></pre>
+<p>要想让物体进行PingPong运动， t 必须是一个不断改变的值 ，常用Time.time 来当作 t 值。f 会从 0 开始变化到 h ，然后再从 h 变化到0.</p>
+<h1 id="3rigidbody"><strong>3.Rigidbody</strong></h1>
+<h2 id="1sweeptest">1.SweepTest</h2>
+<p>语法：</p>
+<pre><code class="language-c">public bool SweepTest(Vector3 direction, out RaycastHit hitInfo, float maxDistance = Mathf.Infinity, QueryTriggerInteraction queryTriggerInteraction = QueryTriggerInteraction.UseGlobal); 
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>direction</td>
+<td style="text-align:center">刚体扫过的方向</td>
+</tr>
+<tr>
+<td>hitInfo</td>
+<td style="text-align:center">如果返回true,hitInfo将包含更多关于被击中位置碰撞体的信息</td>
+</tr>
+<tr>
+<td>maxDistance</td>
+<td style="text-align:center">扫到的长度，默认为无穷大</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2wakeup">2.WakeUp</h2>
+<p>语法：public void WakeUp( );<br>
+功能：此方法用于将刚体从休眠状态唤醒。要将刚体从休眠状态唤醒，除了调用此方法以外，在以下四种情况发生时，刚体会被自动唤醒:</p>
+<ul>
+<li>其他刚体与休眠中的刚体发生了碰撞</li>
+<li>使用关节连接的其他刚体发生了移动</li>
+<li>刚体的属性发生了改变</li>
+<li>给休眠中的刚体施加了一个外力</li>
+</ul>
+<h2 id="3ontriggerxxx和oncollisionxxx">3.OnTriggerXXX和OnCollisionXXX</h2>
+<p>设现有A、B两个物体，且A物体正向B移动，B物体保持静止状态，如图所示：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170903201830923" alt="这里写图片描述" loading="lazy"></figure>
+<p>详解：</p>
+<ul>
+<li>
+<p>若A中无Rigidbody组件，则B中无论是否含有Rigidbody组件，A都将穿过B物体，并且A和B脚本中的OnTriggerXXX和OnCollisionXXX方法都不会调用。</p>
+</li>
+<li>
+<p>若A中含有Rigidbody组件，则B中无论是否含有Rigidbody组件，只要B中含有Collider类组件，A和B脚本中的OnTriggerXXX或OnCollisionXXX方法就会被调用。到底调用哪一种要看A和B物体中的Collider类组件中的IsTrigger是否被选中。<strong>总之，要激活OnTriggerXXX或OnCollisionXXX方法必须使移动的物体中含有Rigidbody组件</strong></p>
+</li>
+<li>
+<p>若A中含有Rigidbody组件，B中含有Collider类组件，当A和B物体中的Collider类组件的IsTrigger都没有选中时，A和B脚本中（两个物体）的OnCollisionXXX类的方法就会被调用</p>
+</li>
+<li>
+<p>若A中含有Rigidbody组件，B中含有Collider类组件，当A和B物体中的Collider类组件的IsTrigger至少有一个被选中时，A和B脚本中（两个物体）的OnTriggerXXX静态方法会被调用</p>
+</li>
+</ul>
+<h1 id="4transform"><strong>4.Transform</strong></h1>
+<h2 id="1localposition">1.localPosition</h2>
+<p>public Vector3 localPosition { get; set; }</p>
+<p>此属性用于设置或返回GameObject在局部坐标系中的位置，若无父级对象则和属性Transform.position返回值相同。</p>
+<p>transform.localPosition的值受父级对象lossyScale的影响，当transform.localPosition的值增加1时，transform.position的值的增量不一定是1，而是在相对父级坐标系中增加了父级的lossyScale倍大小的值。例如物体cube2的父级是cube1，cube1的父级是cube0，cube1的localScale为Vector3（c1x,c1y,c1z）,cube0的localScale为Vector3（c0x,c0y,c0z）,假设cube0和cube1都没有发生旋转，则GameObject对象在世界坐标系中的位置为：<br>
+transform.position.x = cube0.localPosition.x+cube1.localPosition.x<em>c0x+transform.localPosition.x</em>c1x<em>c0x;<br>
+transform.position.y和transform.position.z与此相同。<br>
+当物体cube2的局部坐标值localPosition增加Vector3（tx，ty，tz）时，其世界坐标值position的增加值分别为：<br>
+_x=tx</em>c1x<em>c0x;<br>
+_y=ty</em>c1y<em>c0y;<br>
+_z=tz</em>c1z*c0z;</p>
+<h1 id="5vector3"><strong>5.Vector3</strong></h1>
+<h2 id="1rotatetowards">1.RotateTowards</h2>
+<p>基本语法：public static Vector3 RotateTowards( Vector3 current, Vector3 target, float maxRadiansDelta, float maxMagnitudeDelta);<br>
+其中参数current为起始点坐标，参数target为目标点坐标，参数maxRadiansDelta为角度旋转系数，参数maxMagnitudeDelta为模长系数。</p>
+<p>功能说明：<br>
+此方法用于返回从参数current到target的球形旋转插值向量，此方法可控制插值向量的角度和模长。例如，设有Vector3实例A、B和C，有float类型数值R和L，向量A和B的夹角的弧度为e，则执行以下程序代码后<br>
+C=Vector3.RotateTowards(A,B,R,L);</p>
+<ul>
+<li>当R∈[0,e]时，向量C和A的弧度为R，即当R从0增加到e时，向量C与A的角度也会线性增加到e。向量C的模长为向量A的模长加上L的值，即|C|=|A|+L.</li>
+<li>当R&lt;0时，向量C会沿着A到B的反向量旋转。</li>
+<li>当R&gt;e时，参数R以e来计算角度，即R大于e时C与B的方向相同。</li>
+<li>总之，R值决定了向量C的方向，而L影响了C的模长，无论L取值多少，当R&gt;e时向量C与B的方向总是相同的。</li>
+<li>向量A、B和C在同一平面上。</li>
+</ul>
+<h2 id="2slerp">2.Slerp</h2>
+<p><strong>基本语法</strong>：public static Vector3 Slerp（Vector3 from, Vector3 to, float t）;<br>
+其中参数from为插值起始点坐标，参数to为插值结束点坐标，参数t为插值系数。<br>
+<strong>功能说明</strong>：此方法用于返回从参数from点到参数to点的球形插值向量。例如，设现有Vector3实例A和B，A ( ax,ay,az), B( bx,by,bz)    A和B的夹角为e，则执行如下代码后<br>
+Vector C = Vector3.Slerp（from，to，t）；</p>
+<ul>
+<li>当t&lt;=0时，向量C=A；</li>
+<li>当t&gt;=1时，向量C=B；</li>
+<li>当t从0增加到1时，向量C会从起始点A绕着A<em>B（即向量A和B的叉乘）的方向匀速移动到向量B，此处的匀速时指角度旋转的匀速，即向量C与B的夹角k=e</em>（1-t），这样便可以确定向量C的方向。而向量C的模长计算公式则为：</li>
+</ul>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>C</mi><mi mathvariant="normal">∣</mi><mo>=</mo><msqrt><mrow><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>a</mi><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mi>a</mi><msup><mi>z</mi><mn>2</mn></msup></mrow></msqrt><mo>+</mo><mo>(</mo><msqrt><mrow><mi>b</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><msup><mi>y</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><msup><mi>z</mi><mn>2</mn></msup></mrow></msqrt><mo>−</mo><msqrt><mrow><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>a</mi><msup><mi>y</mi><mn>2</mn></msup><mo>−</mo><mi>a</mi><msup><mi>z</mi><mn>2</mn></msup></mrow></msqrt><mo>)</mo><mo>∗</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">|C| ={\sqrt{ax^2+ay^2+az^2}}+(\sqrt{bx^2+by^2+bz^2}-\sqrt{ax^2+ay^2-az^2})*t
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.24em;vertical-align:-0.23329099999999992em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.006709em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9667090000000003em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
+158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
+c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
+175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
+c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
+-252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
+s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23329099999999992em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.256709em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.006709em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord mathdefault">b</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">b</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">b</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9667090000000003em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
+158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
+c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
+175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
+c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
+-252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
+s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23329099999999992em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.256709em;vertical-align:-0.25em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.006709em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">a</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.9667090000000003em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
+158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
+c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
+175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
+c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
+-252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
+s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.23329099999999992em;"><span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span></span></span></span></span></p>
+<ul>
+<li>当向量A和B中的某个分量的值都为0时，比如它们的y轴分量都为0，即ay=by=0时，则A将绕着y轴在xy平面匀速旋转向B移动，并且在移动过程中C.y的值始终为0.</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-note-013/">
+                  <h3 class="post-title">
+                    Unity实现简单勾物品的功能
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

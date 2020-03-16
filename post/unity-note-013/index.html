@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity实现简单勾物品的功能 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Unity实现一个简单的勾物品的功能
+
+场景布置
+
+
+运行效果：
+
+层次面板
+
+实现方法
+
+
+使用LineRenderer作为钩链
+
+在BeginPoint物体上添加LineRenderer组件，记得取消勾选 use world space..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity实现简单勾物品的功能</h2>
+            <div class="post-date">2017-08-27</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/unity-games.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>Unity实现一个简单的勾物品的功能</p>
+<!--more-->
+<h1 id="场景布置">场景布置</h1>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcviwwa6hkj30lu0eyt94.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvix7u3r7j30ov0fegm6.jpg" alt="undefined" loading="lazy"></figure>
+<p><strong>运行效果：</strong></p>
+<figure data-type="image" tabindex="3"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvixqiyc9j30ql0fkq3f.jpg" alt="undefined" loading="lazy"></figure>
+<h1 id="层次面板">层次面板</h1>
+<figure data-type="image" tabindex="4"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcviy4s8loj308x03ujrd.jpg" alt="undefined" loading="lazy"></figure>
+<h1 id="实现方法">实现方法</h1>
+<ol>
+<li>
+<p>使用LineRenderer作为钩链</p>
+<ol>
+<li>在BeginPoint物体上添加LineRenderer组件，记得取消勾选 use world space</li>
+</ol>
+</li>
+<li>
+<p>使用小球（Hook）作为钩子</p>
+</li>
+<li>
+<p>当发射时对钩子进行碰撞检测</p>
+</li>
+<li>
+<p>检测到敌人便将敌人作为钩子的子物体</p>
+</li>
+<li>
+<p>添加胶囊体Enemy，并将tag设置&quot;Enemy&quot;</p>
+</li>
+</ol>
+<h1 id="代码部分">代码部分</h1>
+<p>附件于Hand上</p>
+<pre><code class="language-c">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hook: MonoBehaviour
+{
+
+    public LineRenderer hookObj;                //钩子起始点 附加有LineRenderer组件
+    public float hookSpeed = 10f;               //钩子发射速度
+    public float totalDistance = 3f;            //钩子最大长度
+    public bool isOut = false;                  //钩子发射或者收回标记
+    public Transform hookTransform;             //钩子物体（即小球）
+
+    private Collider[] colCollection;           //发射中碰撞到的物体
+    private float oriZvalue;                    
+    private bool isStop = true;                 //用来判断钩子是否停止
+    private float tempZvalue;
+    // Use this for initialization
+    void Start() {
+        oriZvalue = hookTransform.localPosition.z;
+        tempZvalue = oriZvalue;
+    }
+
+    // Update is called once per frame
+    void Update() {
+        checkCollider();                //检测发射过程中碰到的碰撞体
+        CheckLength();                  //检测是否超过钩子长度
+        if (Input.GetKeyDown(KeyCode.H)) {
+            isOut = true;
+        }
+        //发射钩子
+        if (isOut) {
+            hookTransform.Translate(0, 0, hookSpeed * Time.deltaTime);
+            hookObj.SetPosition(1, hookTransform.localPosition);
+        }
+        //收回钩子
+        else {
+            if (hookTransform.localPosition.z &gt; oriZvalue) {
+                hookTransform.Translate(0, 0, -hookSpeed * Time.deltaTime);
+                hookObj.SetPosition(1, hookTransform.localPosition);
+            }
+        }
+
+        //判断钩子是否为停止状态
+        if (hookTransform.childCount &gt; 0) {
+            isStop = Mathf.Abs(hookTransform.localPosition.z - tempZvalue) &lt;= 0 ? true : false;
+        }
+        else
+            isStop = false;
+        //将敌人够到身前后，放开钩子
+        if (isStop) RealeaseChild();
+    }
+
+    private void LateUpdate() {
+        tempZvalue = hookTransform.localPosition.z;
+    }
+    void CheckLength() {
+        if (Vector3.Distance(hookTransform.position, hookObj.transform.position) &gt; totalDistance) {
+            isOut = false;
+        }
+    }
+
+
+    void checkCollider() {
+        //对钩子进行球形检测，返回所有碰到或者在球范围内的碰撞体数组     
+        //注意将人称控制器及其子物体的Layer修改为不是Default的一个层，否则钩子会检测到自身的碰撞体
+        colCollection = Physics.OverlapSphere(hookTransform.position, 0.2f, 1 &lt;&lt; LayerMask.NameToLayer(&quot;Default&quot;));
+        if (colCollection.Length &gt; 0) {
+            foreach (Collider item in colCollection) {
+                //将敌人的tag设置为“Enemy”
+                if (item.gameObject.tag.Equals(&quot;Enemy&quot;))
+                    item.transform.SetParent(hookTransform);
+            }
+            isOut = false;
+        }
+    }
+    
+    void RealeaseChild() {
+        if (hookTransform.childCount &gt; 0) {
+            for (int i = 0; i &lt; hookTransform.childCount; i++) {
+                hookTransform.GetChild(i).transform.SetParent(null);
+            }
+        }
+    }
+}
+</code></pre>
+<p>附加于Enemy上 进行pingpong运动</p>
+<pre><code class="language-c-sharp">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemymove : MonoBehaviour {
+
+    public float moveSpeed = 3;
+    public float zVlaue=5;
+
+    private Vector3 ori;
+    private float timer = 0;
+    private Vector3 targetPoi = Vector3.zero;
+    private Quaternion oriRot;
+	// Use this for initialization
+	void Start () {
+        ori = transform.position;
+        oriRot = transform.rotation;
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        //当没被钩中时，进行pingpong运动
+        if (transform.parent == null) {
+            transform.rotation = oriRot;            //更新为初始旋转，否则在放钩后旋转会改变
+            timer += Time.deltaTime*2;
+            zVlaue = Mathf.PingPong(timer, 7);
+            targetPoi = transform.right * zVlaue;
+            transform.position = ori + targetPoi;
+        }
+        //当背钩中时
+        else {
+            ori = new Vector3(transform.position.x, 0.98f, transform.position.z);
+            timer = 0;
+        }
+    }
+}
+</code></pre>
+<hr>
+<p><strong>完</strong></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/data-structure-2/">
+                  <h3 class="post-title">
+                    《大话数据结构》读书笔记——散列表
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D使用navigation系统实现寻路路径的绘制 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="在unity中使用navigation系统实现简易寻路路径的绘制
+
+1.场景搭建
+演示场景如下:
+
+2.移动主角位置
+
+
+给主角添加导航代理组件
+
+
+烘焙场景导航网格
+
+
+添加寻路脚本
+
+
+	
+using System.Collection..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D使用navigation系统实现寻路路径的绘制</h2>
+            <div class="post-date">2017-08-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/unity-games.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p><strong>在unity中使用navigation系统实现简易寻路路径的绘制</strong></p>
+<!--more-->
+<h1 id="1场景搭建">1.场景搭建</h1>
+<p>演示场景如下:<br>
+<img src="https://img-blog.csdn.net/20170803160911924" alt="这里写图片描述" loading="lazy"></p>
+<h1 id="2移动主角位置">2.移动主角位置</h1>
+<ol>
+<li>
+<p>给主角添加导航代理组件</p>
+</li>
+<li>
+<p>烘焙场景导航网格</p>
+</li>
+<li>
+<p>添加寻路脚本</p>
+</li>
+</ol>
+<pre><code class="language-c">	
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Findpath : MonoBehaviour {
+
+    private NavMeshAgent _navPlayer;
+    private Vector3 nextDes = Vector3.zero;
+	// Use this for initialization
+	void Start () {
+        _navPlayer = transform.GetComponent&lt;NavMeshAgent&gt;();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray,out hit,Mathf.Infinity)) {
+                
+                _navPlayer.SetDestination(hit.point);
+                
+            }
+        }
+	}
+}
+</code></pre>
+<p>至此已经实现了主角移动至点击位置的功能</p>
+<!--more-->
+<h1 id="3绘制路径">3.绘制路径</h1>
+<ol>
+<li>
+<p>使用NavMeshAgent.CalculatePath()函数得到寻路路径点</p>
+<p>NavMeshAgent.CalculatePath()函数：</p>
+<p>public bool CalculatePath(Vector3 targetPosition, AI.NavMeshPath path);</p>
+<p>参数targetPosition为目标点 ，path为返回需要的路径<br>
+详细解释可参考<a href="https://docs.unity3d.com/ScriptReference/AI.NavMeshAgent.CalculatePath.html">官方API</a></p>
+</li>
+<li>
+<p>创建空物体添加LineRenderer组件</p>
+<p>在层次面板中创建一个空物体然后添加LineRenderer组件</p>
+</li>
+<li>
+<p>将得到的路径数组赋给LineRenderer实现路径绘制</p>
+<p>修改上面的脚本为：</p>
+</li>
+</ol>
+<pre><code class="language-c">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Findpath : MonoBehaviour {
+
+    private NavMeshAgent _navPlayer;
+    private NavMeshPath _navPath;
+    public LineRenderer lineGameObject;
+	// Use this for initialization
+	void Start () {
+        _navPlayer = transform.GetComponent&lt;NavMeshAgent&gt;();
+        _navPath = new NavMeshPath();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		if(Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray,out hit,Mathf.Infinity)) {
+                
+                _navPlayer.SetDestination(hit.point);
+                _navPlayer.CalculatePath(hit.point, _navPath);
+                if (_navPath.corners.Length &lt; 2)
+                    return;
+                else {
+                    lineGameObject.numPositions = _navPath.corners.Length;
+                    lineGameObject.SetPositions(_navPath.corners);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h1 id="4实现效果展示">4.实现效果展示</h1>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170803163707864" alt="这里写图片描述" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/sqrt9-data-structure/">
+                  <h3 class="post-title">
+                    《大话数据结构》读书笔记——平衡二叉树
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

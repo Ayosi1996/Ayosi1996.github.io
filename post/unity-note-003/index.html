@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D制作双面材质Shader | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Shader中Cull指令的使用：
+通过Cull指令来控制需要剔除那个面的渲染图元。Cull指令的语法如下：
+Cull Back  |  Front  |  Off
+设置为Back，背对摄像机的渲染图源就不会被渲染，设置为Front，朝向摄..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D制作双面材质Shader</h2>
+            <div class="post-date">2017-05-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>Shader中Cull指令的使用：<br>
+通过Cull指令来控制需要剔除那个面的渲染图元。Cull指令的语法如下：<br>
+Cull Back  |  Front  |  Off<br>
+设置为Back，背对摄像机的渲染图源就不会被渲染，设置为Front，朝向摄像机的渲染图元就不会被渲染。<br>
+设置为Off就会关闭剔除功能，即所有图元都会被渲染。</p>
+<!--more-->
+<p><strong>Unity3d制作双面材质：</strong></p>
+<p>步骤：</p>
+<ol>
+<li>
+<p>在项目面板中创建plane作为演示。</p>
+</li>
+<li>
+<p>导入两张图片作为贴图演示。</p>
+</li>
+<li>
+<p>在项目面板中创建DoubleSurface shader</p>
+</li>
+<li>
+<p>打开创建的shader进行编辑：</p>
+</li>
+</ol>
+<pre><code>Shader &quot;Custom/DoubleSurface&quot; {
+	Properties{
+		_Color(&quot;Main Color&quot;, Color) = (1,1,1,1)//Tint Color
+		_MainTex(&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {} //背面纹理
+	    _MainTex_2(&quot;Base (RGB)&quot;, 2D) = &quot;white&quot; {} //正面纹理
+	}
+
+		SubShader{
+		Tags{ &quot;RenderType&quot; = &quot;Opaque&quot; }    //设置渲染类型 Opaque不透明
+		LOD 100
+
+		Pass{
+		Cull Front       //关闭正面渲染
+		Lighting Off
+		SetTexture[_MainTex]{ combine texture }
+		SetTexture[_MainTex]
+	        {
+		    ConstantColor[_Color]
+		    Combine Previous * Constant
+	        }
+	    }
+
+		Pass
+	    {
+		Cull Back      //关闭背面渲染
+		Lighting Off
+		SetTexture[_MainTex_2]{ combine texture }
+		SetTexture[_MainTex_2]
+	        {
+	        ConstantColor[_Color]
+	      	Combine Previous * Constant
+	        }
+	    }
+	}
+}
+
+</code></pre>
+<p>5.创建好之后把DoubleSurface shader附给plane的材质</p>
+<p>6.选则导入的图片，如下图所示：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170503143550575" alt="这里写图片描述" loading="lazy"></figure>
+<p>参考：<br>
+《Shader入门精要》，冯乐乐</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-note-001/">
+                  <h3 class="post-title">
+                    Unity5.x中实现双面材质Shader
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

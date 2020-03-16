@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D中创建全局变量 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="借助static字段实现“全局变量”。
+比如有时需要实现一个类似transform.position这样的变量可以同步更新。
+
+1.Door 静态类：
+using System.Collections;
+using System.Colle..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D中创建全局变量</h2>
+            <div class="post-date">2017-05-20</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>借助static字段实现“全局变量”。</p>
+<p>比如有时需要实现一个类似transform.position这样的变量可以同步更新。</p>
+<!--more-->
+<p>1.Door 静态类：</p>
+<pre><code>using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public static class Door01
+{
+    public static int testNum=0;
+    public static int IsOpen
+    {
+        get
+        {
+            return testNum;
+        }
+        set
+        {
+            Door01.testNum = value;
+        }
+    }
+}
+
+
+
+</code></pre>
+<p>2.ControlOpen类 ，控制静态变量加一</p>
+<pre><code>using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ControlOpen : MonoBehaviour {
+
+//控制加一
+    public void OpenDoor()
+    {
+        Door01.IsOpen +=1;
+    }
+//在控制台显示结果
+    public void Display()
+    {
+       Debug.Log(Door01.IsOpen);
+    }
+}
+
+
+</code></pre>
+<p>3.ControlClose类 ，控制静态变量减一</p>
+<pre><code>using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ControlClose : MonoBehaviour {
+
+    //控制静态变量减一
+    public void CloseDoor()
+    {
+        Door01.IsOpen -=1;
+    }
+    //控制台输出结果
+    public void Display()
+    {
+        Debug.Log(Door01.testNum);
+    }
+}
+
+
+</code></pre>
+<p>将2、3脚本放到不同物体上，并且在unity中添加控制按钮。<br>
+左边两个按钮控制ControlOpen类中的两个方法；<br>
+右边两个按钮控制ControlClose类中的两个方法。</p>
+<p>测试结果：</p>
+<p>点击5次+1，然后点击右下按钮：</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170520165558813" alt="这里写图片描述" loading="lazy"></figure>
+<p>点击5次-1，点击左下按钮：</p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdn.net/20170520165616547" alt="这里写图片描述" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-note-011/">
+                  <h3 class="post-title">
+                    Unity优化DrawCall 及动态批处理的约束
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式之原型模式 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="原型模式(Prototype)，用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象
+
+原型模式其实就是从一个对象再创建另外一个可定制的对象，而且不需要知道创建的细节
+
+UML图：
+
+实现：
+//原型类
+abstract clas..." />
+    <meta name="keywords" content="DP" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">设计模式之原型模式</h2>
+            <div class="post-date">2017-12-02</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>原型模式(Prototype)，用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象<br>
+<br><br>
+原型模式其实就是从一个对象再创建另外一个可定制的对象，而且不需要知道创建的细节</p>
+<!--more-->
+<h2 id="uml图">UML图：</h2>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj80d1urj30kw0fztae.jpg" alt="undefined" loading="lazy"></figure>
+<h2 id="实现">实现：</h2>
+<pre><code class="language-csharp">//原型类
+abstract class Prototype
+{
+    private string id;
+
+    public Prototype(string id)
+    {
+        this.id = id;
+    }
+
+    public string ID {
+        get { return id; }
+    }
+
+    public abstract Prototype Clone();
+}
+
+//具体原型类
+class ConcretePrototype1 : Prototype
+{
+    //提供与父类构造函数参数相同的构造函数
+    public ConcretePrototype1(string id) : base(id)
+    {
+
+    }
+
+    public override Prototype Clone()
+    {
+        //创建当前对象的浅表副本。方法是创建一个新对象，然后将当前对象的非静态字段复制到该新对象。如果字段是值类型，则对该字段执行逐位复制。如果字段是引用类型，则复制引用但不复制引用的对象；因此原始对象及其副本应用同一对象[MSDN]
+        return (Prototype)this.MemberwiseClone();
+    }
+}
+
+//客户端
+	   static void Main(string[] args) {
+            ConcretePrototype1 p1 = new ConcretePrototype1(&quot;Ayosi&quot;);
+            ConcretePrototype1 c1 = (ConcretePrototype1)p1.Clone();
+
+            Console.WriteLine(&quot;Clone: {0}&quot;, c1.ID);
+
+            Console.Read();
+        }
+</code></pre>
+<p><strong>.Net在System命名空间中提供了ICloneable接口，这个接口中维一的方法是Clone(),实现这个接口即可完成原型模式。</strong></p>
+<h1 id="深度复制">深度复制：</h1>
+<p>对于深拷贝和浅拷贝的解析：<a href="https://www.cnblogs.com/zhili/p/DeepCopy.html">C#进阶系列</a></p>
+<h2 id="uml">UML：</h2>
+<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj8hg9l8j30kf0723za.jpg" alt="undefined" loading="lazy"></figure>
+<h2 id="实现-2">实现</h2>
+<pre><code class="language-csharp">class WorkExperience : ICloneable
+{
+    public string WorkDate {
+        get;
+        set;
+    }
+
+    public string Company {
+        get;
+        set;
+    }
+
+    public object Clone()
+    {
+        return (Object)this.MemberwiseClone();
+    }
+}
+
+class Resume : ICloneable
+{
+    private string name;
+    private string sex;
+    private string age;
+    private WorkExperience work;
+
+    public Resume(string name)
+    {
+        this.name = name;
+        work = new WorkExperience();
+    }
+
+    private Resume(WorkExperience work)
+    {
+        //提供Clone方法调用的私有构造函数，以便克隆“工作经历”的数据
+        this.work = (WorkExperience)work.Clone();
+    }
+
+    //设置个人信息
+    public void SetPersonalInfo(string sex,string age)
+    {
+        this.sex = sex;
+        this.age = age;
+    }
+    //设置工作经历
+    public void SetWorkExperience(string workDate,string company)
+    {
+        work.WorkDate = workDate;
+        work.Company = company;
+    }
+
+    public object Clone()
+    {
+        //调用私有的构造方法，让“工作经历”克隆完成，然后再给这个“简历”对象的相关字段赋值，最终返回一个深复制的简历对象
+        Resume obj = new Resume(this.work);
+
+        obj.name = this.name;
+        obj.sex = this.sex;
+        obj.age = this.age;
+
+        return obj;
+    }
+}
+</code></pre>
+<p>浅表复制是只能拷贝当前层中的值类型数据，对于更深层的数据需要在更深层出实现ICloneable接口</p>
+<p>参考：<br>
+[1] 大话设计模式，程杰</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/01XxlRy8q/" class="tag">
+                    DP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/DP-note-001/">
+                  <h3 class="post-title">
+                    设计模式之单例模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

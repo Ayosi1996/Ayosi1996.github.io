@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D场景间切换传递保存数据的方法 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+1.单例模式
+
+单例模式是一种常用的软件设计模式。在它的核心结构中只包含一个被称为单例的特殊类。通过单例模式可以保证系统中一个类只有一个实例。即一个类只有一个对象实例。单例模式是设计模式中最简单的形式之一。这一模式的目的是使得类的一个对象..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D场景间切换传递保存数据的方法</h2>
+            <div class="post-date">2017-07-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <!--more-->
+<h1 id="1单例模式">1.单例模式</h1>
+<blockquote>
+<p>单例模式是一种常用的软件设计模式。在它的核心结构中只包含一个被称为单例的特殊类。通过单例模式可以保证系统中一个类只有一个实例。即一个类只有一个对象实例。单例模式是设计模式中最简单的形式之一。这一模式的目的是使得类的一个对象成为系统中的唯一实例。要实现这一点，可以从客户端对其进行实例化开始。因此需要用一种只允许生成对象类的唯一实例的机制，“阻止”所有想要生成对象的访问。使用工厂方法来限制实例化过程。这个方法应该是静态方法（类方法），因为让类的实例去生成另一个唯一实例毫无意义。  <a href="https://baike.baidu.com/item/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/5946627?fr=aladdin">- -百度百科</a></p>
+</blockquote>
+<ul>
+<li>在unity中有多个场景时需要保存之前场景的状态或者获取之前场景的数据，所以需要一种方法在整个游戏范</li>
+</ul>
+<p>围内 保存用到的数据。</p>
+<p>方法：创建一个GlobalObject，这个GlobalObject需要满足的条件如下：</p>
+<ol>
+<li>在整个游戏中只有一个，并且是同一个</li>
+<li>保证只被初始化一次</li>
+<li>在任何脚本中都可以访问GlobalObject中存放的数据</li>
+<li>GlobalObject中可以存放任何数据</li>
+</ol>
+<p>实现步骤：</p>
+<ol>
+<li>创建空物体GlobalObject</li>
+<li>创建GlobalControl C#脚本</li>
+<li>将脚本赋给GlobalObject</li>
+</ol>
+<p>GlobalControl脚本代码：</p>
+<pre><code class="language-C">public class GlobalControl : MonoBehaviour {
+
+    public static GlobalControl Instance;
+
+    //要保存使用的数据;
+    public int HP;
+	public int MP;
+	public int EXP;
+   
+   //初始化
+    private void Awake()
+    {
+         if(Instance==null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+         else if(Instance!=null)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+
+
+</code></pre>
+<p>通过以上脚本即可保证单例模式</p>
+<p>使用方法：</p>
+<ol>
+<li>保存数据：<br>
+假设有Player类需要保存数据：</li>
+</ol>
+<pre><code class="language-C">public class Player:MonoBehaviour
+{
+	Public int HP;
+	Public int MP;
+	Public int EXP;
+
+	......// other functions
+
+	Public void SavaData()
+	{
+		GlobalControl.Instance.HP=HP;
+		GlobalControl.Instance.MP=MP;
+		GlobalControl.Instance.EXP=EXP;
+	}
+
+}
+
+</code></pre>
+<ol start="2">
+<li>访问数据：</li>
+</ol>
+<pre><code class="language-C">public class Player:MonoBehaviour
+{
+	Public int HP;
+	Public int MP;
+	Public int EXP;
+
+	......// other functions
+
+	void Start()
+	{
+		HP=GlobalControl.Instance.HP;
+		MP=GlobalControl.Instance.MP;
+		EXP=GlobalControl.Instance.EXP;
+	}
+
+}
+</code></pre>
+<h1 id="2-使用playerprefs类">2. 使用PlayerPrefs类</h1>
+<p>PlayerPrefs类是unity自带的类，功能是在场景会话之间访问玩家属性。</p>
+<p>常用方法有保存数据和访问数据：</p>
+<pre><code>PlayerPrefs.SetInt 、PlayerPrefs.SetFloat、PlayerPrefs.SetString
+PlayerPrefs.GetInt 、PlayerPrefs.GetFloat、PlayerPrefs.GetString
+</code></pre>
+<p>例：<br>
+保存血量值</p>
+<pre><code>保存：PlayerPrefs.SetInt(&quot;player hp&quot;,100);
+获取：PlayerPrefs.GetInt(&quot;player hp&quot;);
+</code></pre>
+<h1 id="3-使用静态类">3. 使用静态类</h1>
+<p>静态类一般只能在一个场景范围内传递数据</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/simpleframework-2/">
+                  <h3 class="post-title">
+                    SimpleFramework使用步骤总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

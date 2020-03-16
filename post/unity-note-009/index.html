@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity3D碰撞体详解 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="参考：游戏蛮牛-手册
+
+碰撞体 (Collider) 组合
+在 Unity 中可以进行许多不同的碰撞体 (Collider) 组合。每个游戏都是独一无二的，不同组合可能更适合于不同类型的游戏。如果在游戏中使用物理，则了解不同基本碰撞体 (C..." />
+    <meta name="keywords" content="Unity" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity3D碰撞体详解</h2>
+            <div class="post-date">2017-04-03</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>参考：<a href="http://docs.manew.com/Script/index.htm">游戏蛮牛-手册</a></p>
+<!--more-->
+<p><strong>碰撞体 (Collider) 组合</strong><br>
+在 Unity 中可以进行许多不同的碰撞体 (Collider) 组合。每个游戏都是独一无二的，不同组合可能更适合于不同类型的游戏。如果在游戏中使用物理，则了解不同基本碰撞体 (Collider) 类型、其常见用途以及与其他类型对象的交互方式会十分有帮助。</p>
+<p><strong>静态碰撞体 (Static Collider)</strong><br>
+这些是未附加刚体 (Rigidbody)、但的确附加了碰撞体 (Collider) 的游戏对象 (GameObject)。这些对象应保持静态，或很少移动。这些十分适用于环境几何结构。它们在刚体 (Rigidbody) 与之碰撞时不会移动。</p>
+<p><strong>刚体碰撞体 (Rigidbody Collider)</strong><br>
+这些游戏对象 (GameObject) 同时包含刚体 (Rigidbody) 和碰撞体 (Collider)。它们通过脚本编写的力和碰撞，完全受物理引擎影响。它们可以与仅包含碰撞体 (Collider) 的游戏对象 (GameObject) 碰撞。这些很可能是使用物理的游戏中的主要碰撞体 (Collider) 类型。</p>
+<p><strong>运动学刚体碰撞体 (Kinematic Rigidbody Collider)</strong><br>
+此游戏对象 (GameObject) 包含碰撞体 (Collider) 和标记有“为运动学”(IsKinematic) 的刚体 (Rigidbody)。要移动此游戏对象 (GameObject)，请修改其 变换组件 (Component)，而不是应用力。它们类似于静态碰撞体 (Static Collider)，但是更适合于要经常四处移动碰撞体 (Collider) 的情况。有一些使用此游戏对象 (GameObject) 的其他专业方案。<br>
+此对象可以用于通常希望静态碰撞体 (Static Collider) 发送触发器 (Trigger) 事件的情况。因为触发器 (Trigger) 必须附加刚体 (Rigidbody)，所以应添加刚体 (Rigidbody)，然后启用“为运动学”(IsKinematic)。这可防止对象脱离物理影响，并使您可以在需要时接收触发器 (Trigger) 事件。<br>
+运动学刚体 (Kinematic Rigidbody) 可以方便地打开和关闭。这适合于在以下情况中创建布娃娃：通常希望角色跟随在动画之后，然后在发生碰撞时（通过爆炸或所选的任何其他事物进行提示）变为布娃娃。发生这种情况时，只需通过脚本将所有运动学刚体 (Kinematic Rigidbody) 转变为普通刚体 (Rigidbody)。<br>
+如果让刚体 (Rigidbody) 静止下来以便在一段时间内不移动，它们会“入睡”。即，它们在物理更新过程中不会进行计算，因为它们不会前往任何位置。如果将运动学刚体 (Kinematic Rigidbody) 从休眠的普通刚体 (Rigidbody) 下边移走，则休眠的刚体 (Rigidbody) 将被唤醒并在物理更新中重新准确计算。因此如果您具有许多要四处移动的静态碰撞体 (Static Collider) 并且让不同对象正确落到其上，请使用运动学刚体碰撞体 (Kinematic Rigidbody Collider)。</p>
+<p><strong>标准准则：物理系统不会应用于未添加刚体的对象上。</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20170403161439024" alt="这里写图片描述" loading="lazy"></figure>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
+                    Unity
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/oTRIgNFY6/">
+                  <h3 class="post-title">
+                    RPG 中控制相机距离以及旋转相机视角
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式之单例模式 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="单例模式：
+C#
+定义：单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。[DP]
+
+
+通常我们可以使得一个对象被访问，但它不能防止你实例化多个对象。一个最好的方法就是，让类自身负责保存它的唯一实例。这个类可以保证没有其他实例..." />
+    <meta name="keywords" content="DP,Program" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">设计模式之单例模式</h2>
+            <div class="post-date">2017-11-18</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>单例模式：</p>
+<h2 id="c"><strong>C#</strong></h2>
+<p>定义：单例模式，保证一个类仅有一个实例，并提供一个访问它的全局访问点。[DP]</p>
+<!--more-->
+<blockquote>
+<p>通常我们可以使得一个对象被访问，但它不能防止你实例化多个对象。一个最好的方法就是，让类自身负责保存它的唯一实例。这个类可以保证没有其他实例可以被创建，并且它可以提供一个访问该实例的方法。[DP]</p>
+</blockquote>
+<p>类图：<br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj6stczzj309505zmx9.jpg" alt="undefined" loading="lazy"><br>
+对应代码：</p>
+<pre><code class="language-csharp">class Singleton
+    {
+        private static Singleton _instance;
+        private Singleton()         //将构造方法设为私有，外界无法利用new创建此类实例的可能
+        {
+
+        }
+        public static Singleton GetInstance()
+        {
+            if(null==_instance)     //如果实例不存在就new一个新实例，否则返回已有的实例
+            {
+                _instance = new Singleton();
+            }
+            return _instance;
+        }
+    }
+</code></pre>
+<p>##<strong>unity3d中单例的应用</strong></p>
+<ul>
+<li><strong>不在场景中创建物体，可以用来保存临时数据，可以用静态类替代</strong></li>
+</ul>
+<p>代码与上面相同：</p>
+<pre><code class="language-csharp">public class Singleton  {
+
+    private static Singleton _instance;
+    private Singleton()         //将构造方法设为私有，外界无法利用new创建此类实例的可能
+    {
+
+    }
+    public static Singleton GetInstance()
+    {
+        if (null == _instance)     //如果实例不存在就new一个新实例，否则返回已有的实例
+        {
+            _instance = new Singleton();
+        }
+        return _instance;
+    }
+}
+</code></pre>
+<ul>
+<li><strong>创建继承自MonoBehaviour的单例，调用时在场景中创建物体</strong></li>
+</ul>
+<pre><code class="language-csharp">public class UnitySingleton : MonoBehaviour
+{
+    static UnitySingleton _instance;
+
+    public static UnitySingleton Instance {
+        get {
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject(&quot;UnitySingleton&quot;);
+
+                DontDestroyOnLoad(obj);         //保证在切换场景时不被销毁
+                _instance = obj.AddComponent&lt;UnitySingleton&gt;();
+            }
+            return _instance;
+        }
+    }
+}
+</code></pre>
+<ul>
+<li><strong>同样是继承自MonoBehaviour</strong></li>
+</ul>
+<pre><code class="language-csharp">public class UnitySingleton : MonoBehaviour
+{
+
+    public static UnitySingleton _instance;
+
+    void Awake()
+    {
+        if(_instance==null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+}
+</code></pre>
+<p>第二种是在调用时才创建，第三种在游戏开始时就已经创建</p>
+<h2 id="创建单例泛型类"><strong>创建单例泛型类：</strong></h2>
+<pre><code class="language-csharp">public class SingletonManager&lt;T&gt; : MonoBehaviour
+    where T : Component
+{
+    private static T _instance;
+    public static T Instance {
+        get {
+
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject();
+                DontDestroyOnLoad(obj);             //切换场景时不被销毁
+                _instance = obj.AddComponent&lt;T&gt;();
+            }
+
+            return _instance;
+        }
+    }
+}
+</code></pre>
+<p>将单例类继承自该类即可</p>
+<p><strong>参考：</strong><br>
+《大话设计模式》----程杰<br>
+http://blog.csdn.net/candycat1992/article/details/10960731</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/01XxlRy8q/" class="tag">
+                    DP
+                  </a>
+                
+                  <a href="https://ayosi1996.github.io/tag/RRqzF97wT/" class="tag">
+                    Program
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/DP-note-003/">
+                  <h3 class="post-title">
+                    设计模式之工厂模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

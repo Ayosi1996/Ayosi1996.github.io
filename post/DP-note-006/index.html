@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式-开始 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="面向对象编程的好处：可维护、易扩展、可复用、灵活性好
+
+ UML类图常用标记
+ 字段、方法与属性
+
+对应代码：
+class ClassName
+    {
+        //字段
+        public int field_1;
+ ..." />
+    <meta name="keywords" content="DP" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">设计模式-开始</h2>
+            <div class="post-date">2017-10-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>面向对象编程的好处：可维护、易扩展、可复用、灵活性好</p>
+<!--more-->
+<p><font size =6> <strong>UML类图常用标记</strong></font></p>
+<p><font size =5> <strong>字段、方法与属性</strong></font></p>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjh7ysoij308507uwen.jpg" alt="undefined" loading="lazy"></figure>
+<p>对应代码：</p>
+<pre><code class="language-chsarp">class ClassName
+    {
+        //字段
+        public int field_1;
+        protected float field_2;
+        private string field_3;
+        //属性
+        public int Property {
+            get;
+            set;
+        }
+        //方法
+        public float Function(int parameter_1,float parameter_2) {
+            return parameter_1 + parameter_2;
+        }
+    }
+</code></pre>
+<p><strong>注意：当类名为斜体时类为抽象类</strong></p>
+<!--more-->
+<p><font size =5> <strong>继承、实现接口</strong></font><br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjhw04t1j30d20axdgb.jpg" alt="undefined" loading="lazy"></p>
+<p>对应代码：</p>
+<pre><code class="language-csharp">class Subclass : ClassName, Interface1
+    {
+        public void InterfaceFun() {
+            Console.WriteLine(&quot;接口实现&quot;);
+        }
+    }
+interface Interface1
+    {
+        void InterfaceFun();
+    }
+</code></pre>
+<p><font size =5> <strong>关联、聚合、组合、依赖</strong></font></p>
+<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjia00qsj30bt07edfw.jpg" alt="undefined" loading="lazy"></figure>
+<p>对应代码：</p>
+<pre><code class="language-csharp">class RelateClass
+    {
+        private ClassName _className;
+    }
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjin5sdwj30fz04wjro.jpg" alt="undefined" loading="lazy"></figure>
+<p>对应代码：</p>
+<pre><code class="language-csharp">class 雁群
+    {
+        private 大雁[] _dayan;
+    }
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjiywtk2j30ef04r0sw.jpg" alt="undefined" loading="lazy"></figure>
+<p>对应代码：</p>
+<pre><code class="language-csharp">class Bird
+{
+	private Wing wing;
+	public Bird()
+	{
+		wing = new wing();
+	}
+}
+</code></pre>
+<p>依赖关系：<br>
+<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjjcguhkj30en07fgm1.jpg" alt="undefined" loading="lazy"><br>
+对应代码：</p>
+<pre><code class="language-csharp">class Animal
+{
+	public Animal(Oxygen oxygen,Water water)
+	{
+	}
+}
+</code></pre>
+<p>参考：<br>
+《大化设计模式》 程杰 http://cj723.cnblogs.com/</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/01XxlRy8q/" class="tag">
+                    DP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/unity-interview-01/">
+                  <h3 class="post-title">
+                    游戏开发面试笔试题
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

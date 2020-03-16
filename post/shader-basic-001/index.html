@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Shader基础知识 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Shader基础总结
+
+
+渲染状态
+
+**常见的渲染状态设置选项**
+
+
+
+状态名称
+设置指令
+说明
+
+
+
+
+Cull
+Cull Back/Front/Off
+设置剔除模式：剔除背面/正面/关闭剔除
+
+
+ZTest
+ZTest Less G..." />
+    <meta name="keywords" content="Shader" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Shader基础知识</h2>
+            <div class="post-date">2018-03-05</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/pixel-shaders.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>Shader基础总结</p>
+<!--more-->
+<ul>
+<li><strong>渲染状态</strong></li>
+</ul>
+<center>**常见的渲染状态设置选项**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">状态名称</th>
+<th style="text-align:center">设置指令</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Cull</td>
+<td style="text-align:center">Cull Back/Front/Off</td>
+<td style="text-align:center">设置剔除模式：剔除背面/正面/关闭剔除</td>
+</tr>
+<tr>
+<td style="text-align:center">ZTest</td>
+<td style="text-align:center">ZTest Less Greater/LEqual/GEqual/Equal/NotEqual/Always</td>
+<td style="text-align:center">设置深度测试时使用的函数</td>
+</tr>
+<tr>
+<td style="text-align:center">ZWrite</td>
+<td style="text-align:center">ZWrite On/Off</td>
+<td style="text-align:center">开启/关闭深度写入</td>
+</tr>
+<tr>
+<td style="text-align:center">Blend</td>
+<td style="text-align:center">Blend SrcFactor DstFactor</td>
+<td style="text-align:center">开启并设置混合模式</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>标签</strong></li>
+</ul>
+<center>**SubShader的标签类型**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标签类型</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Queue</td>
+<td style="text-align:center">控制渲染顺序，指定该物体的渲染队列，可以使用自定义的渲染队列控制渲染顺序。</td>
+</tr>
+<tr>
+<td style="text-align:center">RenderType</td>
+<td style="text-align:center">对着色器进行分类，例如这是一个不透明或者透明的着色器</td>
+</tr>
+<tr>
+<td style="text-align:center">DisableBatching</td>
+<td style="text-align:center">指明是否对该<em>SubShader</em>使用批处理</td>
+</tr>
+<tr>
+<td style="text-align:center">ForceNoShadowCasting</td>
+<td style="text-align:center">控制使用该<em>SubShader</em>的物体是否会投射阴影。</td>
+</tr>
+<tr>
+<td style="text-align:center">IgnoreProjector</td>
+<td style="text-align:center">控制使用该<em>SubShader</em>的物体是否受Projector的影响。通常用于半透明物体</td>
+</tr>
+<tr>
+<td style="text-align:center">CanUseSpriteAtlas</td>
+<td style="text-align:center">当该<em>SubShader</em>用于精灵（Sprites）时，将该标签设置为False。</td>
+</tr>
+<tr>
+<td style="text-align:center">PreviewType</td>
+<td style="text-align:center">指明材质面板将如何预览该材质。默认为球形，可以设置为&quot;Plane&quot;,&quot;SkyBox&quot;。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>顶点的空间变换过程</strong></li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj5q3bqyj30go0fltb8.jpg" alt="undefined" loading="lazy"></figure>
+<ul>
+<li><strong>变换矩阵</strong></li>
+</ul>
+<center>**Unity内置的变换矩阵**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_MVP</td>
+<td style="text-align:center">当前的模型观察投影矩阵，用于将顶点/方向矢量从模型空间变换到裁剪空间</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_MV</td>
+<td style="text-align:center">当前的模型观察矩阵，用于将顶点/方向矢量从模型空间变换到观察空间</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_V</td>
+<td style="text-align:center">当前的观察矩阵，用于将顶点/方向矢量从世界空间变换到观察空间</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_P</td>
+<td style="text-align:center">当前的投影矩阵，用于将顶点/方向矢量从观察空间变换到裁剪空间</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_VP</td>
+<td style="text-align:center">当前的观察投影矩阵，用于将顶点/方向矢量从世界空间变换到裁剪空间</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_T_MV</td>
+<td style="text-align:center">UNITY_MATRIX_MV的转置矩阵</td>
+</tr>
+<tr>
+<td style="text-align:center">UNITY_MATRIX_IT_MV</td>
+<td style="text-align:center">UNITY_MATRIX_MV的逆转置矩阵，用于将法线从模型空间变换到观察空间，也可用于得到UNITY_MATRIX_MV的逆矩阵</td>
+</tr>
+<tr>
+<td style="text-align:center">_Object2World</td>
+<td style="text-align:center">当前的模型矩阵，用于将顶点/方向矢量从模型空间变换到世界空间</td>
+</tr>
+<tr>
+<td style="text-align:center">_World2Object</td>
+<td style="text-align:center">_Object2World的逆矩阵，用于将顶点/方向矢量从世界空间变换到模型空间</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>内置文件</strong></li>
+</ul>
+<center>**Unity中一些常用的包含文件**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件名</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">UnityCG.cginc</td>
+<td style="text-align:center">包含了最常使用的帮助函数、宏和结构体等</td>
+</tr>
+<tr>
+<td style="text-align:center">UnityShaderVariables.cginc</td>
+<td style="text-align:center">在编译Unity Shader时，会被自动包含进来。包含了许多内置的全局变量，如UNITY_MATRIX_MVP</td>
+</tr>
+<tr>
+<td style="text-align:center">Lighting.cginc</td>
+<td style="text-align:center">包含了各种内置的光照模型，如果编写的是Surface Shader的话，会被自动包含进来</td>
+</tr>
+<tr>
+<td style="text-align:center">HLSLSupport.cginc</td>
+<td style="text-align:center">在编译Unity Shader时，会被自动包含进来。声明了很多用于跨平台编译的宏和定义</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>结构体</strong></li>
+</ul>
+<center>**UnityCG.cginc中一些常用的结构体**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">包含的变量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">appdata_base</td>
+<td style="text-align:center">可用于顶点着色器的输入</td>
+<td style="text-align:center">顶点位置、顶点法线、第一组纹理坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">appdata_tan</td>
+<td style="text-align:center">可用于顶点着色器的输入</td>
+<td style="text-align:center">顶点位置、顶点切线、顶点法线、第一组纹理坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">appdata_full</td>
+<td style="text-align:center">可用于顶点着色器的输入</td>
+<td style="text-align:center">顶点位置、顶点法线、四组(或更多)组纹理坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">appdata_img</td>
+<td style="text-align:center">可用于顶点着色器的输入</td>
+<td style="text-align:center">顶点位置、第一组纹理坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">v2f_img</td>
+<td style="text-align:center">可用于顶点着色器的输出</td>
+<td style="text-align:center">裁剪空间中的位置、纹理坐标</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>帮助函数</strong></li>
+</ul>
+<center>**UnityCG.cginc中常用的内置函数**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数名</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">float3 WorldSpaceViewDir(float4 v)</td>
+<td style="text-align:center">输入一个模型空间中的顶点位置，返回世界空间中从该顶点到摄像机的观察方向。内部实现使用了UnityWorldSpaceViewDir函数</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 UnityWorldSpaceViewDir(float4 v)</td>
+<td style="text-align:center">输入一个世界空间中的顶点位置，返回世界空间中从该点到摄像机的观察方向</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 ObjSpaceViewDir(float4 v)</td>
+<td style="text-align:center">输入一个模型空间中的顶点位置，返回模型空间中从该点到摄像机的观察方向</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 WorldSpaceLightDir(float4 v)</td>
+<td style="text-align:center">**仅可用于前向渲染中。**输入一个模型空间中的顶点位置，返回世界空间中从该点到光源的光照方向。内部实现使用了UnityWorldSpaceLightDir函数。没有被归一化</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 UnityWorldSpaceLightDir(float4 v)</td>
+<td style="text-align:center">**仅可用于前向渲染中。**输入一个世界空间中的顶点位置，返回世界空间中从该点到光源的光照方向。没有被归一化</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 ObjSpaceLightDir(float4 v)</td>
+<td style="text-align:center">**仅可用于前向渲染中。**输入一个模型空间中的顶点位置，返回模型空间中从该点到光源的光照方向。没有被归一化</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 UnityObjectToWorldNormal(float3 normal)</td>
+<td style="text-align:center">把法线方向从模型空间转换到世界空间中</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 UnityObjectToWorldDir(float3 dir)</td>
+<td style="text-align:center">把方向矢量dir从模型空间转换到世界空间中</td>
+</tr>
+<tr>
+<td style="text-align:center">float3 UnityWorldToObjectDir(float3 dir)</td>
+<td style="text-align:center">把方向矢量dir从世界空间转换到模型空间中</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>常用语义</strong></li>
+</ul>
+<center>**从应用阶段传递模型数据给顶点着色器时的常用语义**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">语义</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">POSITION</td>
+<td style="text-align:center">模型空间的顶点位置，通常是float4类型</td>
+</tr>
+<tr>
+<td style="text-align:center">NORMAL</td>
+<td style="text-align:center">顶点法线，通常是float3类型</td>
+</tr>
+<tr>
+<td style="text-align:center">TANGENT</td>
+<td style="text-align:center">顶点切线，通常是float4类型</td>
+</tr>
+<tr>
+<td style="text-align:center">TEXCOORDn</td>
+<td style="text-align:center">该顶点的纹理坐标，TEXCOORD0表示第一组纹理坐标，依此类推。通常是float2或float4类型</td>
+</tr>
+<tr>
+<td style="text-align:center">COLOR</td>
+<td style="text-align:center">顶点颜色，通常是float4或fixed4类型</td>
+</tr>
+</tbody>
+</table>
+<center>**从顶点着色器传递数据给片元着色器时的常用语义**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">语义</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SV_POSITION</td>
+<td style="text-align:center">裁剪空间中的顶点坐标，结构体中必须包含一个用该语义修饰的变量。</td>
+</tr>
+<tr>
+<td style="text-align:center">COLOR0</td>
+<td style="text-align:center">通常用于输出第一组顶点颜色，但不是必须的</td>
+</tr>
+<tr>
+<td style="text-align:center">COLOR1</td>
+<td style="text-align:center">通常用于输出第二组顶点颜色，但不是必须的</td>
+</tr>
+<tr>
+<td style="text-align:center">TEXCOORD0~TEXCOORD7</td>
+<td style="text-align:center">通常用于输出纹理坐标，但不是必须的</td>
+</tr>
+</tbody>
+</table>
+<center>**片元着色器输出时的常用语义**</center>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">语义</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">SV_Target</td>
+<td style="text-align:center">输出值将会存储到渲染目标(render_target)中。</td>
+</tr>
+</tbody>
+</table>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/Q-X1a-DXy/" class="tag">
+                    Shader
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/wAmbz0BhI2/">
+                  <h3 class="post-title">
+                    通过Shader实现2D游戏中无限滚动的背景
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

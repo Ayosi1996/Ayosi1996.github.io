@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>设计模式之观察者模式 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584331878564">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态发生变化时，会通知所有观察者对象，使他们能够自动更新自己。[DP]
+
+
+UML
+
+实现
+abstract class Observer
+   ..." />
+    <meta name="keywords" content="DP" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584331878564" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+       | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">设计模式之观察者模式</h2>
+            <div class="post-date">2017-12-17</div>
+            
+              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/dp-note.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态发生变化时，会通知所有观察者对象，使他们能够自动更新自己。[DP]</p>
+</blockquote>
+<!--more-->
+<h1 id="uml">UML</h1>
+<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjfzqkm1j30ov0gsn01.jpg" alt="undefined" loading="lazy"></figure>
+<h1 id="实现">实现</h1>
+<pre><code class="language-csharp">abstract class Observer
+    {
+        public abstract void Update();
+    }
+
+    abstract class Subject
+    {
+        private IList&lt;Observer&gt; observers = new List&lt;Observer&gt;();
+
+        /// &lt;summary&gt;
+        /// 增加观察者
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;observer&quot;&gt;&lt;/param&gt;
+        public void Attach(Observer observer)
+        {
+            observers.Add(observer);
+        }
+        /// &lt;summary&gt;
+        /// 移出观察者
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;observer&quot;&gt;&lt;/param&gt;
+        public void Detach(Observer observer)
+        {
+            observers.Remove(observer);
+        }
+        /// &lt;summary&gt;
+        /// 通知每个订阅的观察者
+        /// &lt;/summary&gt;
+        public void Notify()
+        {
+            foreach (Observer item in observers)
+            {
+                item.Update();
+            }
+        }
+    }
+
+    //具体对象类
+    class ConcreteSubject:Subject
+    {
+        private string subjectState;
+        //具体被观察者状态
+        public string SubjectState {
+            get { return subjectState; }
+            set { subjectState = value; }
+        }
+    }
+
+    class ConcreteObserver:Observer
+    {
+        private string name;
+        private string observerState;
+        private ConcreteSubject subject;
+
+        public ConcreteObserver(ConcreteSubject subject,string name)
+        {
+            this.subject = subject;
+            this.name = name;
+        }
+
+        public override void Update()
+        {
+            observerState = subject.SubjectState;
+            Console.WriteLine(&quot;观察者{0}的新状态是{1}&quot;, name, observerState);
+        }
+
+        public ConcreteSubject Subject {
+            get { return subject; }
+            set { subject = value; }
+        }
+    }
+</code></pre>
+<p>客户端：</p>
+<pre><code class="language-csharp">static void Main(string[] args) {
+            ConcreteSubject s = new ConcreteSubject();
+
+            s.Attach(new ConcreteObserver(s, &quot;X&quot;));
+            s.Attach(new ConcreteObserver(s, &quot;Y&quot;));
+            s.Attach(new ConcreteObserver(s, &quot;Z&quot;));
+
+            s.SubjectState = &quot;老板来了，快开始工作&quot;;
+            s.Notify();
+
+            Console.Read();
+        }
+</code></pre>
+<h1 id="总结">总结</h1>
+<p>1.为什么使用观察者模式？</p>
+<blockquote>
+<p>将一个系统分割成一系列相互协作的类有一个很不好的副作用，那就是需要维护相关对象间的一致性。我们不希望为了维持一致性而使各类紧密耦合，这样会给维护、扩展和重用都带来不便。[DP]</p>
+</blockquote>
+<p>2.什么时候使用观察者模式？</p>
+<blockquote>
+<p>当一个对象的改变需要同时改变其他对象的时候，而且它不知道具体有多少对象有待改变时，应该考虑使用观察者模式。</p>
+<p>观察者模式所做的工作其实就是在解除耦合。让耦合的双方都依赖于抽象，而不是依赖具体。从而使得各自的变化都不会影响另一边的变化。体现了依赖倒转原则。[大话设计模式]</p>
+</blockquote>
+<hr>
+<p>1.《大话设计模式》  程杰</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ayosi1996.github.io/tag/01XxlRy8q/" class="tag">
+                    DP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/DP-note-002/">
+                  <h3 class="post-title">
+                    设计模式之原型模式
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
