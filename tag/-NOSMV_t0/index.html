@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Character controller在运动的刚体碰撞体上会掉落 | Sqrt9</title>
+<title>CPU | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,12 +18,7 @@
 
 
 
-    <meta name="description" content="Character controller在运动的刚体碰撞体上会掉落解决方案
-
-即使用Character controller实现类似升降梯的效果
-将以下脚本附给角色控制器：
-void OnTriggerStay(Collider platf..." />
-    <meta name="keywords" content="Unity" />
+    <meta name="description" content="Hi there!">
   </head>
   <body>
     <div id="app" class="main">
@@ -105,72 +100,29 @@ void OnTriggerStay(Collider platf..." />
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Character controller在运动的刚体碰撞体上会掉落</h2>
-            <div class="post-date">2017-06-14</div>
-            
-              <div class="feature-container" style="background-image: url('https://ayosi1996.github.io/post-images/feature/Unity-5.jpg')">
-              </div>
-            
-            <div class="post-content" v-pre>
-              <p>Character controller在运动的刚体碰撞体上会掉落解决方案</p>
-<!--more-->
-<p>即使用Character controller实现类似升降梯的效果</p>
-<p>将以下脚本附给角色控制器：</p>
-<pre><code class="language-c">void OnTriggerStay(Collider platforms)
-    {
-        if(!isOnMove&amp;&amp;platforms.gameObject.CompareTag(&quot;Platform&quot;))
-        {
-            this.transform.parent = platforms.transform.parent;
-            isOnMove = true;
-            Debug.Log(&quot;In&quot;);
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.CompareTag(&quot;Platform&quot;))
-        {
-            this.transform.parent = null;
-            isOnMove = false;
-            transform.localScale = new Vector3(scale, scale, scale);
-            Debug.Log(&quot;out !!&quot;);
-        }
-}
-
-
-</code></pre>
-<p>给Cube物体添加一个碰撞器，一个触发器。</p>
-<p>在角色进入cube触发器后，将cube的父物体即ParentObject 作为角色控制器的父物体，即可实现同步运动。</p>
-<p>项目结构图：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj1acgxcj305n01rdfm.jpg" alt="undefined" loading="lazy"></p>
-<p>场景图片：</p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj200o2tj30br074dgv.jpg" alt="undefined" loading="lazy"></figure>
-
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
-                    Unity
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ayosi1996.github.io/post/unity-mysql-ugui-2/">
-                  <h3 class="post-title">
-                    使用UGUI与MySql实现的简单角色管理系统
-                  </h3>
+          <h2 class="current-tag">标签: CPU</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/computer-principle/">
+                  <h2 class="post-title">But How Do It Know-The Basic Principles of Computers</h2>
                 </a>
+                <div class="post-date">
+                  2020-01-10
+                </div>
+                <div class="post-abstract">
+                  <p>《But How Do It Know-The Basic Principles of Computers》读书笔记</p>
+
+                </div>
               </div>
-            
+              
+            </article>
+          
 
-            
-
-          </div>
+          <div class="pagination-container">
+  
+  
+</div>
 
         </div>
       </div>
