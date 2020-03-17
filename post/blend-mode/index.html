@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584410431804">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1584422703500">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@ How
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584410431804" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1584422703500" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -109,7 +109,10 @@ How
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">混合模式</h2>
-            <div class="post-date">2020-03-17</div>
+            <div class="post-date">2020-02-02</div>
+            
+              <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20200317131729198.png')">
+              </div>
             
             <div class="post-content" v-pre>
               <p>数字图像编辑和计算机图形学中的混合模式用于决定两个层之间如何相互混合。</p>
@@ -119,17 +122,109 @@ How
 <h1 id="how">How</h1>
 <p>背景层 (Base)：图片中起始的颜色，通常为下层<br>
 混合层 (Blend)：用于决定两个层之间的颜色如何混合，通常为上层<br>
-结果 (Result): 结果即为两个层混合之后得到的颜色<br>
-<img src="https://img-blog.csdnimg.cn/20200317013321423.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+结果 (Result): 结果即为两个层混合之后得到的颜色</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200317013321423.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="math">Math</h1>
-<p>在本文中用A来表示混合层的颜色，用B来表示背景层的颜色</p>
+<p>在本文中用<strong>M</strong>来表示混合层的颜色，用<strong>I</strong>来表示背景层的颜色，<strong>E</strong>代表混合之后得到的结果<br>
+文章中提到的白色为纯白，即（255,255,255）黑色为纯黑色，即（0,0,0）</p>
 <p>例如：<br>
-线性减淡的公式为：</p>
-<center>B / (1 - A) = Result</center>
+“正片叠底”的公式为：</p>
+<center><b>E = M * I / 255</b></center>
+<br>
+<h1 id="begin">Begin</h1>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200317103845120.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>上面的两张图片代表混合层，下面的图片代表背景层<br>
+所有混合模式将基于上面的图片进行演示</p>
+<h1 id="normal">Normal</h1>
+<h2 id="正常">正常</h2>
+<p>“正常”混合模式是大多数软件默认的混合模式，即直接显示混合层的图像，如果想要显示背景层的图像，可以降低混合层的透明度。</p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200317104432531.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="溶解">溶解</h2>
+<p>“溶解”模式和正常模式很像，区别在于当降低混合层透明度时，背景层图像的像素以一种随机的方式显示出来，显示的强度取决于混合层的不透明度，即混合层越透明，背景层显示的像素越多</p>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200317105137753.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="darken">Darken</h1>
+<p>这些混合模式都会使图片变得更暗，混合层的白颜色会变得不可见，混合层的其他颜色会变得更暗。</p>
+<h2 id="变暗">变暗</h2>
+<center><b>E = min(M, I)</b></center>
+<br>
+即该混合模式会对比每个像素的RGB通道值，然后选择较小的一个，例如混合层某一像素为（15，120，30），与之对应的背景层的像素为（20，56, 14)，则新产生的像素为（15，56，14）
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200317110756182.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="正片叠底">正片叠底</h2>
+<p>“正片叠底”是最常用到的一种混合模式。</p>
+<center><b>E = M * I / 255</b></center>
+<br>
+通过公式可以得出如果为白色像素，则会显示另一层的像素，如果为黑色像素，则会依然显示黑色，其他颜色则会变得更暗。
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317111501648.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="颜色加深">颜色加深</h2>
+<p><img src="https://img-blog.csdnimg.cn/20200317112732590.png" alt="在这里插入图片描述" loading="lazy"><br>
+“颜色加深”会得出一个比正片叠底更暗的结果，会使中间调更加饱和，并减少高光。</p>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317113048541.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="线性加深">线性加深</h2>
+<center><b>E = (M + I) - 255</b></center>
+<br>
+"线性加深”得出的结果比正片叠底暗，但饱和度比“颜色加深”低。该模式能在图片较暗的部分产生较大的对比度。
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200317113729348.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="深色">深色</h2>
+<p>“深色”与“变暗”模式很像，区别在于&quot;深色&quot;不是对像素的每个通道作比较，而是对整个像素的亮度作比较然后保留较暗的一个。<br>
+通过RGB计算亮度一种常用的公式为：</p>
+<center><b>L = 0.2126*R + 0.7152 *G + 0.0722*B</b></center>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/2020031711470856.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="lighten">Lighten</h1>
+<p>这些混合模式都会得到一个更亮的结果，混合层黑色部分会变透明，其他颜色部分会变得更亮。</p>
+<h2 id="变亮">变亮</h2>
+<center><b>E = max(M, I)</b></center>
+<br>
+“变亮”的计算方式与“变暗”相同，但“变亮”取得是每个通道中较大的一个。例如混合层某一像素为（15，120，30），与之对应的背景层的像素为（20，56, 14)，则新产生的像素为（20，120，30）
+<figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20200317115516169.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="滤色">滤色</h2>
+<figure data-type="image" tabindex="11"><img src="https://img-blog.csdnimg.cn/20200317115647483.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>“滤色”也是PS种较常用的一种混合模式，得到的结果始终是较亮的颜色，黑色部分不会发生变化，较亮的像素会保留。该模式可用于增量图像或者创建高光。<br>
+<img src="https://img-blog.csdnimg.cn/20200317120107746.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="颜色减淡">颜色减淡</h2>
+<p><img src="https://img-blog.csdnimg.cn/20200317121357626.png" alt="在这里插入图片描述" loading="lazy"><br>
+通过降低背景层和混合层之间的对比度，“彩色减淡”混合模式可以得到一个比“滤色”更亮的效果，从而产生饱和的中间调和高光。<br>
+<img src="https://img-blog.csdnimg.cn/20200317121731182.png" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="线性减淡添加">线性减淡（添加）</h2>
+<center><b>E = M + I</b></center>
+<br>
+该公式作用于每个像素的每个通道
+<figure data-type="image" tabindex="12"><img src="https://img-blog.csdnimg.cn/2020031712222467.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="浅色">浅色</h2>
+<p>“浅色”与“深色”相反，对比两个像素的亮度值（不是每个通道），保留亮度值较高的像素。</p>
+<figure data-type="image" tabindex="13"><img src="https://img-blog.csdnimg.cn/20200317122356339.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="contrast">Contrast</h1>
+<p>此类别中的混合模式是“变暗”和“变亮”混合模式之间的混合。 通过使用互补的混合模式创建混合，它们通过使结果颜色变亮和变暗来创建对比度。</p>
+<p>这类模式中50%灰色，即(128,128,128)，会非常常见，为了方便，以下统称该色为“中性灰”。</p>
+<p>Photoshop中会检查颜色是比中性灰暗还是亮。 如果比中性灰暗，则将应用变暗的混合模式。 如果颜色比中性灰亮，则应用变亮的混合模式。</p>
+<h2 id="叠加">叠加</h2>
+<center><b>E = M * I / 128  </b>&emsp;当 I<128时</center>
+<center><b>E = 255 - (255 - M) * (255 - I) / 128   </b>&emsp;当 I>=128时</center>
+<br>
+叠加是Photoshop中使用最广泛的混合模式之一。它是“正片叠底”和“滤色”的混合。背景层中较亮的部分会变得更亮，较暗的部分会变得更暗。中性灰部分不受影响。
+<figure data-type="image" tabindex="14"><img src="https://img-blog.csdnimg.cn/20200317124319179.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="todo">TODO:</h1>
+<h2 id="柔光">柔光</h2>
+<h2 id="强光">强光</h2>
+<h2 id="亮光">亮光</h2>
+<h2 id="线性光">线性光</h2>
+<h2 id="点光">点光</h2>
+<h2 id="实色混合">实色混合</h2>
+<h1 id="inversion">Inversion</h1>
+<h2 id="差值">差值</h2>
+<h2 id="排除">排除</h2>
+<h2 id="减去">减去</h2>
+<h2 id="划分">划分</h2>
+<h1 id="component">Component</h1>
+<h2 id="色相">色相</h2>
+<h2 id="饱和度">饱和度</h2>
+<h2 id="颜色">颜色</h2>
+<h2 id="明度">明度</h2>
 <h1 id="参考">参考</h1>
 <ol>
 <li>https://en.wikipedia.org/wiki/Blend_modes</li>
 <li>https://photoshoptrainingchannel.com/blending-modes-explained/</li>
+<li>https://docs.gimp.org/en/gimp-concepts-layer-modes.html</li>
+<li>https://jingyan.baidu.com/article/36d6ed1f7c04801bcf4883c2.html</li>
 </ol>
 
             </div>
