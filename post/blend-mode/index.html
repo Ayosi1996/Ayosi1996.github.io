@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Unity优化DrawCall 及动态批处理的约束 | Sqrt9</title>
+<title>混合模式 | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,12 +18,14 @@
 
 
 
-    <meta name="description" content="参考自《Unity3D脚本编程》-陈嘉栋
+    <meta name="description" content="数字图像编辑和计算机图形学中的混合模式用于决定两个层之间如何相互混合。
 
-DrawCall优化方案：
-（1）使用Draw Call Batching，也就是描绘调用批处理。Unity3D再多次运行时可以将一些物体进行合并，从而用一个描绘来渲染他们。
-（2）通过把纹理打包..." />
-    <meta name="keywords" content="Unity" />
+When
+在大概1994年Photoshop 3.0的时候引入了混合模式，最初有19个混合模式。
+How
+背景层 (Base)：图片中起始的颜色，通常为下层
+混合层 ..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -106,47 +108,38 @@ DrawCall优化方案：
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Unity优化DrawCall 及动态批处理的约束</h2>
-            <div class="post-date">2017-05-20</div>
-            
-              <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20200317001653905.jpg')">
-              </div>
+            <h2 class="post-title">混合模式</h2>
+            <div class="post-date">2020-03-17</div>
             
             <div class="post-content" v-pre>
-              <p>参考自<a href="http://item.jd.com/12035114.html">《Unity3D脚本编程》-陈嘉栋</a></p>
-<!--more-->
-<p><strong>DrawCall优化方案：</strong></p>
-<p>（1）使用Draw Call Batching，也就是描绘调用批处理。Unity3D再多次运行时可以将一些物体进行合并，从而用一个描绘来渲染他们。</p>
-<p>（2）通过把纹理打包成图集尽量减少材质的使用。</p>
-<p>（3）尽量少的使用反光、阴影之类的效果，因为那会使物体多次渲染。</p>
-<p>批处理分为静态批处理和动态批处理。</p>
-<p><strong>动态批处理相对静态批处理有许多约束条件：</strong></p>
-<p>（1）批处理动态物体需要在每个顶点进行一定的开销，所以动态批处理仅支持小于900顶点的网格物体。</p>
-<p>（2）如果着色器使用顶点位置、法线和UV值三种属性，那么只能批处理300顶点以下的物体；如果着色器需要使用顶点位置、法线、UV0、UV1和切向量，那只能批处理180顶点以下的物体。</p>
-<p>（3）不要使用缩放。分别拥有缩放大小（1,1,1）和（2,2,2）的两个物体将不会进行批处理。</p>
-<p>（4）统一缩放的物体不会与非统一缩放的进行批处理。</p>
-<p>（5）使用缩放尺度（1,1,1）和（1,2,1）的两个物体将不会进行批处理，但是使用缩放尺度（1,2,1）和（1,3,1）的两个物体将可以进行批处理。</p>
-<p>（6）使用不同材质的实例化物体（instance）将会导致批处理失败。</p>
-<p>（7）拥有lightmap的物体含有额外（隐藏）得材质属性，例如lightmap的偏移和缩放系数等，所以，拥有lightmap的物体将不会进行批处理（除非他们指向lightmap的同一部分）。</p>
-<p>（8）多通道的shader会妨碍批处理操作。比如几乎Unity3D中所有的着色器在前向渲染中都支持多个光源，并为他们有效的开辟多个通道。</p>
-<p>（9）预设体的实例会自动地使用相同的网格模型和材质。</p>
+              <p>数字图像编辑和计算机图形学中的混合模式用于决定两个层之间如何相互混合。</p>
+<!-- more -->
+<h1 id="when">When</h1>
+<p>在大概1994年Photoshop 3.0的时候引入了混合模式，最初有19个混合模式。</p>
+<h1 id="how">How</h1>
+<p>背景层 (Base)：图片中起始的颜色，通常为下层<br>
+混合层 (Blend)：用于决定两个层之间的颜色如何混合，通常为上层<br>
+结果 (Result): 结果即为两个层混合之后得到的颜色<br>
+<img src="https://img-blog.csdnimg.cn/20200317013321423.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
+<h1 id="math">Math</h1>
+<p>在本文中用A来表示混合层的颜色，用B来表示背景层的颜色</p>
+<p>例如：<br>
+线性减淡的公式为：</p>
+<center>B / (1 - A) = Result</center>
+<h1 id="参考">参考</h1>
+<ol>
+<li>https://en.wikipedia.org/wiki/Blend_modes</li>
+<li>https://photoshoptrainingchannel.com/blending-modes-explained/</li>
+</ol>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
-                    Unity
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ayosi1996.github.io/post/unity-note-014/">
+                <a href="https://ayosi1996.github.io/post/computer-principle/">
                   <h3 class="post-title">
-                    在Unity3D中扩展编辑器添加菜单
+                    But How Do It Know-The Basic Principles of Computers
                   </h3>
                 </a>
               </div>
