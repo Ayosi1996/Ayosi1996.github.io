@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" >
 
-<title>混合模式 | Sqrt9</title>
+<title>混合模式总结 | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1588998168429">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1604840614049">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@ How
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1588998168429" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1604840614049" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -104,7 +104,7 @@ How
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">混合模式</h2>
+            <h2 class="post-title">混合模式总结</h2>
             <div class="post-date">2020-02-02</div>
             
               <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20200317131729198.png')">
@@ -113,110 +113,157 @@ How
             <div class="post-content" v-pre>
               <p>数字图像编辑和计算机图形学中的混合模式用于决定两个层之间如何相互混合。</p>
 <!-- more -->
-<h1 id="when">When</h1>
+<h1 id="font-size-6-color-0077bbwhenfont"><font size = 6 color = 0077bb>When</font></h1>
 <p>在大概1994年Photoshop 3.0的时候引入了混合模式，最初有19个混合模式。</p>
-<h1 id="how">How</h1>
+<h1 id="font-size-6-color-0077bbhowfont"><font size = 6 color = 0077bb>How</font></h1>
 <p>背景层 (Base)：图片中起始的颜色，通常为下层<br>
 混合层 (Blend)：用于决定两个层之间的颜色如何混合，通常为上层<br>
 结果 (Result): 结果即为两个层混合之后得到的颜色</p>
 <figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200317013321423.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h1 id="math">Math</h1>
-<p>在本文中用<strong>M</strong>来表示混合层的颜色，用<strong>I</strong>来表示背景层的颜色，<strong>E</strong>代表混合之后得到的结果<br>
+<h1 id="font-size-6-color-0077bbmathfont"><font size = 6 color = 0077bb>Math</font></h1>
+<p>在本文中用 <font color = 990500><strong>M</strong></font> 来表示混合层的颜色，用 <font color = 990500><strong>I</strong></font> 来表示背景层的颜色， <font color = 990500><strong>E</strong></font> 代表混合之后得到的结果<br>
 文章中提到的白色为纯白，即（255,255,255）黑色为纯黑色，即（0,0,0）</p>
 <p>例如：<br>
 “正片叠底”的公式为：</p>
-<center><b>E = M * I / 255</b></center>
+<center><b>E = (M * I) / 255</b></center>
 <br>
-<h1 id="begin">Begin</h1>
+<h1 id="font-size-6-color-0077bbbeginfont"><font size = 6 color = 0077bb>Begin</font></h1>
 <figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200317103845120.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>上面的两张图片代表混合层，下面的图片代表背景层<br>
 所有混合模式将基于上面的图片进行演示</p>
-<h1 id="normal">Normal</h1>
-<h2 id="正常">正常</h2>
+<h1 id="font-size-6-color-0077bbnormalfont"><font size = 6 color = 0077bb>Normal</font></h1>
+<h2 id="b正常normalb"><b>正常(Normal)</b></h2>
 <p>“正常”混合模式是大多数软件默认的混合模式，即直接显示混合层的图像，如果想要显示背景层的图像，可以降低混合层的透明度。</p>
 <figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200317104432531.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="溶解">溶解</h2>
+<h2 id="b溶解dissolveb"><b>溶解(Dissolve)</b></h2>
 <p>“溶解”模式和正常模式很像，区别在于当降低混合层透明度时，背景层图像的像素以一种随机的方式显示出来，显示的强度取决于混合层的不透明度，即混合层越透明，背景层显示的像素越多</p>
 <figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200317105137753.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h1 id="darken">Darken</h1>
+<h1 id="font-size-6-color-0077bbdarkenfont"><font size = 6 color = 0077bb>Darken</font></h1>
 <p>这些混合模式都会使图片变得更暗，混合层的白颜色会变得不可见，混合层的其他颜色会变得更暗。</p>
-<h2 id="变暗">变暗</h2>
+<h2 id="b变暗darkenb"><b>变暗(Darken)</b></h2>
 <center><b>E = min(M, I)</b></center>
 <br>
 即该混合模式会对比每个像素的RGB通道值，然后选择较小的一个，例如混合层某一像素为（15，120，30），与之对应的背景层的像素为（20，56, 14)，则新产生的像素为（15，56，14）
 <figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200317110756182.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="正片叠底">正片叠底</h2>
+<h2 id="b正片叠底multiplyb"><b>正片叠底(Multiply)</b></h2>
 <p>“正片叠底”是最常用到的一种混合模式。</p>
 <center><b>E = M * I / 255</b></center>
 <br>
 通过公式可以得出如果为白色像素，则会显示另一层的像素，如果为黑色像素，则会依然显示黑色，其他颜色则会变得更暗。
 <figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317111501648.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="颜色加深">颜色加深</h2>
+<h2 id="b颜色加深color-burnb"><b>颜色加深(Color Burn)</b></h2>
 <p><img src="https://img-blog.csdnimg.cn/20200317112732590.png" alt="在这里插入图片描述" loading="lazy"><br>
 “颜色加深”会得出一个比正片叠底更暗的结果，会使中间调更加饱和，并减少高光。</p>
 <figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317113048541.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="线性加深">线性加深</h2>
+<h2 id="b线性加深linear-burnb"><b>线性加深(Linear Burn)</b></h2>
 <center><b>E = (M + I) - 255</b></center>
 <br>
 "线性加深”得出的结果比正片叠底暗，但饱和度比“颜色加深”低。该模式能在图片较暗的部分产生较大的对比度。
 <figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200317113729348.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="深色">深色</h2>
+<h2 id="b深色darker-colorb"><b>深色(Darker Color)</b></h2>
 <p>“深色”与“变暗”模式很像，区别在于&quot;深色&quot;不是对像素的每个通道作比较，而是对整个像素的亮度作比较然后保留较暗的一个。<br>
 通过RGB计算亮度一种常用的公式为：</p>
 <center><b>L = 0.2126*R + 0.7152 *G + 0.0722*B</b></center>
 <figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/2020031711470856.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h1 id="lighten">Lighten</h1>
+<h1 id="font-size-6-color-0077bblightenfont"><font size = 6 color = 0077bb>Lighten</font></h1>
 <p>这些混合模式都会得到一个更亮的结果，混合层黑色部分会变透明，其他颜色部分会变得更亮。</p>
-<h2 id="变亮">变亮</h2>
+<h2 id="b变亮lightenb"><b>变亮(Lighten)</b></h2>
 <center><b>E = max(M, I)</b></center>
 <br>
 “变亮”的计算方式与“变暗”相同，但“变亮”取得是每个通道中较大的一个。例如混合层某一像素为（15，120，30），与之对应的背景层的像素为（20，56, 14)，则新产生的像素为（20，120，30）
 <figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20200317115516169.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="滤色">滤色</h2>
+<h2 id="b滤色screenb"><b>滤色(Screen)</b></h2>
 <figure data-type="image" tabindex="11"><img src="https://img-blog.csdnimg.cn/20200317115647483.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>“滤色”也是PS种较常用的一种混合模式，得到的结果始终是较亮的颜色，黑色部分不会发生变化，较亮的像素会保留。该模式可用于增量图像或者创建高光。<br>
 <img src="https://img-blog.csdnimg.cn/20200317120107746.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<h2 id="颜色减淡">颜色减淡</h2>
+<h2 id="b颜色减淡color-dodgeb"><b>颜色减淡(Color Dodge)</b></h2>
 <p><img src="https://img-blog.csdnimg.cn/20200317121357626.png" alt="在这里插入图片描述" loading="lazy"><br>
 通过降低背景层和混合层之间的对比度，“彩色减淡”混合模式可以得到一个比“滤色”更亮的效果，从而产生饱和的中间调和高光。<br>
 <img src="https://img-blog.csdnimg.cn/20200317121731182.png" alt="在这里插入图片描述" loading="lazy"></p>
-<h2 id="线性减淡添加">线性减淡（添加）</h2>
+<h2 id="b线性减淡添加linear-dodgeaddb"><b>线性减淡（添加）(Linear Dodge(Add))</b></h2>
 <center><b>E = M + I</b></center>
 <br>
 该公式作用于每个像素的每个通道
 <figure data-type="image" tabindex="12"><img src="https://img-blog.csdnimg.cn/2020031712222467.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="浅色">浅色</h2>
+<h2 id="b浅色lighter-colorb"><b>浅色(Lighter Color)</b></h2>
 <p>“浅色”与“深色”相反，对比两个像素的亮度值（不是每个通道），保留亮度值较高的像素。</p>
 <figure data-type="image" tabindex="13"><img src="https://img-blog.csdnimg.cn/20200317122356339.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h1 id="contrast">Contrast</h1>
+<h1 id="font-size-6-color-0077bbcontrastfont"><font size = 6 color = 0077bb>Contrast</font></h1>
 <p>此类别中的混合模式是“变暗”和“变亮”混合模式之间的混合。 通过使用互补的混合模式创建混合，它们通过使结果颜色变亮和变暗来创建对比度。</p>
 <p>这类模式中50%灰色，即(128,128,128)，会非常常见，为了方便，以下统称该色为“中性灰”。</p>
 <p>Photoshop中会检查颜色是比中性灰暗还是亮。 如果比中性灰暗，则将应用变暗的混合模式。 如果颜色比中性灰亮，则应用变亮的混合模式。</p>
-<h2 id="叠加">叠加</h2>
+<h2 id="b叠加overlayb"><b>叠加(Overlay)</b></h2>
 <center><b>E = M * I / 128  </b>&emsp;当 I<128时</center>
 <center><b>E = 255 - (255 - M) * (255 - I) / 128   </b>&emsp;当 I>=128时</center>
 <br>
 叠加是Photoshop中使用最广泛的混合模式之一。它是“正片叠底”和“滤色”的混合。背景层中较亮的部分会变得更亮，较暗的部分会变得更暗。中性灰部分不受影响。
 <figure data-type="image" tabindex="14"><img src="https://img-blog.csdnimg.cn/20200317124319179.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h2 id="柔光">柔光</h2>
-<p>“柔光”和“叠加”很像，你可以把“柔光”当做“叠加”的柔和版本，即”柔和“没有“叠加”那么强烈的对比度。</p>
+<h2 id="b柔光soft-lightb"><b>柔光(Soft Light)</b></h2>
+<p>“柔光”和“叠加”很像，可以把“柔光”当做“叠加”的柔和版本，即”柔和“没有“叠加”那么强烈的对比度。</p>
 <figure data-type="image" tabindex="15"><img src="https://img-blog.csdnimg.cn/20200322225613208.png" alt="在这里插入图片描述" loading="lazy"></figure>
-<h1 id="todo">TODO:</h1>
-<h2 id="强光">强光</h2>
-<h2 id="亮光">亮光</h2>
-<h2 id="线性光">线性光</h2>
-<h2 id="点光">点光</h2>
-<h2 id="实色混合">实色混合</h2>
-<h1 id="inversion">Inversion</h1>
-<h2 id="差值">差值</h2>
-<h2 id="排除">排除</h2>
-<h2 id="减去">减去</h2>
-<h2 id="划分">划分</h2>
-<h1 id="component">Component</h1>
-<h2 id="色相">色相</h2>
-<h2 id="饱和度">饱和度</h2>
-<h2 id="颜色">颜色</h2>
-<h2 id="明度">明度</h2>
+<h2 id="b强光hard-lightb"><b>强光(Hard Light)</b></h2>
+<p><img src="https://img-blog.csdnimg.cn/20201108103055296.png#pic_center" alt="在这里插入图片描述" loading="lazy"><img src="https://img-blog.csdnimg.cn/20201108103117443.png#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
+<p>强光的公式分为两个部分,分别处理亮部和暗部。强光相当于正片叠底和滤色的混合，使用该效果混合两张图片能够获得比较明亮的色彩和清晰的边缘。强光的结果通常比较强烈，通常需要降低混合层透明度以获得一个比较合理的结果。</p>
+<figure data-type="image" tabindex="16"><img src="https://img-blog.csdnimg.cn/20201108104710131.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b亮光vivid-lightb"><b>亮光(Vivid Light)</b></h2>
+<p><img src="https://img-blog.csdnimg.cn/20201108110131168.gif#pic_center" alt="在这里插入图片描述" loading="lazy"><img src="https://img-blog.csdnimg.cn/2020110811030920.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
+<p>亮光可以认为是阴暗处应用颜色加深(Color Burn) 高亮处应用颜色减淡(Color Dodge)。该模式非常强烈的增加了对比度，特别是在高亮和阴暗处。<br>
+<img src="https://img-blog.csdnimg.cn/20201108110452218.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="b线性光linear-lightb"><b>线性光(Linear Light)</b></h2>
+<p><img src="https://img-blog.csdnimg.cn/20201108110816780.gif#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+线性光通过在较亮像素上使用线性减淡(Linear Dodge)和在较暗像素上使用线性加深(Linear Burn) 的方式来加深或减淡颜色。其类似于Linear Burn,只不过是加深了上层的影响力。<br>
+<img src="https://img-blog.csdnimg.cn/20201108111542599.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></p>
+<h2 id="b点光pin-lightb"><b>点光(Pin Light)</b></h2>
+<center><b>E = Min(I,2*M)  </b>&emsp;当 M<=128时</center>
+<center><b>E = Min(I,2*M-255)   </b>&emsp;当 M>128时</center>
+<p>Pin Light是一种比较极端的混合模式，会同时应用“变暗”和“变亮”混合模式。 它可能会导致斑点，并且会完全消除所有中间调。</p>
+<figure data-type="image" tabindex="17"><img src="https://img-blog.csdnimg.cn/20201108112242826.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b实色混合hard-mixb"><b>实色混合(Hard Mix)</b></h2>
+<center><b>①如果 I + M >= 255 那么E = 255 </b></center>
+<center><b>②如果 I + M < 255 那么E = 0 </b></center>
+<br>
+实色混合模式通过将混合层和基础层 每个像素对应的RGB通道相加来进行混合。生成的图像会失去很多细节，并且颜色只能是黑色，白色或六种原色中的任何一种： 红色，绿色，蓝色，青色，洋红色或黄色，因为每个通道不是0就是255.
+<figure data-type="image" tabindex="18"><img src="https://img-blog.csdnimg.cn/20201108185656696.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="font-size-6-color-0077bbinversionfont"><font size = 6 color = 0077bb>Inversion</font></h1>
+<p>反转(Inversion)模式通过在基础层和混合层之间寻找差异来进行混合</p>
+<h2 id="b差值differenceb"><b>差值(Difference)</b></h2>
+<center><b>E = |I - M| </b></center>
+<br>
+差值混合模式如果与黑色混合则保持原颜色不变，如果与白色混合则反转原颜色。该模式通常用于在编辑过程中验证两张相似图片的相似程度。
+<figure data-type="image" tabindex="19"><img src="https://img-blog.csdnimg.cn/20201108202444621.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b排除exclusionb"><b>排除(Exclusion)</b></h2>
+<figure data-type="image" tabindex="20"><img src="https://img-blog.csdnimg.cn/2020110820274960.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>排除与差值模式非常相似。 与白色混合会反转基础层颜色值，而与黑色混合不会产生任何变化。 但是，与50％的灰度混合会产生50％的灰度。</p>
+<figure data-type="image" tabindex="21"><img src="https://img-blog.csdnimg.cn/20201108203025302.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b减去subtractb"><b>减去(Subtract)</b></h2>
+<center><b>E = I - M </b></center>
+<br>
+减去混合模式 由基础层颜色减去混合层颜色得到。
+如果出现负数就剪切为零。与基色相同的颜色混合得到黑色；白色与基色混合得到黑色；黑色与基色混合得到基色。
+<figure data-type="image" tabindex="22"><img src="https://img-blog.csdnimg.cn/20201108203816656.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b划分divideb"><b>划分(Divide)</b></h2>
+<figure data-type="image" tabindex="23"><img src="https://img-blog.csdnimg.cn/20201108204006845.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>划分混合模式产生和减去相反的结果。<br>
+混合层的暗色区域会得到更亮的颜色，混合层的亮部区域会发生轻微的改变。</p>
+<figure data-type="image" tabindex="24"><img src="https://img-blog.csdnimg.cn/20201108204246801.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="font-size-6-color-0077bbcomponentfont"><font size = 6 color = 0077bb>Component</font></h1>
+<p>以下混合模式通过使用颜色的主要元素（色相、饱和度、颜色、明度）来进行混合。<br>
+各个混合模式的公式通过HSB颜色模式来表示。H(hues)表示色相，S(saturation)表示饱和度，B（brightness）表示亮度</p>
+<h2 id="b色相hueb"><b>色相(Hue)</b></h2>
+<p><img src="https://img-blog.csdnimg.cn/20201108205021547.gif#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+该公式表示：<br>
+输出图像的色相取混合层的色相，饱和度取基础层的饱和度，亮度取基础层的饱和度。<br>
+色相混合模式可用于更改图层中的色相，同时保持原始色相和饱和度。</p>
+<figure data-type="image" tabindex="25"><img src="https://img-blog.csdnimg.cn/20201108205417526.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b饱和度saturationb"><b>饱和度(Saturation)</b></h2>
+<figure data-type="image" tabindex="26"><img src="https://img-blog.csdnimg.cn/20201108205641943.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="27"><img src="https://img-blog.csdnimg.cn/20201108205815801.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b颜色colorb"><b>颜色(Color)</b></h2>
+<figure data-type="image" tabindex="28"><img src="https://img-blog.csdnimg.cn/20201108205908612.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="29"><img src="https://img-blog.csdnimg.cn/2020110820594852.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<h2 id="b明度luminosityb"><b>明度(Luminosity)</b></h2>
+<figure data-type="image" tabindex="30"><img src="https://img-blog.csdnimg.cn/20201108210130309.gif#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="31"><img src="https://img-blog.csdnimg.cn/20201108210151775.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="参考">参考</h1>
 <ol>
 <li>https://en.wikipedia.org/wiki/Blend_modes</li>
