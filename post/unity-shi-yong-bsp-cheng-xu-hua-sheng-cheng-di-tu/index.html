@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Unity 使用BSP程序化生成地图 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607068814190">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="BSP Tree
+二叉空间分割 （Binary space partitioning，简称BSP）是一种通过使用超平面作为分割，递归细分空间为两凸集的算法。这个过程将空间细分转化为了树结构，即所谓的二叉空间分割树（BSP树）。1993年， ..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607068814190" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+          <a class="social-link" href="https://twitter.com/Sqrt9SD" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+      Powered by Gridea | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Unity 使用BSP程序化生成地图</h2>
+            <div class="post-date">2020-12-04</div>
+            
+              <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20201204155832558.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="bsp-tree">BSP Tree</h1>
+<p><strong>二叉空间分割</strong> （Binary space partitioning，简称BSP）是一种通过使用超平面作为分割，递归细分空间为两凸集的算法。这个过程将空间细分转化为了树结构，即所谓的二叉空间分割树（BSP树）。1993年， <strong>毁灭战士(DOOM)</strong> 是John Carmack首次在游戏中使用二叉空间分割算法</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201204094046734.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1  color = 888888>图源wiki</font></center>
+<h1 id="构建bsp-tree">构建BSP Tree</h1>
+<p>首先选取一块矩形空间作为地图的最大边界，接下来对地图进行递归的分割，直到每个单独的小空间不能再进行划分为止。</p>
+<p>划分算法可分为以下步骤：</p>
+<ul>
+<li>选择划分方向：横向还是纵向</li>
+<li>选择划分位置</li>
+<li>将空间分割为两个子空间</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201204095527691.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1  color = 888888>第一次划分结果</font></center>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20201204100304884.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1  color = 888888>第二次划分结果</font></center>
+<br>
+注意当选择划分位置的时候，分割线不能离空间边界太近，必须保证最后的每个空间都能放下一个预设房间的大小。重复划分直到最低层的空间（叶子节点）达到我们想要的近似预设空间的大小。
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20201204101058757.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1 color = 888888>第四次划分结果</font></center>
+<p>不同的划分位置选择会造成不同的生成结果，如果把分割线规定在0.4f - 0.5f 的范围内，最后会形成比较一个比较规整的地图，所有房间大小相近。如果把分割线规定在0.1f - 0.9f的范围内，就会形成一个比较混乱的地图，房间大小不一。</p>
+<p>BSP节点生成伪代码：</p>
+<pre><code class="language-c">while (迭代次数 &lt; 最大迭代次数 &amp;&amp; graph.Count&gt;0)    // graph 为待检查节点队列
+        {
+            迭代次数++;
+            RoomNode 当前节点 = graph.Dequeue();
+            if(当前节点 仍然可以分割)
+            {
+                根据房间最小宽度和长度 获取分割线(Line)位置(Coordinate)和方向(Orientation);
+                依据分割线生成两个新的子节点;
+                将新生成的子节点加入节点集合和graph中;
+            }
+        }
+</code></pre>
+<h1 id="创建房间">创建房间</h1>
+<p>创建好BSP Tree之后，即可创建房间了。为了创建房间，首先需要遍历BSP树找到所有叶子节点，也就是对BSP树进行按层遍历。</p>
+<p>查找叶子节点主要代码</p>
+<pre><code class="language-csharp">while (nodesToCheck.Count &gt; 0)
+        {
+            var currentNode = nodesToCheck.Dequeue();   // 当前检查的节点
+            if (currentNode.ChildrenNodeList.Count == 0)    // 没有子节点即为叶子节点，加入叶子节点列表
+            {
+                listToReturn.Add(currentNode);
+            }
+            else        // 如果有叶子节点，将该节点的子节点入队，等待遍历
+            {
+                foreach (var child in currentNode.ChildrenNodeList)
+                {
+                    nodesToCheck.Enqueue(child);
+                }
+            }
+        }
+</code></pre>
+<br>
+查找到所有的叶子节点后，即可在节点中生成房间。
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/2020120411025713.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1 color = 888888>房间生成结果</font></center>
+<h1 id="创建走廊">创建走廊</h1>
+<p>为了创建走廊，需要遍历所有的叶子节点，连接每个节点至它的兄弟节点。如果两个房间有面对面的墙，即可直接直线连接，如果没有的话，只能使用一个Z型的走廊来连接。</p>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20201204111209539.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1 color = 888888>连接第四层兄弟节点</font></center>
+<p>下一步重复以上的步骤对上一层（第三层）进行处理。由于第四层的房间已经相互连接起来，所以在连接第三层的时候可以有以下几种连接方式：</p>
+<ul>
+<li>两个房间进行连接</li>
+<li>房间与走廊连接</li>
+<li>走廊与走廊连接</li>
+</ul>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20201204112115899.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1 color = 888888>连接第三层兄弟节点</font></center>
+<br>
+重复以上步骤直到A和B节点连接到一起
+<br>
+走廊生成部分主要代码：
+<pre><code class="language-csharp">// 连接两个相对位置为左右关系的节点
+    private void ProcessRoomInRelationRightOrLeft(Node structure1, Node structure2)
+    {
+        Node leftStructure = null;
+        // 获取左半部分叶子节点
+        List&lt;Node&gt; leftStructureChildren = StructureHelper.TraverseGraphToExtractLowestLeafes(structure1);
+        Node rightStructure = null;
+        // 获取右半部分叶子节点
+        List&lt;Node&gt; rightStructureChildren = StructureHelper.TraverseGraphToExtractLowestLeafes(structure2);
+
+        // 将左侧叶子节点按照x坐标递减的顺序排列
+        var sortedLeftStructure = leftStructureChildren.OrderByDescending(child =&gt; child.TopRightAreaCorner.x).ToList();
+        if (sortedLeftStructure.Count == 1)
+        {
+            leftStructure = sortedLeftStructure[0];
+        }
+        else
+        {
+            // 在左侧叶子节点中 随机选取一个节点与右侧进行连接，该结点的x坐标与x坐标的最大值相距不能超过10
+            int maxX = sortedLeftStructure[0].TopRightAreaCorner.x;
+            sortedLeftStructure = sortedLeftStructure.Where(children =&gt; Math.Abs(maxX - children.TopRightAreaCorner.x) &lt; 10).ToList();
+            int index = UnityEngine.Random.Range(0, sortedLeftStructure.Count);
+            leftStructure = sortedLeftStructure[index];
+        }
+
+        // 根据选中的左侧节点 在右侧的叶子节点中找到能够与之相连接的节点
+        var possibleNeighboursInRightStructureList = rightStructureChildren.Where(
+            child =&gt; GetValidYForNeighourLeftRight(
+                leftStructure.TopRightAreaCorner,
+                leftStructure.BottomRightAreaCorner,
+                child.TopLeftAreaCorner,
+                child.BottomLeftAreaCorner
+                ) != -1
+            ).OrderBy(child =&gt; child.BottomRightAreaCorner.x).ToList();
+
+        // 在右侧可用的节点中选取一个
+        if (possibleNeighboursInRightStructureList.Count &lt;= 0)
+        {
+            rightStructure = structure2;
+        }
+        else
+        {
+            rightStructure = possibleNeighboursInRightStructureList[0];
+        }
+
+        // 计算出左侧房间和右侧房间能够连接的有效y坐标（y值坐标会被用作走廊左下角顶点的y值）
+        int y = GetValidYForNeighourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+            rightStructure.TopLeftAreaCorner,
+            rightStructure.BottomLeftAreaCorner);
+
+        // 当无法找到有效的y值连接点时，并且左侧叶子节点数量大于1时，进入以下循环
+        while(y==-1 &amp;&amp; sortedLeftStructure.Count &gt; 1)
+        {
+            // 从左侧叶子节点中重新选择一个有效节点
+            sortedLeftStructure = sortedLeftStructure.Where(
+                child =&gt; child.TopLeftAreaCorner.y != leftStructure.TopLeftAreaCorner.y).ToList();
+            leftStructure = sortedLeftStructure[0];
+            // 重新计算有效的y值坐标
+            y = GetValidYForNeighourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+            rightStructure.TopLeftAreaCorner,
+            rightStructure.BottomLeftAreaCorner);
+        }
+
+        // 求出走廊的左下角坐标和右上角坐标
+        BottomLeftAreaCorner = new Vector2Int(leftStructure.BottomRightAreaCorner.x, y);
+        TopRightAreaCorner = new Vector2Int(rightStructure.TopLeftAreaCorner.x, y + this.corridorWidth);
+    }
+</code></pre>
+<p>以上代码展示的是两个兄弟结点的分割方式为 <strong>纵向(Vertical)</strong> 的时候， <strong>横向(Horizontal)</strong> 分割方式同理。</p>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20201204112232751.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 1 color = 888888>地图生成结果</font></center>
+<h1 id="unity-showcase">Unity Showcase</h1>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/2020120415522477.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<h1 id="reference">Reference</h1>
+<ol>
+<li>http://www.roguebasin.com/index.php?title=Basic_BSP_Dungeon_generation</li>
+<li>https://en.wikipedia.org/wiki/Binary_space_partitioning</li>
+<li>https://youtu.be/VnqN0v95jtU?list=PLcRSafycjWFfEPbSSjGMNY-goOZTuBPMW</li>
+</ol>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/blend-mode/">
+                  <h3 class="post-title">
+                    混合模式总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
