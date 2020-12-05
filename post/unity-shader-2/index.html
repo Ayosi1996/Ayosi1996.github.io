@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607179260820">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -42,7 +42,7 @@ CPU流水线
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607179260820" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -125,7 +125,7 @@ CPU流水线
 <!--more-->
 <br>
 渲染流程大体可以分为三个概念阶段：
-<figure data-type="image" tabindex="1"><img src="https://ayosi1996.github.io/post-images/1584282752139.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201205234454931.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="cpu流水线">CPU流水线</h1>
 <ul>
 <li><font size=5><b>应用阶段</b></font></li>
@@ -136,7 +136,7 @@ CPU流水线
 <li><font color="#990500"><b>把数据加载到显存中</b></font></li>
 </ol>
 <p>渲染所需的数据从硬盘最终加载到显存中。在渲染时，GPU可以快速访问这些数据</p>
-<figure data-type="image" tabindex="2"><img src="https://ayosi1996.github.io/post-images/1584282780490.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201205234523653.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <ol start="2">
 <li>
 <p><font color="#990500"><b>设置渲染状态</b></font><br>
@@ -147,33 +147,33 @@ CPU流水线
 Draw Call只是一个命令，从CPU发送向GPU。这个命令仅仅会指向一个需要被渲染的图元列表，并且不会包含任何材质信息。</p>
 </li>
 </ol>
-<figure data-type="image" tabindex="3"><img src="https://ayosi1996.github.io/post-images/1584282801923.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20201205234555283.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="gpu流水线">GPU流水线</h1>
-<figure data-type="image" tabindex="4"><img src="https://ayosi1996.github.io/post-images/1584282981012.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20201205234622507.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>GPU的渲染流水线实现。颜色表示了不同阶段的可配置性或可编程性：绿色表示该流水线阶段是完全可编程控制的，黄色表示该流水线阶段可以配置但不是可编程的，蓝色表示该流水线阶段是由GPU固定实现的，开发者没有任何控制权。实线表示该shader必须由开发者编程实现，虚线表示该Shader是可选的</font></center>
 <p>GPU的渲染流水线接收顶点数据作为输入。这些顶点数据是由应用阶段加载到显存中，再由Draw Call指定的。</p>
 <ul>
 <li><font size=5><b>几何阶段</b></font></li>
 </ul>
 <p><font color="#990500"><b>顶点着色器</b></font>是完全可编程的，它的处理单位是顶点。顶点着色器需要完成的工作主要有：坐标变换、逐顶点光照和输出后续阶段所需的数据。必须完成的一个工作是，把顶点坐标从模型空间转换到齐次裁剪空间。</p>
-<figure data-type="image" tabindex="5"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzny3k85j30go05zwf6.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20201205234657545.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>顶点着色器会将模型顶点的位置变换到齐次裁剪坐标空间下，进行输出后再由硬件做透视除法得到NDC下的坐标 </font></center>
 <br>
 <font color="#990500"><b>裁剪</b></font>是为了不处理那些不在摄像机视野范围内的物体。这一步不可编程。裁剪过程:
-<figure data-type="image" tabindex="6"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzoqxyilj30go04hjrt.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20201205234732110.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>只有在单位立方体的图元才需要被继续处理。因此，完全在单位立方体外部的图元（红色三角形）被舍弃，完全在单位立方体内部的图元（绿色三角形）将被保留。和单位立方体相交的图元（黄色三角形）会被裁剪，新的顶点会被生成，原来在外部的顶点会被舍弃  </font></center>
 <br>
 <font color="#990500"><b>屏幕映射</b></font>的任务是把每个图元的*x*和*y*坐标转换到屏幕坐标系下。
 将*x、y *坐标从（-1,1）范围转换到屏幕坐标系中：
-<figure data-type="image" tabindex="7"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzs2fd2wj30go05tjrq.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20201205234757681.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>注意：屏幕坐标系在OpenGL和DiretX之间存在差异：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzsgrmajj30m808tt96.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201205234823936.png" alt="在这里插入图片描述" loading="lazy"></p>
 <ul>
 <li><font size=5><b>光栅化阶段</b></font></li>
 </ul>
 <p><font color="#990500"><b>三角形设置</b></font>阶段会计算光栅化一个三角形网格所需的数据。</p>
 <p><font color="#990500"><b>三角形遍历</b></font>阶段将会检查每个像素是否被一个三角网格所覆盖。如果被覆盖，会生成一个片元。片元是包含了很多状态的集合，这些状态包括屏幕坐标、深度信息、法线、纹理坐标等。三角形遍历过程：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuztl36lgj30m80b60uo.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201205234850872.png" alt="在这里插入图片描述" loading="lazy"></p>
 <center><font size = 2>根据几何阶段输出的顶点信息，最终得到该三角网格覆盖的像素位置。对应像素会生成一个片元，而片元中的状态是对三个顶点的信息进行插值得到的。  </font></center>
 <br>
 <font color="#990500"><b>片元着色器</b></font>是另一个非常重要的可编程着色器阶段。这一阶段可以完成很多重要的渲染技术，技术之一是纹理采样。在执行片元着色器时，它不能将自己的任何结果直接发送给它的邻居。这一阶段的输出是一个或多个颜色值。
@@ -183,25 +183,25 @@ Draw Call只是一个命令，从CPU发送向GPU。这个命令仅仅会指向�
 <li>如果片元通过测试，需要把源颜色(通过测试的片元颜色)与目标颜色(颜色缓冲区中的颜色)进行混合。<br>
 <br><br>
 <font size =3>此阶段所做的操作：</font><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzupbpjnj30m802v3yv.jpg" alt="undefined" loading="lazy"></li>
+<img src="https://img-blog.csdnimg.cn/20201205234918628.png" alt="在这里插入图片描述" loading="lazy"></li>
 </ol>
 <center><font size = 2>只有通过了所有的测试后，新生成的片元才能和颜色缓冲区中已经存在的像素颜色进行混合，最后再写入颜色缓冲区中   </font></center>
 <p><font size =3>模板测试和深度测试简化流程图：</font><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzv2il54j30go0hignx.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201205234940508.png" alt="在这里插入图片描述" loading="lazy"></p>
 <p><font size =3>混合操作简化流程图：</font><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzvifnuoj30go0iijsz.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/2020120523501326.png" alt="在这里插入图片描述" loading="lazy"></p>
 <p><font size =3>Unity的渲染流水线中，深度测试是在片元着色器之前。<br>屏幕显示的就是颜色缓冲区的值，为了避免看到正在进行光栅化的图元，GPU会使用双重缓冲：即对场景的渲染发生在后置缓冲中。</font></p>
 <h1 id="draw-call">Draw Call</h1>
 <p>Draw Call本身的含义很简单，就是CPU调用图像编程接口，如OpelGL中的glDrawElements命令。<br>
 Draw Call中造成性能问题的元凶是CPU</p>
 <p><font size=5><b>CPU和GPU实现并行工作</b></font></p>
-<p>让CPU和GPU可以并行工作，解决方法是使用一个命令缓冲区：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzwc6s1rj30dw0c0wfl.jpg" alt="undefined" loading="lazy"></p>
+<p>让CPU和GPU可以并行工作，解决方法是使用一个命令缓冲区：</p>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20201205235115580.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>CPU通过图像编程接口向命令缓冲区中添加命令，而GPU从中读取命令并执行。黄色方框内的命令就是Draw Call，而红色方框内的命令用于改变渲染状态。我们使用红色方框来表示改变渲染状态的命令，是因为这些命令往往更加耗时   </font></center>
 <br>
 <font size=5><b>Draw Call多了影响帧率</b></font>
 <p>如果Draw Call的数量太多，CPU就会把大量时间花费在提交Draw Call上，造成CPU过载。<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuzwy53u9j30go0demzv.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201205235144161.png" alt="在这里插入图片描述" loading="lazy"></p>
 <center><font size = 2>命令缓冲区中的虚线方框表示GPU已经完成的命令。此时，命令缓冲区中没有可以执行的命令了，GPU处于空闲状态，而CPU还没有准备好下一个渲染命令。  </font></center>
 <br>
 <font size=5><b>减少Draw Call</b></font>
