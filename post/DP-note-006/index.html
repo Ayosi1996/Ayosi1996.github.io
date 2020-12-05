@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -38,7 +38,7 @@ class ClassName
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -119,9 +119,9 @@ class ClassName
 <!--more-->
 <p><font size =6> <strong>UML类图常用标记</strong></font></p>
 <p><font size =5> <strong>字段、方法与属性</strong></font></p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjh7ysoij308507uwen.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206001716471.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>对应代码：</p>
-<pre><code class="language-chsarp">class ClassName
+<pre><code class="language-c#">class ClassName
     {
         //字段
         public int field_1;
@@ -141,9 +141,9 @@ class ClassName
 <p><strong>注意：当类名为斜体时类为抽象类</strong></p>
 <!--more-->
 <p><font size =5> <strong>继承、实现接口</strong></font><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjhw04t1j30d20axdgb.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201206001751809.png" alt="在这里插入图片描述" loading="lazy"></p>
 <p>对应代码：</p>
-<pre><code class="language-csharp">class Subclass : ClassName, Interface1
+<pre><code class="language-c#">class Subclass : ClassName, Interface1
     {
         public void InterfaceFun() {
             Console.WriteLine(&quot;接口实现&quot;);
@@ -155,23 +155,23 @@ interface Interface1
     }
 </code></pre>
 <p><font size =5> <strong>关联、聚合、组合、依赖</strong></font></p>
-<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjia00qsj30bt07edfw.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201206001816918.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>对应代码：</p>
-<pre><code class="language-csharp">class RelateClass
+<pre><code class="language-c#">class RelateClass
     {
         private ClassName _className;
     }
 </code></pre>
-<figure data-type="image" tabindex="3"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjin5sdwj30fz04wjro.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/2020120600184541.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>对应代码：</p>
-<pre><code class="language-csharp">class 雁群
+<pre><code class="language-c#">class 雁群
     {
         private 大雁[] _dayan;
     }
 </code></pre>
-<figure data-type="image" tabindex="4"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjiywtk2j30ef04r0sw.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20201206001906521.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>对应代码：</p>
-<pre><code class="language-csharp">class Bird
+<pre><code class="language-c#">class Bird
 {
 	private Wing wing;
 	public Bird()
@@ -181,9 +181,9 @@ interface Interface1
 }
 </code></pre>
 <p>依赖关系：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvjjcguhkj30en07fgm1.jpg" alt="undefined" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20201206001958956.png" alt="在这里插入图片描述" loading="lazy"><br>
 对应代码：</p>
-<pre><code class="language-csharp">class Animal
+<pre><code class="language-c#">class Animal
 {
 	public Animal(Oxygen oxygen,Water water)
 	{

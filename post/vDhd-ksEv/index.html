@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ Sha..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -119,7 +119,8 @@ Sha..." />
 Shader负责将输入的Mesh（网格）以指定的方式和输入的贴图或者颜色等组合作用，然后输出。绘图单元可以依据这个输出来将图像绘制到屏幕上。输入的贴图或者颜色等，加上对应的Shader，以及对Shader的特定的参数设置，将这些内容（Shader及输入参数）打包存储在一起，得到的就是一个Material（材质）。</p>
 <p><strong><font color = #990500>纹理(Texture)</font></strong><br>
 又称纹理贴图，在计算机图形学中是把存储在内存里的位图包裹到3D渲染物体的表面。纹理贴图给物体提供了丰富的细节，用简单的方式模拟出了复杂的外观。一个图像（纹理）被贴(映射)到场景中的一个简单形体上，就像印花贴到一个平面上一样。这大大减少了在场景中制作形体和纹理的计算量。<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3dweifkj32bl11iaev.jpg" alt="undefined" loading="lazy"><center><font size =2>1: 未加纹理贴图的球体, 2: 纹理贴图加凹凸贴图, 3: 仅凹凸贴图, 4: 透明图加纹理贴图 图片来源于wiki</font></center></p>
+<img src="https://img-blog.csdnimg.cn/20201206000249767.png" alt="在这里插入图片描述" loading="lazy"></p>
+<center><font size =2>1: 未加纹理贴图的球体, 2: 纹理贴图加凹凸贴图, 3: 仅凹凸贴图, 4: 透明图加纹理贴图 图片来源于wiki</font></center>
 <p><strong><font color = #990500>纹理坐标</font></strong><br>
 模型上面的贴图是通过纹理映射技术将其附加在模型上面，美术人员利用Max等工具建模时，会在建模软件中利用纹理展开技术把纹理映射坐标存储在每个顶点上，纹理映射坐标定义了该顶点在纹理中对应的2D坐标。这些坐标使用一个二维变量（u，v）来表示，纹理映射坐标也称为UV坐标。顶点UV坐标的范围通常都被归一化到[0,1]范围内。</p>
 <p><strong><font color = #990500>纹理采样</font></strong></p>
@@ -132,14 +133,16 @@ Rendering Path其实指的就是渲染场景中光照的方式。由于场景中
 <h1 id="font-color-0077bb-size-7进阶font"><font color = #0077BB size =7>进阶</font></h1>
 <h2 id="font-color-0077bbunity中的shaderfont"><font color = #0077BB>Unity中的Shader</font></h2>
 <p>在Unity中，在<em>Project</em>视图中右击-&gt;<em>Create</em>-&gt;<em>Shader</em>能够创建一下集几种Shader</p>
-<p><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3ed3rvrj30fn094js7.jpg" alt="undefined" loading="lazy"><center><font size =2>unity版本：5.5.0f3</font></center><br>
-<strong>Standard Surface Shader</strong> 会产生一个包含了标准光照模型（使用了Unity中新加的基于物理的渲染方法）的表面着色器。<br>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206000318766.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size =2>unity版本：5.5.0f3</font></center>
+<br>
+<p><strong>Standard Surface Shader</strong> 会产生一个包含了标准光照模型（使用了Unity中新加的基于物理的渲染方法）的表面着色器。<br>
 <strong>Unity Shader</strong> 会产生一个不包含光照（但包含雾效）的基本的顶点/片元着色器。<br>
 <strong>Image Effect Shader</strong> 则为我们实现各种屏幕后效果提供了一个基本模板。<br>
 <strong>Compute Shader</strong> 会产生一种特殊的Shader文件，这类Shader旨在利用GPU的并行性来进行一些与常规渲染流水线无关的计算。</p>
 <h2 id="font-color-0077bbsurface-shader表面着色器font"><font color = #0077BB>Surface Shader（表面着色器）</font></h2>
 <p>着色器基础结构：</p>
-<pre><code>Shader &quot;Custom/MyShader&quot; {
+<pre><code class="language-c">Shader &quot;Custom/MyShader&quot; {
 	Properties {
 		//属性
 	}
@@ -166,7 +169,7 @@ Rendering Path其实指的就是渲染场景中光照的方式。由于场景中
 <p>属性类型（PropertyType）包括：Int,Float,Range(min,max),Color,Vector,2D,Cube,3D</p>
 <p>Unity Shader可以包含多个<em>SubShader</em>语义块，至少一个。提供这种语义的原因是因为不同的显卡有不同的能力，在计算着色时，平台先选择最优先可以使用的着色器，然后依次运行其中的Pass（Unity Shader中的顶点/片元着色器）。</p>
 <p>下面是Unity中创建的默认Surface Shader：</p>
-<pre><code>Shader &quot;Custom/MyShader&quot; {
+<pre><code class="language-c">Shader &quot;Custom/MyShader&quot; {
 	Properties {
 		_Color (&quot;Color&quot;, Color) = (1,1,1,1)
 		_MainTex (&quot;Albedo (RGB)&quot;, 2D) = &quot;white&quot; {}
@@ -211,10 +214,10 @@ Rendering Path其实指的就是渲染场景中光照的方式。由于场景中
 <p><strong><font color = "#990500">MyShader详解：</font></strong></p>
 <p><font size=5>Properties</font><br>
 <em>Properties</em>即定义的属性。在材质面板中如下图所示：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv3esm06xj30aa06z0t1.jpg" alt="undefined" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20201206000359488.png" alt="在这里插入图片描述" loading="lazy"><br>
 <font size=5>SubShader</font><br>
 然后是<em>SubShader</em>，<em>SubShader</em>语义块中包含的定义通常如下：</p>
-<pre><code>SubShader{
+<pre><code class="language-c">SubShader{
 	//可选的标签
 	[Tags]
 
@@ -365,7 +368,7 @@ struct Input {
 <p>这里即着色器的方法部分了。<br>
 <code>SurfaceOutputStandard</code>是预定义的输出结构，surf函数的目标就是根据输入把这个输出结构填上。<br>
 <code>SurfaceOutputStandard</code>结构体的定义如下:</p>
-<pre><code>struct SurfaceOutputStandard
+<pre><code class="language-c">struct SurfaceOutputStandard
 {
     fixed3 Albedo;      // base (diffuse or specular) color
     fixed3 Normal;      // tangent space normal, if written
@@ -383,7 +386,7 @@ struct Input {
 也可以<code>FallBack Off</code>直接关闭回滚功能。</p>
 <h2 id="font-color-0077bbvertexfragment-shader顶点片元着色器font"><font color = #0077BB>Vertex/Fragment Shader（顶点/片元着色器）</font></h2>
 <p>在Unity中通过在项目视图右键 <em>Create</em>-&gt;<em>Shader</em>-&gt;<em>Unity Shader</em>可以创建一个默认的顶点/片元着色器</p>
-<pre><code>Shader &quot;Unlit/VertFragShader&quot;
+<pre><code class="language-c">Shader &quot;Unlit/VertFragShader&quot;
 {
 	Properties
 	{
@@ -456,7 +459,7 @@ struct Input {
 			};
 </code></pre>
 <p>这里使用一个结构体来定义顶点着色器的输入，问了创建一个自定义的结构体，我们必须使用如下格式来定义它：</p>
-<pre><code>struct StructName{
+<pre><code class="language-c">struct StructName{
 	Type Name : Semantic;
 	Type Name : Semantic;
 	......

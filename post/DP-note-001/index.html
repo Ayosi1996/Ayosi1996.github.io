@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -32,7 +32,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -116,9 +116,9 @@
 <p>通常我们可以使得一个对象被访问，但它不能防止你实例化多个对象。一个最好的方法就是，让类自身负责保存它的唯一实例。这个类可以保证没有其他实例可以被创建，并且它可以提供一个访问该实例的方法。[DP]</p>
 </blockquote>
 <p>类图：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj6stczzj309505zmx9.jpg" alt="undefined" loading="lazy"><br>
+<img src="https://img-blog.csdnimg.cn/20201206001505703.png" alt="在这里插入图片描述" loading="lazy"><br>
 对应代码：</p>
-<pre><code class="language-csharp">class Singleton
+<pre><code class="language-c#">class Singleton
     {
         private static Singleton _instance;
         private Singleton()         //将构造方法设为私有，外界无法利用new创建此类实例的可能
@@ -140,7 +140,7 @@
 <li><strong>不在场景中创建物体，可以用来保存临时数据，可以用静态类替代</strong></li>
 </ul>
 <p>代码与上面相同：</p>
-<pre><code class="language-csharp">public class Singleton  {
+<pre><code class="language-c#">public class Singleton  {
 
     private static Singleton _instance;
     private Singleton()         //将构造方法设为私有，外界无法利用new创建此类实例的可能
@@ -160,7 +160,7 @@
 <ul>
 <li><strong>创建继承自MonoBehaviour的单例，调用时在场景中创建物体</strong></li>
 </ul>
-<pre><code class="language-csharp">public class UnitySingleton : MonoBehaviour
+<pre><code class="language-c#">public class UnitySingleton : MonoBehaviour
 {
     static UnitySingleton _instance;
 
@@ -181,7 +181,7 @@
 <ul>
 <li><strong>同样是继承自MonoBehaviour</strong></li>
 </ul>
-<pre><code class="language-csharp">public class UnitySingleton : MonoBehaviour
+<pre><code class="language-c#">public class UnitySingleton : MonoBehaviour
 {
 
     public static UnitySingleton _instance;
@@ -202,7 +202,7 @@
 </code></pre>
 <p>第二种是在调用时才创建，第三种在游戏开始时就已经创建</p>
 <h2 id="创建单例泛型类"><strong>创建单例泛型类：</strong></h2>
-<pre><code class="language-csharp">public class SingletonManager&lt;T&gt; : MonoBehaviour
+<pre><code class="language-c#">public class SingletonManager&lt;T&gt; : MonoBehaviour
     where T : Component
 {
     private static T _instance;

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -36,7 +36,7 @@ abstract clas..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -118,9 +118,9 @@ abstract clas..." />
 原型模式其实就是从一个对象再创建另外一个可定制的对象，而且不需要知道创建的细节</p>
 <!--more-->
 <h2 id="uml图">UML图：</h2>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj80d1urj30kw0fztae.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206001347300.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h2 id="实现">实现：</h2>
-<pre><code class="language-csharp">//原型类
+<pre><code class="language-c#">//原型类
 abstract class Prototype
 {
     private string id;
@@ -167,9 +167,9 @@ class ConcretePrototype1 : Prototype
 <h1 id="深度复制">深度复制：</h1>
 <p>对于深拷贝和浅拷贝的解析：<a href="https://www.cnblogs.com/zhili/p/DeepCopy.html">C#进阶系列</a></p>
 <h2 id="uml">UML：</h2>
-<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj8hg9l8j30kf0723za.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/2020120600142238.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h2 id="实现-2">实现</h2>
-<pre><code class="language-csharp">class WorkExperience : ICloneable
+<pre><code class="language-c#">class WorkExperience : ICloneable
 {
     public string WorkDate {
         get;

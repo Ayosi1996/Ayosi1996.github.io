@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -34,7 +34,7 @@ Lua 协同程序(coroutine)与线程比较类似：拥有独立的堆栈，独�
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -130,11 +130,11 @@ co=coroutine.create(function fun1( a,b )
 end)
 </code></pre>
 <h2 id="2调用">2.调用</h2>
-<pre><code>coroutine.resume(co,20,30)  --控制台输出50
+<pre><code class="language-lua">coroutine.resume(co,20,30)  --控制台输出50
 </code></pre>
 <h2 id="3暂停">3.暂停</h2>
 <p>在想要暂停执行的地方加上<code>coroutine.yield()</code>语句</p>
-<pre><code>function fun1(a,b)
+<pre><code class="language-lua">function fun1(a,b)
 	-- body
 	print(a+b)
 	coroutine.yield()
@@ -173,7 +173,7 @@ coroutine.resume(co)
 <li><code>coroutine.yield()</code>函数能够向主线程传递参数</li>
 </ul>
 <h1 id="四-实例">四、实例</h1>
-<pre><code>function foo (a)
+<pre><code class="language-lua">function foo (a)
     print(&quot;foo 函数输出&quot;, a)
     return coroutine.yield(2 * a) -- 返回  2*a 的值
 end
@@ -201,7 +201,7 @@ print(&quot;main&quot;, coroutine.resume(co, &quot;x&quot;, &quot;y&quot;)) -- c
 print(&quot;---分割线---&quot;)
 </code></pre>
 <p>执行结果：</p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvncpwntxj30i90ahdgy.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206002138421.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="参考">参考</h1>
 <p>http://www.runoob.com/lua/lua-coroutine.html</p>
 

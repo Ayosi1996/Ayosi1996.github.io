@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -38,7 +38,7 @@ a..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -121,10 +121,10 @@ a..." />
 </blockquote>
 <!--more-->
 <h1 id="uml">UML</h1>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvni0oru6j30gl0c7402.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/202012060010210.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size=2>图片源自《大话设计模式》</font></center>
 <p><font size=7><b>实现</b></font></p>
-<pre><code class="language-csharp">//用来声明执行操作的接口
+<pre><code class="language-c#">//用来声明执行操作的接口
 abstract class Command
 {
 	protected Receiver receiver;
@@ -199,12 +199,11 @@ static void Main(string[] args)
 <p><font size=7><b>应用</b></font></p>
 <h1 id="配置输入">配置输入</h1>
 <p>一般的输入命令：</p>
-<pre><code class="language-csharp">void Update () {
+<pre><code class="language-c#">void Update () {
             if (Input.GetKeyDown(KeyCode.W)) Jump();
             if (Input.GetKeyDown(KeyCode.S)) GetDown();
             if (Input.GetKeyDown(KeyCode.A)) Defense();
             if (Input.GetKeyDown(KeyCode.D)) Attack();
-        
     }
 </code></pre>
 <p>为了支持可以配置按键功能，需要将这些对Jump()和Attack()的直接调用转化为可以变换的东西。</p>

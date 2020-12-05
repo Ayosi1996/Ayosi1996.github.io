@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@ SimpleFramework UGUI Github地址：ht..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -117,7 +117,7 @@ SimpleFramework UGUI Github地址：ht..." />
 <p>ulua官方地址：http://www.ulua.org/<br>
 SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UGUI/</p>
 <p>下载完成后为项目文件，可直接使用unity打开，目录结构如下图：</p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2t2fy3cj307r0hnaat.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206003122475.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>Examples/Scenes文件下放的为热更新示例项目，ulua/Examples文件夹下放的为ulua语法教程示例</p>
 <h1 id="2新建场景"><strong>2.新建场景</strong></h1>
 <ol>
@@ -126,7 +126,7 @@ SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UG
 <li>新建一个GameObject添加Global Generator脚本组件</li>
 </ol>
 <p>层次面板目录结构：</p>
-<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2tinx2zj305p06jmx7.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201206003144905.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p><font color= red><strong>注意：需要热更新的UI面板要以“Panel”名字结尾</strong></font></p>
 <h1 id="3打包文件"><strong>3.打包文件</strong></h1>
 <ol>
@@ -146,7 +146,7 @@ SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UG
 <p>打包成功会在项目文件夹中生成StreamingAssets文件夹，目录结构如下：</p>
 </li>
 </ol>
-<figure data-type="image" tabindex="3"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2tx287ej307n06r74f.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/2020120600320624.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>注：</p>
 <ul>
 <li>红框中为我的打包文件，其他为示例项目打包的资源文件</li>
@@ -157,7 +157,7 @@ SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UG
 官方给出的解决方案：因为unity不同平台版本api各不相同，因此不是特别统一，遇到此问题直接删除错误代码即可.</p>
 <h1 id="4修改c脚本"><strong>4.修改C#脚本</strong></h1>
 <h2 id="1panelmanagercs">1.PanelManager.cs</h2>
-<pre><code class="language-csharp">Transform Parent {
+<pre><code class="language-c#">Transform Parent {
             get {
                 if (parent == null) {
                     GameObject go = GameObject.FindWithTag(&quot;Canvas&quot;);//原标签为&quot;GuiCamera&quot;
@@ -169,7 +169,7 @@ SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UG
 </code></pre>
 <p>因为我的TextFramePanel是直接放在Canvas下的，而原框架中是放在GuiCamera下的，所以我将Canvas添加了一个“Canvas”的标签来作为面板的父物体。</p>
 <h2 id="2appviewcs">2.AppView.cs</h2>
-<pre><code class="language-csharp">void OnGUI() {
+<pre><code class="language-c#">void OnGUI() {
         GUI.Label(new Rect(10, 120, 960, 50), message);
 
         GUI.Label(new Rect(10, 0, 500, 50), &quot;(1) 单击 \&quot;Lua/Gen Lua Wrap Files\&quot;。&quot;);
@@ -181,14 +181,14 @@ SimpleFramework UGUI Github地址：https://github.com/jarjin/SimpleFramework_UG
 </code></pre>
 <p>这些是框架的提示信息，可自行修改或删除</p>
 <h2 id="3appconstcs">3.AppConst.cs</h2>
-<pre><code>public const bool DebugMode = false;          //调试模式-用于内部测试，默认为true
+<pre><code class="language-c#">public const bool DebugMode = false;          //调试模式-用于内部测试，默认为true
 public const bool UpdateMode = true;          //更新模式-默认为false
 public const string WebUrl = &quot;http://192.168.3.9:6688/&quot;;  //测试更新地址，默认为localhost
 </code></pre>
 <p>192.168.3.9位本机IP地址</p>
 <h2 id="4httpservercs">4.HttpServer.cs</h2>
 <p>修改框架自带的服务器端host地址，即Server/Server.sln中的HttpServer.cs</p>
-<pre><code>public HttpServer(int port) {
+<pre><code class="language-c#">public HttpServer(int port) {
             host = &quot;http://192.168.3.9:6688/&quot;;
         }
 </code></pre>
@@ -198,7 +198,7 @@ public const string WebUrl = &quot;http://192.168.3.9:6688/&quot;;  //测试更�
 不过第一次打开也会将所有.meta文件显示出来，显得比较乱，可以参考<a href="https://stackoverflow.com/questions/17632108/hide-files-with-certain-extension-in-sublime-text-editor">这里</a>来屏蔽特定文件类型<br>
 ##2.函数调用顺序<br>
 GameManager.cs</p>
-<pre><code>        /// &lt;summary&gt;
+<pre><code class="language-c#">        /// &lt;summary&gt;
         /// 资源初始化结束
         /// &lt;/summary&gt;
         public void OnResourceInited() {
@@ -224,7 +224,7 @@ GameManager.cs</p>
         }
 </code></pre>
 <p>从以上可以看出Lua函数的调用顺序为</p>
-<pre><code>GameManager.LuaScriptPanel()--&gt;View/TextFramePanel.lua--&gt;GameManager.OnInitOK()
+<pre><code class="language-c#">GameManager.LuaScriptPanel()--&gt;View/TextFramePanel.lua--&gt;GameManager.OnInitOK()
 </code></pre>
 <p>这里即将控制权交给了Lua文件</p>
 <h2 id="3logicgamemangerlua">3.Logic/GameManger.lua</h2>
@@ -307,17 +307,17 @@ end
 <h1 id="6启动服务器测试"><strong>6.启动服务器测试</strong></h1>
 <h2 id="1build安卓apk">1.Build安卓apk</h2>
 <p>当服务器没有打开时，打开APK如下图：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2uftyh0j30e80pat8o.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201206003307310.png" alt="在这里插入图片描述" loading="lazy"></p>
 <h2 id="2启动服务器">2.启动服务器</h2>
 <p>以管理员方式启动Server\Server\bin\Debug下的SuperSocket.SocketService.exe<br>
 启动后显示图：</p>
-<figure data-type="image" tabindex="4"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2urnnmfj30io087q3t.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20201206003340352.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>此时再重启APK：</p>
-<figure data-type="image" tabindex="5"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2v5y67tj30e80pa3z8.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/2020120600340265.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>ok！</p>
 <p>如果更新失败可以测试一下手机是否能连接电脑主机端口，即在浏览器中输入 本机IP:端口号<br>
 例如：192.168.3.9:6688 输入后能显示下图即连接成功</p>
-<figure data-type="image" tabindex="6"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2vkc4zxj30m704emxq.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20201206003424768.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>如果连接不上可以试试如下方法：<br>
 http://jingyan.baidu.com/article/67508eb4dc85e79cca1ce48f.html</p>
 <h1 id="7热更新测试">7.热更新测试</h1>
@@ -335,9 +335,9 @@ end
 </code></pre>
 <p>2.修改TextFramePanel预制体</p>
 <p>将预制体中的图片删除，结构如下：</p>
-<figure data-type="image" tabindex="7"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2vxi54hj305p05cglk.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20201206003451181.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>然后重新Build Android Resource，重新启动安卓客户端：</p>
-<figure data-type="image" tabindex="8"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv2w7q0m0j30740cndft.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20201206003514754.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>完！</p>
 
             </div>

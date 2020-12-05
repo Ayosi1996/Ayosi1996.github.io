@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -33,7 +33,7 @@ void Move(){
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -113,7 +113,7 @@ void Move(){
               <p>实现手游中通过摇杆控制角色移动的方式</p>
 <!--more-->
 <p>主要代码：</p>
-<pre><code class="language-c">void Move(){
+<pre><code class="language-c#">void Move(){
 	
         Vector2 offset = new Vector2(ETCInput.GetAxis(&quot;Horizontal&quot;), ETCInput.GetAxis(&quot;Vertical&quot;));  //摇杆输入
         if (offset.magnitude == 0)  //当摇杆没有偏移时角色朝向不变

@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -43,7 +43,7 @@ ArrayList
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -153,7 +153,7 @@ ArrayList
 1.当存储容量不足时，按照2的幂次规律扩容；<br>
 2.可以存储不同类型的元素<br>
 ArrayList list =new ArrayList();</p>
-<pre><code>//使用foreach进行遍历
+<pre><code class="language-c#">//使用foreach进行遍历
 foreach(int num inlist)
 {
         Console.WriteLine(num+” “);
@@ -170,7 +170,7 @@ for(int i;i&lt;list.Count;i++)
 遍历方法：<br>
 Queue q=new Queue();<br>
 IEnumerator myEnumerat = q.GetEnumerator();//获取能循环访问队列枚举数的IEnumerator接口实例</p>
-<pre><code>while(myEnumerator.MoveNext())
+<pre><code class="language-c#">while(myEnumerator.MoveNext())
 {
         Console.Write(myEnumerator.Current+” “);
 }
@@ -183,7 +183,7 @@ IEnumerator myEnumerat = q.GetEnumerator();//获取能循环访问队列枚举�
 <p><strong>四、SortedList</strong><br>
 特点：键/值对的集合，存入的元素会自动按照键排序，可以按照键或者索引访问<br>
 Hashtable（key，object）元素的集合，按照键的哈希代码组织，通过key可以访问到指定的元素。</p>
-<pre><code>Hashtable ht=new Hashtable();
+<pre><code class="language-c#">Hashtable ht=new Hashtable();
 //获取键：
 foreach(string key in ht.Keys)
 {

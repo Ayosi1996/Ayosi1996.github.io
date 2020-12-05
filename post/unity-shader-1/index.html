@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -22,11 +22,12 @@
 作者博客：http://blog.csdn.net/candycat1992
 
 开始
+
 妞妞的鼻子是怎么绘制到屏幕上的？
 一些重要的空间变换
 
 渲染流水线中顶点的空间变换过程
-模型..." />
+模..." />
     <meta name="keywords" content="Shader" />
   </head>
   <body>
@@ -36,7 +37,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -117,28 +118,30 @@
 <font color = 0077BB size = 3><strong>作者博客：<a href="http://blog.csdn.net/candycat1992">http://blog.csdn.net/candycat1992</a></strong></font></p>
 <!--more-->
 <h1 id="font-size7-color-0077bb开始font"><font size=7 color = 0077BB>开始</font></h1>
-<p><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuohbeztwj30jg08x7bl.jpg" alt="undefined" loading="lazy"><center><font size = 2>妞妞的鼻子是怎么绘制到屏幕上的？</font></center></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201205235542906.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size = 2>妞妞的鼻子是怎么绘制到屏幕上的？</font></center>
 <p>一些重要的空间变换</p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuogtb22ij30go0fltb8.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201205235608622.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>渲染流水线中顶点的空间变换过程</font></center>
 <h1 id="font-color-0077bb模型空间font"><font color = 0077BB>模型空间</font></h1>
 <p>模型空间，有时也被称为对象空间（object space）或局部空间（local space）。</p>
 <p>每个模型都有自己独立的坐标空间，当它移动或者旋转的时候，模型空间也会跟着它移动和旋转。</p>
 <p>Unity在模型空间中使用的是左手坐标系。模型空间的原点和坐标通常在建模软件中确定好的。</p>
 <p>当导入Unity后，可以在顶点着色器中访问到模型的顶点信息。</p>
-<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuojqiadaj30b408dgno.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20201205235640502.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>奶牛的模型空间，在模型空间中鼻子的坐标是(0,2,4,1)</font></center>
 <h1 id="font-color-0077bb世界空间font"><font color = 0077BB>世界空间</font></h1>
 <p>在Unity中最大的空间，使用的是左手坐标系。在Unity中我们可以通过调整Transform组件中的Position属性来改变模型的位置，<strong>这里的位置指的是相对于这个<font color =red>Transform的父节点（Parent）的模型坐标空间</font>中的原点定义的。</strong></p>
 <p>如果一个Transform没有父节点，这个位置就是世界坐标系中的位置。<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuotwc2tkj30go0drn7e.jpg" alt="undefined" loading="lazy"><center><font size = 2>农场游戏中的世界空间。世界空间的原点被放置在农场的中心。左下角显示了妞妞在世界空间中所做的变换。</font></center></p>
+<img src="https://img-blog.csdnimg.cn/20201205235706254.png" alt="在这里插入图片描述" loading="lazy"></p>
+<center><font size = 2>农场游戏中的世界空间。世界空间的原点被放置在农场的中心。左下角显示了妞妞在世界空间中所做的变换。</font></center>
 <p>顶点变换的第一步，就是将顶点坐标从模型空间变换到世界空间中。通常称作<strong>模型变换</strong></p>
 <p>大多数情况下，我们约定变换的顺序就是先缩放，再旋转，最后平移。</p>
 <p>根据上图Transform组件的信息构建模型变换的变换矩阵：</p>
-<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200317153432293.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/2020031715353596.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200317153432293.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/2020031715353596.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>现在可以用它进行模型变换</p>
-<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200317153608304.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317153608304.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="font-color-0077bb观察空间font"><font color = 0077BB>观察空间</font></h1>
 <p>观察空间也被称为摄像机空间。</p>
 <p>在观察空间中，摄像机位于原点。Unity中观察空间的坐标轴：+x轴指向右方，+y轴指向上方，+z轴指向<font color=  red>摄像机的后方</font></p>
@@ -146,56 +149,56 @@
 <p>注意：观察空间和屏幕空间是不同的。一个是三维，一个是二维。</p>
 <p>现在，需要求出从世界空间变换到观察空间的变换矩阵。第一种方法：计算 观察空间的的三个坐标轴在世界空间下的表示</p>
 <p>构建出从观察空间变换到世界空间的变换矩阵，再对该矩阵求逆。</p>
-<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317153724935.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317153724935.png?x-oss-process=image,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L01hY1lvc2Vm,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>矩阵表示从坐标空间C转换到坐标空间P的变换矩阵，x<sub>c</sub>、y<sub>c</sub>、z<sub>c</sub>表示坐标空间C的三个坐标轴在坐标空间P下的矢量表示。O<sub>c</sub>表示原点</font></center>
 <p>第二种方法：想象平移整个观察空间，让摄像机位于世界坐标的原点，坐标轴与世界空间的坐标轴对齐（除了z轴，z轴相反）</p>
 <p>按照第二种方法，由前面图片的Transform组件，进行逆向变换：将摄像机先按（0，-10,10）平移，回到原点，再按（-30,0,0）旋转，坐标轴对齐。即可求得变换矩阵 <strong>M</strong><sub>view</sub></p>
 <p><strong>世界空间-&gt;观察空间</strong></p>
-<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317153821626.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200317153821626.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p><font size=6 color = 0077BB><strong>裁剪空间</strong></font><br>
 <br><br>
 裁剪空间也被称为齐次裁剪空间。使用裁剪矩阵（clip matrix）或者叫做投影矩阵（projection matrix）进行顶点变换。裁剪空间的目标是能都方便地对渲染图元进行裁剪：视锥体内的图元被保留，视锥体外的图元被剔除，视锥体相交的图元会被裁剪。</p>
 <p>视锥体有两种类型，这涉及到两种投影类型：透视投影、正交投影。</p>
-<figure data-type="image" tabindex="8"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuoy65s86j30m80997cd.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/20201205235739687.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>视锥体和裁剪平面。左侧是透视投影的视锥体，右侧是正交投影的视锥体</font></center>
 <p>对于透视投影的视锥体来说，想要判断一个顶点是否处于内部是比较麻烦的。因此通过一个投影矩阵把顶点转换到一个裁剪空间中进行裁剪工作。</p>
 <p>投影矩阵有两个目的：</p>
 <p>首先是为投影做准备。虽然投影矩阵包含了投影二字，但是并没有真正的进行投影工作。真正的投影发生在后面的齐次除法过程中。</p>
 <p>其次是对x，y，z分量进行缩放。直接使用视锥体的6个裁剪平面来进行裁剪会比较麻烦。经过投影矩阵的缩放后，可以直接使用w分量作为阈值，如果x，y，z分量都位于这个阈值内，就说明位于裁剪空间内。</p>
 <p><strong><font size  = 4 color = #0077BB>透视投影：</font></strong><br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuoxuvx9kj30go0gnabn.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201205235807519.png" alt="在这里插入图片描述" loading="lazy"></p>
 <center><font size = 2>透视摄像机的参数对透视投影视锥体的影响 </font></center>
-<figure data-type="image" tabindex="9"><img src="http://ww1.sinaimg.cn/large/005SUDKAgy1gcupcf1d9tj30rs0d7gos.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20201205235835360.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2> 在透视投影中，投影矩阵对顶点进行了缩放。图中标注了4个关键点经过投影矩阵变换后的结果。从这些结果可以看出x、y、z和w分量的范围发生的变化 </font></center>
 <p><strong><font size  = 4 color = #0077BB>正交投影：</font></strong></p>
-<figure data-type="image" tabindex="10"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuox8hdvyj30dw0bbgm9.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://img-blog.csdnimg.cn/20201205235905529.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>正交摄像机的参数对正交投影视锥体的影响  </font></center>
-<figure data-type="image" tabindex="11"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuowytzzjj30rs0dijup.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://img-blog.csdnimg.cn/20201205235931477.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>在正交投影中，投影矩阵对顶点进行了缩放。图中标注了4个关键点经过投影矩阵变换后的结果。从这些结果可以看出x、y、z和w分量范围发生的变化   </font></center>
 <p>经过变换后，如果一个顶点在视锥体内，那么它变换后的坐标必须满足：</p>
-<figure data-type="image" tabindex="12"><img src="https://img-blog.csdnimg.cn/20200317153919421.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://img-blog.csdnimg.cn/20200317153919421.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>任何不满足上述条件的图元都需要被剔除或者裁剪。</p>
 <h1 id="font-color-0077bb屏幕空间font"><font color = #0077BB>屏幕空间</font></h1>
 <p>经过投影矩阵的变换后，我们可以进行裁剪操作。当完成了所有裁剪工作后，就需要进行真正的投影了：我们需要把视锥体投影到屏幕空间中。经过这一步变换，我们会得到真正的像素位置。</p>
 <p>这一步将顶点从裁剪空间投影到屏幕空间中，来生成对应的2D坐标。这个过程可以理解成两个步骤：</p>
 <p>首先进行标准齐次除法(homogenous division)，也称为透视除法。这个步骤就是用齐次坐标系的w分量去除以x、y、z分量。在OpenGL中，我们把这一步得到的坐标叫做归一化的设备坐标（Normalized Device Coordinates，NDC）。</p>
 <p>经过透视投影变换后的裁剪空间，经过齐次除法后会变换到一个立方体内。</p>
-<figure data-type="image" tabindex="13"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuowkvp2sj30rs0dlwhu.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="14"><img src="https://img-blog.csdnimg.cn/20201205235958549.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>经过齐次除法后，透视投影的裁剪空间会变换到一个立方体 </font></center>
-<figure data-type="image" tabindex="14"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuow7k3fcj30rs0d1ju1.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="15"><img src="https://img-blog.csdnimg.cn/20201206000028301.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>经过齐次除法后，正交投影的裁剪空间会变换到一个立方体  </font></center>
 <p>注意：按照OpenGL的传统，这个立方体x、y、z分量的范围都是[-1,1]。但在DirectX这样的API中，z分量的范围是[0,1]。Unity使用的是OpenGL的齐次裁剪空间</p>
 <p>经过齐次除法后，透视投影和正交投影的视锥体都变换到一个相同的立方体内。现在可以根据变换后的x和y坐标来映射输出窗口的对应像素坐标。</p>
 <p>在Unity中，屏幕空间左下角的像素坐标是（0,0）右上角的像素坐标是（pixelWidth,pixelHeight）。</p>
 <p>齐次除法和屏幕映射的过程可以使用下面的公式来总结：</p>
-<figure data-type="image" tabindex="15"><img src="https://img-blog.csdnimg.cn/20200317153948343.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="16"><img src="https://img-blog.csdnimg.cn/20200317153948343.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>对于z分量，通常用于深度缓冲。一个传统的方式是把 clip<sub>z</sub>/clip<sub>w</sub>的值直接存进深度缓冲中。</p>
 <p>在Unity中，从裁剪空间到屏幕空间的转换是由底层帮我们完成的。顶点着色器只要把顶点转换到裁剪空间即可。</p>
 <hr>
 <p>以上就是一个顶点从模型空间变换到屏幕坐标的过程。</p>
-<figure data-type="image" tabindex="16"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuovrolyyj30go0fltb8.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="17"><img src="https://img-blog.csdnimg.cn/20201206000059584.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>渲染流水线中顶点的空间变换过程  </font></center>
-<figure data-type="image" tabindex="17"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcuouvo2uij308c0hhjt7.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="18"><img src="https://img-blog.csdnimg.cn/2020120600013020.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <center><font size = 2>Unity中各个坐标空间的旋向性 </font></center>
 <h1 id="font-size7-color-0077bb完font"><font size=7 color = #0077BB>完</font></h1>
 

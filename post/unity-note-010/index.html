@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607183567001">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -32,7 +32,7 @@ void OnTriggerStay(Collider platf..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607183567001" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -113,7 +113,7 @@ void OnTriggerStay(Collider platf..." />
 <!--more-->
 <p>即使用Character controller实现类似升降梯的效果</p>
 <p>将以下脚本附给角色控制器：</p>
-<pre><code class="language-c">void OnTriggerStay(Collider platforms)
+<pre><code class="language-c#">void OnTriggerStay(Collider platforms)
     {
         if(!isOnMove&amp;&amp;platforms.gameObject.CompareTag(&quot;Platform&quot;))
         {
@@ -139,9 +139,9 @@ void OnTriggerStay(Collider platf..." />
 <p>给Cube物体添加一个碰撞器，一个触发器。</p>
 <p>在角色进入cube触发器后，将cube的父物体即ParentObject 作为角色控制器的父物体，即可实现同步运动。</p>
 <p>项目结构图：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj1acgxcj305n01rdfm.jpg" alt="undefined" loading="lazy"></p>
+<img src="https://img-blog.csdnimg.cn/20201206003024286.png" alt="在这里插入图片描述" loading="lazy"></p>
 <p>场景图片：</p>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcvj200o2tj30br074dgv.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206003042451.png" alt="在这里插入图片描述" loading="lazy"></figure>
 
             </div>
             
