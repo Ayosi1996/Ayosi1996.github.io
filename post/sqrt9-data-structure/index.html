@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186313978">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607186799385">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -32,7 +32,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186313978" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607186799385" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,18 +115,18 @@
 <li>平衡因子，将二叉树的左子树深度减去右子树深度的值称为平衡因子BF（Balance Factor）。</li>
 <li>最小不平衡子树，距离插入结点最近的，且平衡因子的绝对值大于1的结点为根的子树。</li>
 </ul>
-<figure data-type="image" tabindex="1"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0hvslayj30ii09eab1.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20201206004320828.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h2 id="平衡二叉树-构建">平衡二叉树 构建</h2>
 <p>​平衡二叉树构建的基本思想就是在构建二叉排序树的过程中，每当插人一个结点时，先检查是否因插入而破坏了树的平衡性，若是，则找出最小不平衡子树，在保持二叉排序树特性的前提下，调整最小不平衡子树中各结点间的链接关系，进行相应的旋转，使之成为新的平衡子树。</p>
 <p>a[10]={3,2,1,4,5,6,7,10,9,8} 的构建过程<br>
 图解：</p>
-<figure data-type="image" tabindex="2"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0ijkamlj30gy07174t.jpg" alt="undefined" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0iwna0qj30g207tmxn.jpg" alt="undefined" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0j95pxyj30f00ce75c.jpg" alt="undefined" loading="lazy"></figure>
-<figure data-type="image" tabindex="5"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0jiye7ij30e90d5q3y.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20201206004348920.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20201206004415344.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20201206004439656.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20201206004503823.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>图11不能简单的旋转，仔细观察图就会发现，根本原因在于结点7的BF是-2，而结点10的BF是1，符号不同意。前面的几次旋转，无论左还是右旋，<strong>最小不平衡树的根节点与它的子节点的BF符号是相同的。</strong> 这就是不能直接旋转的关键。<br>
 所以需要先把它们转到符号统一：对结点9和结点10进行右旋，再以结点7位最小不平衡子树进行左旋。</p>
-<figure data-type="image" tabindex="6"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0kiug27j30fm0dbwfp.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20201206004528292.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <h1 id="主要算法">主要算法：</h1>
 <pre><code class="language-c">/*二叉树的二叉链表结点结构定义*/
 typedef struct BitNode				   /*结点结构*/
@@ -148,8 +148,8 @@ void R_Rotate(BiTree *P)
 }
 </code></pre>
 <p>右旋图解：<br>
-<img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0l7234ej30l507cdgu.jpg" alt="undefined" loading="lazy"></p>
-<pre><code class="language-csharp">#define LH 1
+<img src="https://img-blog.csdnimg.cn/20201206004552883.png" alt="在这里插入图片描述" loading="lazy"></p>
+<pre><code class="language-c#">#define LH 1
 #define EH 0
 #define RH -1
 /*对以指针T所指根节点为根的二叉树作左平衡旋转处理*/
@@ -188,7 +188,7 @@ void LeftBalance(BiTree *T)
 }
 </code></pre>
 <p>左平衡旋转图解：</p>
-<figure data-type="image" tabindex="7"><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv0nwx9j8j30ei0ew0u1.jpg" alt="undefined" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20201206004620953.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p><strong>主函数：</strong></p>
 <pre><code class="language-c">//若在平衡的二叉排序树T中不存在和e有相同关键字的结点，
 //则插入一个数据元素为e的新结点并返回1，否则返回0。若因插入而使二叉排序树失去平衡，
