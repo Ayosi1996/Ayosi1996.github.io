@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C# yield return详解 | Sqrt9</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607179260820">
+<link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="在迭代器(iterator)方法中，遇到yield return语句后就会返回，但是当前执行的位置会保留。当迭代器(iterator)再次被调用时会从上次的位置继续执行。
+
+
+迭代器示例
+IEnumerable&lt;int&gt; Get..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ayosi1996.github.io">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607179260820" class="site-logo">
+        <h1 class="site-title">Sqrt9</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://ayosi1996.github.io" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://ayosi1996.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+          <a class="social-link" href="https://twitter.com/Sqrt9SD" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        
+      
+        
+          <a class="social-link" href="https://weibo.com/ayosi " target="_blank">
+            <i class="fab fa-weibo"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Hi there!
+    </div>
+    <div class="site-footer">
+      Powered by Gridea | <a class="rss" href="https://ayosi1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C# yield return详解</h2>
+            <div class="post-date">2020-05-05</div>
+            
+              <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20201205224024822.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <p>在迭代器(iterator)方法中，遇到yield return语句后就会返回，但是当前执行的位置会保留。当迭代器(iterator)再次被调用时会从上次的位置继续执行。</p>
+<!-- more -->
+<hr>
+<h1 id="迭代器示例">迭代器示例</h1>
+<pre><code class="language-c#">IEnumerable&lt;int&gt; GetNumbers()
+{
+    yield return 1;
+    yield return 2;
+    yield return 3;
+}
+
+foreach (var item in GetNumbers())
+{
+    Console.WriteLine(item);
+}
+</code></pre>
+<p>在visual studio使用逐语句调试执行，可以观察到程序在 <code>foreach</code> 循环和 <code>GetNumber()</code> 之间来回切换执行。当程序遇到 <code>yield return</code>  之后，便切换到 <code>foreach</code> 逻辑中并且返回 <code>yield return</code> 后面的数值。在 <code>foreach</code> 中执行完一次打印后程序又回到 <code>GetNumbers()</code> 中,并且从上次结束的位置开始执行。</p>
+<h1 id="传统循环-vs-迭代器">传统循环 vs 迭代器</h1>
+<p>首先使用传统的循环来实现一个遍历的效果：</p>
+<pre><code class="language-c#">IEnumerable&lt;int&gt; GenerateWithoutYield() 
+{ 
+    var i = 0; 
+    var list = new List&lt;int&gt;(); 
+    while (i&lt;5) 
+        list.Add(++i); 
+    return list; 
+} 
+foreach(var number in GenerateWithoutYield()) 
+    Console.WriteLine(number);
+</code></pre>
+<br>
+<p>代码执行步骤：<br>
+1. <code>GenerateWithoutYield</code> 被调用<br>
+2. 整个方法执行完毕并且返回构建好的数字列表<br>
+3.  <code>foreach</code> 遍历列表中的所有值然后输出</p>
+<br>
+使用迭代器实现：
+<pre><code class="language-c#">IEnumerable&lt;int&gt; GenerateWithYield() 
+{ 
+    var i = 0; 
+    while (i&lt;5) 
+        yield return ++i; 
+} 
+foreach(var number in GenerateWithYield()) 
+    Console.WriteLine(number);
+</code></pre>
+<br>
+<p>代码执行步骤：<br>
+1. <code>GenerateWithYield()</code> 被调用<br>
+2. 方法返回  <code>IEnumerable&lt;int&gt;</code> ，这里返回的并不是一个list，而是一个类似状态机运行机制的迭代器。以上代码中的 <code>GenerateWithYield()</code> 会返回5个数字，但并不是一次执行完毕。而是每次请求的时候逐一返回。<br>
+3. <code>foreach</code> 循环调用 <code>GenerateWithYield()</code> 知道所有数字输出完毕<br>
+<br></p>
+<h1 id="无限循环">无限循环</h1>
+<p>以上代码并不能展示迭代器的用处，下面用一个无限循环的例子来演示迭代器的优点</p>
+<p>无限循环输出数字：</p>
+<pre><code class="language-c#">// 迭代器方法
+IEnumerable&lt;int&gt; GenerateWithYield() 
+{ 
+    var i = 0; 
+    while (true) 
+    yield return ++i; 
+} 
+
+// 传统方法
+IEnumerable&lt;int&gt; GenerateWithoutYield() 
+{ 
+    var i = 0; 
+    var list = new List&lt;int&gt;(); 
+    while (true) 
+        list.Add(++i); 
+    return list; 
+}
+
+// 打印数字
+foreach(var number in GenerateWithoutYield())) 
+    Console.WriteLine(number); 
+
+foreach(var number in GenerateWithYield()) 
+    Console.WriteLine(number);
+</code></pre>
+<p>结果很明显，如果使用传统的方法遍历数字程序会陷入死循环，而使用迭代器方法的话就会每次打印一个数字，逐步递增。</p>
+<h1 id="实际用途">实际用途</h1>
+<h2 id="自定义迭代">自定义迭代</h2>
+<p>假如有一个数字列表，想要找出其中大于某一特定数值的数字集合。<br>
+如果使用传统的方法：</p>
+<pre><code class="language-c#">IEnumerable&lt;int&gt; GetNumbersGreaterThan3(List&lt;int&gt; numbers) 
+{ 
+    var theNumbers = new List&lt;int&gt;(); 
+    foreach(var nr in numbers) 
+    { 
+        if(nr &gt; 3) 
+            theNumbers.Add(nr); 
+    } 
+    return theNumbers; 
+} 
+    foreach(var nr in GetNumbersGreaterThan3(new List&lt;int&gt; {1,2,3,4,5}) 
+        Console.WriteLine(nr);
+
+</code></pre>
+<p>这种方法的确能够达到目的，但是需要创建一个额外的列表来保存结果。过程可用图表示为：<br>
+<img src="https://img-blog.csdnimg.cn/20201205220108454.png" alt="在这里插入图片描述" loading="lazy"></p>
+<p>如果使用<code>yield return</code> :</p>
+<pre><code class="language-c#">IEnumerable&lt;int&gt; GetNumbersGreaterThan3(List&lt;int&gt; numbers) 
+{ 
+    foreach(var nr in numbers) 
+    { 
+        if(nr &gt; 3) 
+            yield return nr; 
+    } 
+} 
+foreach(var nr in GetNumbersGreaterThan3(new List&lt;int&gt; {1,2,3,4,5}) 
+    Console.WriteLine(nr);
+</code></pre>
+<br>
+<p>使用<code>yield return</code> 的话过程图：<br>
+<img src="https://img-blog.csdnimg.cn/20201205220535913.png" alt="在这里插入图片描述" loading="lazy"></p>
+<p>这样只需要迭代列表一次并且不需要创建额外的空间来保存结果。</p>
+<h2 id="状态控制">状态控制</h2>
+<p>因为迭代器能够被<strong>暂停执行</strong> 或者在需要的时候 <strong>重新执行</strong> ，所以该特性可以用来处理与状态有关的方法。</p>
+<pre><code class="language-c#">IEnumerable&lt;int&gt; Totals(List&lt;int&gt; numbers) 
+{ 
+    var total = 0; 
+    foreach(var number in numbers) 
+    { 
+        total += number; 
+        yield return total; 
+    } 
+} 
+foreach(var total in Totals(new List&lt;int&gt; {1,2,3,4,5}) 
+    Console.WriteLine(total);
+
+// Output： 1    3    6    10    15
+</code></pre>
+<p>由于<code>yield return</code> 的暂停的重新运行特性，变量total能够输出每次迭代后的中间状态值。</p>
+<h2 id="延迟执行">延迟执行</h2>
+<p>以上的 <code>yield return</code> 代码都有一个特性，就是只有当需要的时候迭代器才会被调用。所以通过使用 <code>yield return</code> 能够让代码做到&quot;延迟执行&quot;(Deferred execution)</p>
+<p>C# 的LINQ部分就用到了这一特性。示例：</p>
+<pre><code class="language-c#">var dollarPrices = FetchProducts().Take(10)
+                                  .Select(p =&gt; p.CalculatePrice())
+                                  .OrderBy(price =&gt; price)
+                                  .Take(5)
+                                  .Select(price =&gt; ConvertTo$(price));
+</code></pre>
+<p>假设有1000个产品，如果使用传统方法，那么需要：</p>
+<ul>
+<li>获取所有1000个产品</li>
+<li>计算所有产品的价格</li>
+<li>对价格进行排序</li>
+<li>将价格兑换为美元</li>
+<li>取出价格前5的产品</li>
+</ul>
+<p>如果使用延迟执行的方法：</p>
+<ul>
+<li>取出10个产品</li>
+<li>计算取出产品的价格</li>
+<li>对价格进行排序</li>
+<li>将5个产品的价格兑换为美元</li>
+</ul>
+<h1 id="reference">Reference</h1>
+<ol>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield">https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield</a></li>
+<li><a href="https://www.c-sharpcorner.com/UploadFile/5ef30d/understanding-yield-return-in-C-Sharp/a">https://www.c-sharpcorner.com/UploadFile/5ef30d/understanding-yield-return-in-C-Sharp/</a></li>
+<li><a href="https://www.kenneth-truyers.net/2016/05/12/yield-return-in-c/">https://www.kenneth-truyers.net/2016/05/12/yield-return-in-c/</a></li>
+</ol>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ayosi1996.github.io/post/blend-mode/">
+                  <h3 class="post-title">
+                    混合模式总结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

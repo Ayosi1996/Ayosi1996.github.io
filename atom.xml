@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ayosi1996.github.io</id>
     <title>Sqrt9</title>
-    <updated>2020-12-04T08:04:23.292Z</updated>
+    <updated>2020-12-05T14:41:08.817Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ayosi1996.github.io"/>
     <link rel="self" href="https://ayosi1996.github.io/atom.xml"/>
@@ -19,6 +19,17 @@
         <summary type="html"><![CDATA[<p>二叉空间分割 (Binary space partitioning，简称BSP)是一种通过使用超平面作为分割，递归细分空间为两凸集的算法。</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>二叉空间分割 (Binary space partitioning，简称BSP)是一种通过使用超平面作为分割，递归细分空间为两凸集的算法。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[C# yield return详解]]></title>
+        <id>https://ayosi1996.github.io/post/c-yield-return-xiang-jie/</id>
+        <link href="https://ayosi1996.github.io/post/c-yield-return-xiang-jie/">
+        </link>
+        <updated>2020-05-05T12:43:57.000Z</updated>
+        <summary type="html"><![CDATA[<p>在迭代器(iterator)方法中，遇到yield return语句后就会返回，但是当前执行的位置会保留。当迭代器(iterator)再次被调用时会从上次的位置继续执行。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在迭代器(iterator)方法中，遇到yield return语句后就会返回，但是当前执行的位置会保留。当迭代器(iterator)再次被调用时会从上次的位置继续执行。</p>
 ]]></content>
     </entry>
     <entry>
@@ -56,17 +67,6 @@
         <content type="html"><![CDATA[<h1 id="概述">概述</h1>
 <br>
 渲染流水线的最终目的在于生成或者说是渲染一张二维图像，即我们在电脑屏幕上看到的所有效果。
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Blender 2.79 BGE记录所有物体的动画]]></title>
-        <id>https://ayosi1996.github.io/post/iqKqdD2bN/</id>
-        <link href="https://ayosi1996.github.io/post/iqKqdD2bN/">
-        </link>
-        <updated>2019-08-16T22:25:40.000Z</updated>
-        <summary type="html"><![CDATA[<p>Blender 2.x的游戏引擎有个很好的功能就是记录动画，可惜的是只有刚体、软体、静态属性的物体能被记录，而且有子物体也不会被记录。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>Blender 2.x的游戏引擎有个很好的功能就是记录动画，可惜的是只有刚体、软体、静态属性的物体能被记录，而且有子物体也不会被记录。</p>
 ]]></content>
     </entry>
 </feed>
