@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Unity中实现RPG游戏角色控制移动 | Sqrt9</title>
+<title>C# | Sqrt9</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,13 +18,7 @@
 
 
 
-    <meta name="description" content="实现手游中通过摇杆控制角色移动的方式
-
-主要代码：
-void Move(){
-	
-        Vector2 offset = new Vector2(ETCInput.GetAxis(&quot;Horizontal&quot;), ..." />
-    <meta name="keywords" content="Unity" />
+    <meta name="description" content="Hi there!">
   </head>
   <body>
     <div id="app" class="main">
@@ -102,59 +96,34 @@ void Move(){
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Unity中实现RPG游戏角色控制移动</h2>
-            <div class="post-date">2017-07-27</div>
-            
-              <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20200317001526963.jpg')">
-              </div>
-            
-            <div class="post-content" v-pre>
-              <p>实现手游中通过摇杆控制角色移动的方式</p>
-<!--more-->
-<p>主要代码：</p>
-<pre><code class="language-c#">void Move(){
-	
-        Vector2 offset = new Vector2(ETCInput.GetAxis(&quot;Horizontal&quot;), ETCInput.GetAxis(&quot;Vertical&quot;));  //摇杆输入
-        if (offset.magnitude == 0)  //当摇杆没有偏移时角色朝向不变
-            transform.forward = transform.forward;      
-        else {
-            cameraForward = mainCamera.transform.right * offset.x+ mainCamera.transform.forward* offset.y; 
-            cameraForward = new Vector3(-cameraForward.x, 0, -cameraForward.z);
-            
-            transform.forward = cameraForward;
-            
-        }
-		if (offset.magnitude &gt; 0.1) //最小移动距离
-            player.SimpleMove( cameraForward* moveSpeed);
-	}	
-</code></pre>
-<p>代码是附加于需要控制的角色上</p>
-
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ayosi1996.github.io/tag/8XKEAF2sL/" class="tag">
-                    Unity
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ayosi1996.github.io/post/unity-note-007/">
-                  <h3 class="post-title">
-                    Unity3D场景间切换传递保存数据的方法
-                  </h3>
+          <h2 class="current-tag">标签: C#</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ayosi1996.github.io/post/c-yield-return-xiang-jie/">
+                  <h2 class="post-title">C# yield return详解</h2>
                 </a>
+                <div class="post-date">
+                  2020-05-05
+                </div>
+                <div class="post-abstract">
+                  <p>在迭代器(iterator)方法中，遇到yield return语句后就会返回，但是当前执行的位置会保留。当迭代器(iterator)再次被调用时会从上次的位置继续执行。</p>
+
+                </div>
               </div>
-            
+              
+                <a class="right" href="https://ayosi1996.github.io/post/c-yield-return-xiang-jie/">
+                  <div class="feature-container" style="background-image: url('https://img-blog.csdnimg.cn/20201205224024822.png')">
+                  </div>
+                </a>
+              
+            </article>
+          
 
-            
-
-          </div>
+          <div class="pagination-container">
+  
+  
+</div>
 
         </div>
       </div>
