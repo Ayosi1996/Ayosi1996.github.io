@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607216930784">
+<link rel="shortcut icon" href="https://ayosi1996.github.io/favicon.ico?v=1607217349694">
 <link rel="stylesheet" href="https://ayosi1996.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@ Lambert
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ayosi1996.github.io">
-        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607216930784" class="site-logo">
+        <img src="https://ayosi1996.github.io/images/avatar.png?v=1607217349694" class="site-logo">
         <h1 class="site-title">Sqrt9</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -136,9 +136,10 @@ Lambert
 <ul>
 <li><strong>高光反射（specular）</strong>，用于描述当光线从光源照射到模型表面时，该表面会在完全镜面反射方向散射多少辐射量。</li>
 </ul>
-<p><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv31db0jvj30dw06d74v.jpg" alt="undefined" loading="lazy"><center><font size=2>使用Phong模型计算高光反射, <a href="http://candycat1992.github.io/unity_shaders_book/unity_shaders_book_images.html">图片来源</a></font></center></p>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20201206091515479.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size=2>使用Phong模型计算高光反射, [图片来源](http://candycat1992.github.io/unity_shaders_book/unity_shaders_book_images.html)</font></center>
 <p>计算公式：</p>
-<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200317154254458.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317154254458.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>这就是<strong>Phong提出的基于经验的高光反射模型</strong>。其中：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>c</mi><mrow><mi>l</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">c_{light}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">h</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>：入射光线的颜色和强度，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>m</mi><mrow><mi>s</mi><mi>p</mi><mi>e</mi><mi>c</mi><mi>u</mi><mi>l</mi><mi>a</mi><mi>r</mi></mrow></msub></mrow><annotation encoding="application/x-tex">m_{specular}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">m</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">p</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">u</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">a</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>：材质的高光反射颜色，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>v</mi><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{v}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.714em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.20772em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
 3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
 10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
@@ -159,7 +160,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 -7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span>计算方法：</p>
-<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200317154327630.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317154327630.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <ul>
 <li>
 <p><strong>漫反射（diffuse）</strong>，用于描述当光线从光源照射到模型表面时，该表面会向每个方向散射多少辐射量。<br>
@@ -171,7 +172,7 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 </li>
 <li></li>
 </ul>
-<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200317154420827.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200317154420827.png" alt="在这里插入图片描述" loading="lazy"></figure>
 <p>环境光<b>g<sub>ambient</sub></b>通常是一个全局变量，即场景中的所有物体都使用了这个环境光。</p>
 <h2 id="font-color-990500blinn-phongfont"><font color = 990500>Blinn Phong</font></h2>
 <p>Blinn提出了一个简单的修改方法来得到与Phong高光反射模型类似的效果，它的基本思想是，避免计算反射方向<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mi>r</mi><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{r}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.714em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.714em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.17994em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
@@ -213,9 +214,10 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 -7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
 H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
 c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span>之间的夹角。</p>
-<p><img src="http://ww1.sinaimg.cn/large/005SUDKAly1gcv31udmd7j30dw06d3z4.jpg" alt="undefined" loading="lazy"><center><font size=2>Blinn模型 <a href="http://candycat1992.github.io/unity_shaders_book/unity_shaders_book_images.html">图片来源</a></font></center></p>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/20201206091540466.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<center><font size=2>Blinn模型 [图片来源](http://candycat1992.github.io/unity_shaders_book/unity_shaders_book_images.html)</font></center>
 <p><strong>Blinn模型</strong>的公式：</p>
-<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200317154509471.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20200317154509471.png" alt="在这里插入图片描述" loading="lazy"></figure>
 
             </div>
             
